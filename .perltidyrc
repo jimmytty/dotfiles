@@ -1,0 +1,24 @@
+#### This is a perltidy configuratin file
+#### Thu Feb 18 10:27:58 BRST 2010
+
+--perl-best-practices    # -l=78,   --maximum-line-length=78
+                         # -i=4,    --indent-columns=4
+                         # -ci=4,   --continuation-indentation=4
+                         # -st,     --standard-output
+                         # -se,     --standard-error-output
+                         # -vt=2,   --vertical-tightness=2
+                         # -cti=0,  --closing-token-indentation=0
+                         # -pt=1,   --paren-tightness=1
+                         # -bt=1,   --brace-tightness=1
+                         # -sbt=1,  --square-bracket-tightness=1
+                         # -bbt=1,  --block-brace-tightness=1
+                         # -nsfs,   --nospace-for-semicolon
+                         # -nolq,   --nooutdent-long-quotes, 
+                         #          --no-outdent-long-quotes
+                         # -wbb="% + - * / x != == >= <= =~ !~ < > | & = **= +=
+                         #       *= &= <<< = &&= -= /= |= >>= ||= //= .= %= ^=
+                         #       x=",
+                         # --want-break-before=s
+
+--closing-side-comments             # -csc
+--closing-side-comment-interval=15  # -csci=
