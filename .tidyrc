@@ -1,0 +1,53 @@
+# Tidy configuration file
+
+add-xml-decl: no          # default: no
+#add-xml-pi:bool
+add-xml-space: no         # default: no
+#alt-text: string
+assume-xml-procins: no    # default: no
+break-before-br: no       # default: no
+char-encoding: ascii      # default: ascii (ascii, iso2022, latin1, utf8, raw)
+clean: yes                # default: no
+doctype: auto             # default: auto (<fpi>, auto, loose, omit, strict)
+drop-empty-paras: yes     # default: yes
+drop-font-tags: yes       # default: no
+enclose-block-text: no    # default: no
+enclose-text: no          # default: no
+#error-file: filename
+fix-backslash: yes        # default: yes
+fix-bad-comments: yes     # default: yes
+gnu-emacs: yes            # default: no
+hide-endtags: no          # default: yes
+indent: yes               # default: no
+indent-attributes: yes    # default: no
+indent-spaces: 2          # default: 2
+input-xml: no             # default: no
+keep-time: yes            # default: yes
+literal-attributes: yes   # default: no
+logical-emphasis: yes     # default: no
+markup: yes               # default: yes
+#new-blocklevel-tags: tag1, tag2, tag3
+#new-empty-tags: tag1, tag2, tag3
+#new-inline-tags: tag1, tag2, tag3
+#new-pre-tags: tag1, tag2, tag3
+numeric-entities: no      # default: no
+output-xhtml: yes         # default: no
+output-xml: no            # default: no
+quiet: no                 # default: no
+quote-ampersand: yes      # default: yes
+quote-marks: yes          # default: yes
+quote-nbsp: yes           # default: yes
+show-warnings: yes        # default: yes
+split: no                 # default: no
+tab-size: 4               # default: 4
+tidy-mark: yes            # default: yes
+uppercase-attributes: no  # default: no
+uppercase-tags: no        # default: no
+word-2000: no             # default: no
+wrap: 0                   # default: 66
+wrap-asp: yes             # default: yes
+wrap-attributes: no       # default: no
+wrap-jste: yes            # default: yes
+wrap-php: yes             # default: yes
+wrap-script-literals: no  # default: no
+write-back: no            # default: no
