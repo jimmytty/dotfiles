@@ -1,0 +1,19 @@
+# bind = resize =
+# bind + resize +1
+# bind - resize -1
+# bind _ resize max
+#
+# defnonblock 1
+# blankerprg rain -d 100
+# idle 30 blanker
+
+#bindkey -t ^oc stuff $CONFIGURE
+#bindkey -t ^od stuff $DATA
+#bindkey -t ^oe stuff $EMAIL
+#bindkey -t ^oh stuff $HORA
+#bindkey -t ^on stuff $NOME
+#bindkey -t ^ourl stuff $URL
+#
+#bindkey -t ^oi stuff $ICQ
+#bindkey -t ^or  stuff $RG
+#bindkey -t ^oc stuff $CPF
