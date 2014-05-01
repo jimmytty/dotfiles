@@ -1,0 +1,6 @@
+# if "Must run suid root for multiuser support."; then
+# chmod +s /usr/bin/screen
+
+multiuser on
+addacl <login name>
+detach
