@@ -1,0 +1,21 @@
+include   = Bangs BuiltinFunctions ClassHierarchies CodeLayout Compatibility ControlStructures Documentation Editor ErrorHandling InputOutput Lax logicLAB Miscellanea Modules NamingConventions Objects OTRS References RegularExpressions Storable Subroutines TestingAndDebugging Tics ValuesAndExpressions Variables Variables::ProhibitUnusedVariables CodeLayout::ProhibitTrailingWhitespace
+exclude   = CodeLayout::RequireASCII Documentation::PodSpelling Documentation::RequireEndBeforeLastPod Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion OTRS::RequireCamelCase OTRS::RequireParensWithMethods OTRS::RequireTrueReturnValueForModules Subroutines::ProhibitCallsToUndeclaredSubs Subroutines::ProhibitCallsToUnexportedSubs Subroutines::ProhibitExportingUndeclaredSubs ValuesAndExpressions::ProhibitImplicitNewlines ValuesAndExpressions::RequireInterpolationOfMetachars ValuesAndExpressions::RestrictLongStrings ValuesAndExpressions::ProhibitLongChainsOfMethodCalls Compatibility::PodMinimumVersion Documentation::RequirePackageMatchesPodName Documentation::RequirePodAtEnd Documentation::RequirePodLinksIncludeText Documentation::RequirePodSections
+color     = 1
+force     = 0
+only      = 1
+pager     = less -R
+severity  = 1
+top       = 10000
+verbose   = 4
+
+[ControlStructures::ProhibitPostfixControls]
+allow = if unless
+
+[TestingAndDebugging::RequireUseWarnings]
+equivalent_modules = common::sense
+
+[TestingAndDebugging::RequireUseStrict]
+equivalent_modules = common::sense
+
+[Variables::ProhibitReusedNames]
+allow = $self $class
