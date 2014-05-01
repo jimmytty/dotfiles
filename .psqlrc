@@ -1,0 +1,10 @@
+\setenv PAGER 'piconv -f utf8 -t latin1|less -S'
+\setenv PSQL_EDITOR 'vim --cmd "%!piconv -f latin1 -t utf8 %|uni2ascii -q -a7"'
+\encoding utf8
+\timing on
+\pset null '(null)'
+\pset pager 'always'
+\set HISTCONTROL ignoreboth
+\set HISTFILE ~/.psql_history
+\set HISTSIZE 500
+\set COMP_KEYWORD_CASE lower
