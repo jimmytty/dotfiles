@@ -1,0 +1,15 @@
+auto_image 0
+display 1
+display_lineinfo 1
+display_link 1
+editor /usr/bin/vim
+emacs_like_lineedit 1
+ext_image_viewer 1
+frame 1
+ignore_null_img_alt 1
+indent_incr 4
+mark 1
+tabstop 4
+use_history 1
+use_mouse 0
+vi_prec_num 1
