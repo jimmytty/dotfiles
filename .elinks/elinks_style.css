@@ -1,0 +1,29 @@
+/* Elinks default style sheet
+ * document.css.stylesheet */
+
+body {	color: gray75;	background: black; }
+h1 {
+	text-align: left;
+	color: yellow;
+    background-color: blue;
+}
+
+attribute           { color: magenta }
+blockquote          { color: blue; }
+cdata-section       { color: orange2 }
+code                { color: lime }
+comment             { color: aqua }
+document            { color: yellow }
+element             { color: lightgreen }
+em                  { color: olive; }
+entity-reference    { color: red }
+h2, h3, h4, h5, h6  { color: darkgreen; }
+i                   { color: lightblue; }
+img                 { color: olive;}
+p                   { text-align: justify; }
+proc-instruction    { color: red }
+small               { color: white; }
+strong,b,cite       { color: red; }
+th                  { color: olive; }
+tt                  { color: magenta }
+ul                  { color: darkmagenta; }
