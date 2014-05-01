@@ -1,0 +1,26 @@
+# mailx startup file
+# man 1 mailx
+fwdretain subject date from to
+ignore authentication-results content-disposition content-length content-type delivered-to dkim-signature domainkey-signature errors-to lines list-archive list-help list-id list-post list-subscribe list-unsubscribe organization precedence received-spf reply-to return-path sender user-agent x-beenthere x-mailman-version x-spam-check-by x-spam-status x-virus-checked x-originating-ip status
+ignore mime-version content-transfer-encoding
+ignore received in-reply-to message-id references
+set append
+set ask
+set autocollapse
+set autosort=status
+set autothread
+set crt
+set dot
+set emptybox
+set folder='.mailbox/'
+set header
+set headline='%a %S'
+set hold
+set indentprefix="> "
+set keep
+set newmail=nopoll
+set quiet
+set quote
+set sendcharsets=iso-8859-1,utf-8
+set showname
+set showto
