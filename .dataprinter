@@ -1,0 +1,48 @@
+# Data::Printer - CONFIGURATION FILE (RUN CONTROL)
+
+{   caller_info => 1,
+    class       => {
+        expand       => 1,
+        inherited    => q(none),
+        internals    => 1,
+        linear_isa   => 1,
+        parents      => 1,
+        show_methods => q(all),
+        sort_methods => 1,
+    },
+    class_method => q(_data_printer),
+    color        => {
+        array       => q(bright_white),
+        caller_info => q(bright_cyan),
+        class       => q(bright_green),
+        code        => q(green),
+        glob        => q(bright_cyan),
+        hash        => q(magenta),
+        number      => q(bright_blue),
+        regex       => q(yellow),
+        repeated    => q(white on_red),
+        string      => q(bright_yellow),
+        tainted     => q(red),
+        undef       => q(bright_red),
+        weak        => q(cyan),
+    },
+    colored        => 1,
+    deparse        => 1,
+    hash_separator => q( => ),
+    indent         => 4,
+    index          => 1,
+    max_depth      => 0,
+    multiline      => 1,
+    name           => q(var),
+    quote_keys     => 1,
+    return_value   => q(dump),
+    show_tainted   => 1,
+    show_tied      => 1,
+    show_weak      => 1,
+    sort_keys      => 1,
+    use_prototypes => 1,
+}
+
+# Local Variables:
+# mode: perl
+# End:
