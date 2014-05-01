@@ -1,0 +1,5 @@
+# ack configuration file
+# $ perldoc ack # "THE .ackrc FILE"
+--color
+--pager=less -RS
+--sort-files
