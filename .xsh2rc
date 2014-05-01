@@ -1,0 +1,54 @@
+quiet;
+nodebug;
+recovering 1;
+encoding 'iso-8859-1';
+query-encoding 'iso-8859-1';
+$PROMPT = '%L> ';
+
+def number2attributes $path {
+    my $nodes = xsh:split('/+',$path);
+    $nodes = xsh:grep($nodes, '.');
+    my $fpath;
+    my $cpath;
+
+    foreach my $node in xsh:split('/', $path) {
+
+        if ( $cpath) {
+            $cpath = xsh:join('/', $cpath, $node);
+        }
+        else {
+            $cpath = $node;
+        }
+
+        if ( $node != '.') {
+            my $xpath = concat($cpath, '/', '@*');
+            my $attrs;
+            foreach my $attr in xsh:evaluate($xpath) {
+                $attr = concat('[@'
+                               , normalize-space(xsh:serialize($attr))
+                               , ']'
+                              );
+                $attrs = normalize-space(concat($attrs, $attr));
+            }
+            if ( string-length($attrs) != 0 and $node != 'html'){
+                $node = xsh:subst($node, '\[\d+\]$', '');
+                $node = concat($node, $attrs);
+            }
+        }
+
+        if ( $fpath ) {
+            $fpath = xsh:join('/', $fpath, $node);
+        }
+        else {
+            $fpath = $node;
+        }
+    }
+    print $fpath;
+}
+
+def serialize_nodes {
+    foreach my $node in node() {
+        cd $node;
+        print substring(normalize-space(xsh:serialize(.)),1,79);
+    }
+}
