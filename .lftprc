@@ -1,0 +1,3 @@
+# lftp conf file
+# man 1 lftp
+debug on
