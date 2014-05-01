@@ -1,0 +1,12 @@
+# minicpan config file
+# perldoc minicpan
+local: ~/minicpan/
+#remote: ftp://ftp.linorg.usp.br/CPAN/
+#remote: http://cpan.kinghost.net/
+#remote: http://linorg.usp.br/CPAN/
+remote: http://www.cpan.org/
+#remote: rsync://rsync.linorg.usp.br/CPAN/ 
+#remote: http://cpan.cpantesters.org/
+exact_mirror: 1
+force: 1
+trace: 1
