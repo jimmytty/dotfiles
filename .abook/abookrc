@@ -1,0 +1,66 @@
+# abook configuration file
+# see abookrc(5) for detailed explanation
+
+# Automatically save database on exit
+set autosave=true
+
+# Show all email addresses in list
+#set show_all_emails=true
+set show_all_emails=true
+
+# Screen column for email field to start
+set emailpos=30
+
+# Field to be used in the extra column
+set extra_column=Notes
+# frequently used values:
+#	-1          disabled
+#	phone		Home Phone
+#	workphone	Work Phone
+#	fax         Fax
+#	mobile		Mobile Phone
+#	nick		Nick / Alias
+#	url         URL
+#   notes       Notes
+
+# Specify an alternative field to be displayed in the extra
+# column if there is no data for the field specified in
+# extra_column for a particular item.
+set extra_alternative=-1
+
+# Screen column for the extra field to start
+set extrapos=65
+
+# Command used to start mutt
+set mutt_command="/usr/bin/mutt -e 'unset editor'"
+
+# Return all email addresses to a mutt query
+set mutt_return_all_emails=true
+
+# Command used to print
+set print_command=/usr/bin/lpr
+
+# Command used to start the web browser
+#set www_command=/usr/bin/lynx
+set www_command=/usr/bin/lynx
+
+# address style [eu|us|uk]
+set address_style=eu
+
+# use ASCII characters only
+set use_ascii_only=true
+
+# Prevent double entry
+set add_email_prevent_duplicates=true
+
+# field to be used with "sort by field" command
+set sort_field=notes
+
+
+# custom fields
+
+#customfield 1 Name1
+#customfield 2 Name2
+#customfield 3 Name3
+#customfield 4 Name4
+#customfield 5 Name5
