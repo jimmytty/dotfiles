@@ -1,0 +1,5 @@
+# .proverc
+--count
+--failures
+--jobs=9
+--timer
