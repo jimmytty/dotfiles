@@ -1,0 +1,24 @@
+#==============================================================================
+# Home Profile for Screens
+#==============================================================================
+
+### screen
+chdir $HOME/tmp
+screen -a -t mutt
+stuff "[ -x $HOME/usr/bin/muttng ] && { $HOME/usr/bin/muttng; } || /usr/bin/mutt\012G\012^[[15~\012"
+chdir $WDIR
+
+### screen
+screen -a -t elinks
+stuff "TERM=linux $HOME/usr/bin/elinks\012"
+
+### screen
+screen -a -t emacs
+stuff "/usr/bin/emacs --debug-init\012"
+
+### screen
+screen -a
+
+### last
+register 0 ""
+select 3
