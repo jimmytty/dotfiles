@@ -1,5 +1,6 @@
-include   = Bangs BuiltinFunctions ClassHierarchies CodeLayout Compatibility ControlStructures Documentation Editor ErrorHandling InputOutput Lax logicLAB Miscellanea Modules NamingConventions Objects OTRS References RegularExpressions Storable Subroutines TestingAndDebugging Tics ValuesAndExpressions Variables Variables::ProhibitUnusedVariables CodeLayout::ProhibitTrailingWhitespace
-exclude   = CodeLayout::RequireASCII Documentation::PodSpelling Documentation::RequireEndBeforeLastPod Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion OTRS::RequireCamelCase OTRS::RequireParensWithMethods OTRS::RequireTrueReturnValueForModules Subroutines::ProhibitCallsToUndeclaredSubs Subroutines::ProhibitCallsToUnexportedSubs Subroutines::ProhibitExportingUndeclaredSubs ValuesAndExpressions::ProhibitImplicitNewlines ValuesAndExpressions::RequireInterpolationOfMetachars ValuesAndExpressions::RestrictLongStrings ValuesAndExpressions::ProhibitLongChainsOfMethodCalls Compatibility::PodMinimumVersion Documentation::RequirePackageMatchesPodName Documentation::RequirePodAtEnd Documentation::RequirePodLinksIncludeText Documentation::RequirePodSections
+include = Bangs BuiltinFunctions ClassHierarchies CodeLayout Compatibility ControlStructures Documentation Editor ErrorHandling InputOutput Lax logicLAB Miscellanea Modules NamingConventions Objects OTRS References RegularExpressions Storable Subroutines TestingAndDebugging Tics ValuesAndExpressions Variables Variables::ProhibitUnusedVariables CodeLayout::ProhibitTrailingWhitespace
+exclude = CodeLayout::ProhibitHashBarewords CodeLayout::ProhibitSpaceIndentation CodeLayout::RequireASCII CodeLayout::RequireUseUTF8 CodeLayout::TabIndentSpaceAlign Compatibility::PodMinimumVersion Documentation::PodSpelling Documentation::RequireEndBeforeLastPod Documentation::RequirePackageMatchesPodName Documentation::RequirePodAtEnd Documentation::RequirePodLinksIncludeText Documentation::RequirePodSections Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireVersionVar OTRS::RequireCamelCase OTRS::RequireParensWithMethods OTRS::RequireTrueReturnValueForModules Subroutines::ProhibitCallsToUndeclaredSubs Subroutines::ProhibitCallsToUnexportedSubs Subroutines::ProhibitExportingUndeclaredSubs ValuesAndExpressions::ProhibitImplicitNewlines ValuesAndExpressions::ProhibitLongChainsOfMethodCalls ValuesAndExpressions::RequireInterpolationOfMetachars ValuesAndExpressions::RestrictLongStrings logicLAB::RequireParamsValidate
+
 color     = 1
 force     = 0
 only      = 1
@@ -18,4 +19,5 @@ equivalent_modules = common::sense
 equivalent_modules = common::sense
 
 [Variables::ProhibitReusedNames]
-allow = $self $class
+allow = $class $self
+
