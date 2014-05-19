@@ -133,3 +133,5 @@ export XDG_CONFIG_HOME="$HOME"
 export INFOPATH="$HOME/info/:$HOME/.emacs.d/el-get/auctex/doc/:$HOME/.emacs.d/el-get/el-get/:$HOME/.emacs.d/el-get/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/info/:$HOME/.emacs.d/el-get/emacs-w3m/doc/:$HOME/.emacs.d/el-get/magit/:$HOME/.emacs.d/el-get/magithub/:$HOME/.emacs.d/el-get/mmm-mode/:$HOME/usr/local/share/info/:"
 export NETHACKDIR="$HOME/.nethack/"
 export R_PROFILE="$HOME/R/rprofile.r"
+export LEDGER_FILE="$HOME/.ledger/ledger.dat"
+export LEDGER_PAGER='/usr/bin/less'
