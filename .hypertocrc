@@ -1,0 +1,13 @@
+--quiet
+--make_anchors
+--make_toc
+--textonly
+--ol
+--ol_num_levels 0
+--inline
+--toc_entry H1=1
+--toc_entry H2=2
+--toc_entry H3=3
+--toc_entry H4=4
+--toc_entry H5=5
+--toc_entry H6=6
