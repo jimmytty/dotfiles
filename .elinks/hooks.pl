@@ -12,6 +12,7 @@ use URI;
 use URI::QueryParam;
 use URI::Escape;
 use HTML::TreeBuilder::LibXML;
+
 #use HTML::Entities;
 use Text::Unidecode;
 use Unicode::CheckUTF8 qw(is_utf8);
@@ -228,8 +229,10 @@ sub goto_url_hook {
         when ( [qw[slack slackware]] ) {
             $f->(qq($ENV{HOME}/doc/slackbook/html/index.html))
         }
-        when (q(R))     { $f->(qq(/usr/doc/R-*/)) }
-        when (q(tetex)) { $f->(qq(/usr/doc/tetex-*/index.html)) }
+        when (q(R))     { $f->(q(/usr/doc/R-*/)) }
+        when (q(tetex)) { $f->(q(/usr/doc/tetex-*/index.html)) }
+        when (q(w3m))   { $f->(q(/usr/doc/w3m-*/)) }
+        when (q(tig))   { $f->(q(/usr/doc/tig-*/)) }
     } ## end foreach ($url)
 
     $url = $file if ($file);
