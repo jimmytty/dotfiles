@@ -27,7 +27,7 @@ foreach my $anchor_node in //node()[@id or @name] {
     my $orgid = concat('<<','#',$anchor_name,'>>');
     insert text $orgid before .;
 }
-print normalize-space(xsh:serialize(/));
+print xsh:serialize(/);
 EOF
 )
     pandoc_file="$outdir/pandoc_html2org.org"
