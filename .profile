@@ -33,7 +33,7 @@ export SDCV_PAGER='piconv -f utf8 -t latin1 | fmt -w80 | less -R'
 
 # If the user doesn't have a .inputrc, use the one in /etc.
 if [ ! -r "$HOME/.inputrc" ]; then
-  export INPUTRC=/etc/inputrc
+    export INPUTRC=/etc/inputrc
 fi
 
 # Set the default system $PATH:
@@ -43,9 +43,9 @@ PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
 # the $PATH.  Some means of connection don't add these by default (sshd comes
 # to mind).
 if [ "`id -u`" = "0" ]; then
-  echo $PATH | grep /usr/local/sbin 1> /dev/null 2> /dev/null
+    echo $PATH | grep /usr/local/sbin 1> /dev/null 2> /dev/null
   if [ ! $? = 0 ]; then
-    PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+        PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
   fi
 fi
 
@@ -56,7 +56,7 @@ fi
 
 # Set TERM to linux for unknown type or unset variable:
 if [ "$TERM" = "" -o "$TERM" = "unknown" ]; then
- TERM=linux
+  TERM=linux
 fi
 
 ## Set ksh93 visual editing mode:
@@ -69,15 +69,15 @@ fi
 # Set a default shell prompt:
 #PS1='`hostname`:`pwd`# '
 if [ "$SHELL" = "/bin/pdksh" ]; then
- PS1='! $ '
+  PS1='! $ '
 elif [ "$SHELL" = "/bin/ksh" ]; then
- PS1='! ${PWD/#$HOME/~}$ '
+  PS1='! ${PWD/#$HOME/~}$ '
 elif [ "$SHELL" = "/bin/zsh" ]; then
- PS1='%n@%m:%~%# '
+  PS1='%n@%m:%~%# '
 elif [ "$SHELL" = "/bin/ash" ]; then
- PS1='$ '
+  PS1='$ '
 else
- PS1='\u@\h:\w\$ '
+  PS1='\u@\h:\w\$ '
 fi
 PS2='> '
 PATH="$HOME/bin/:$HOME/perl5/bin/:$HOME/usr/bin/:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/share/texmf/bin:/usr/X11R6/bin/:/sbin:/usr/sbin:/usr/local/sbin:"
@@ -91,7 +91,7 @@ umask 0077
 # Notify user of incoming mail.  This can be overridden in the user's
 # local startup file (~/.bash.login or whatever, depending on the shell)
 if [ -x /usr/bin/biff ]; then
- biff y 2> /dev/null
+  biff y 2> /dev/null
 fi
 
 # Append any additional sh scripts found in /etc/profile.d/:
@@ -104,20 +104,20 @@ unset profile_script
 
 # For non-root users, add the current directory to the search path:
 if [ ! "`id -u`" = "0" ]; then
- PATH="$PATH:."
+  PATH="$PATH:."
 fi
 
 ### SETs
 /bin/setterm -bfreq 0
 if [[ $TERM == "linux" ]]; then
-    /usr/bin/setleds +num
+  /usr/bin/setleds +num
 fi
 /usr/bin/mesg n
 eval "$(dircolors $HOME/.dircolors)"
 
 ### PERL
 source ~/perl5/perlbrew/etc/bashrc
-perlbrew use perl-5.16.3
+perlbrew use perl-5.18.2
 export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/share/man/"
 
 ### ALIAS
@@ -130,8 +130,6 @@ alias wicd='sudo /usr/bin/wicd-curses'
 
 export PSQL_EDITOR='/usr/bin/vim -c '\''set nowrap syntax=sql'\'''
 export XDG_CONFIG_HOME="$HOME"
-export INFOPATH="$HOME/info/:$HOME/.emacs.d/el-get/auctex/doc/:$HOME/.emacs.d/el-get/el-get/:$HOME/.emacs.d/el-get/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/info/:$HOME/.emacs.d/el-get/emacs-w3m/doc/:$HOME/.emacs.d/el-get/magit/:$HOME/.emacs.d/el-get/magithub/:$HOME/.emacs.d/el-get/mmm-mode/:$HOME/usr/local/share/info/:"
+export INFOPATH="$HOME/info/:$HOME/usr/share/info/:$HOME/.emacs.d/el-get/auctex/doc/:$HOME/.emacs.d/el-get/el-get/:$HOME/.emacs.d/el-get/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/info/:$HOME/.emacs.d/el-get/emacs-w3m/doc/:$HOME/.emacs.d/el-get/magit/:$HOME/.emacs.d/el-get/magithub/:$HOME/.emacs.d/el-get/mmm-mode/:$HOME/usr/local/share/info/:"
 export NETHACKDIR="$HOME/.nethack/"
 export R_PROFILE="$HOME/R/rprofile.r"
-export LEDGER_FILE="$HOME/.ledger/ledger.dat"
-export LEDGER_PAGER='/usr/bin/less'
