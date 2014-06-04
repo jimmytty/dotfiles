@@ -208,6 +208,7 @@ ADT       Abstract Data Type
 AE        Adaptive Equalizer
 AES       Advanced Encryption Standard
 AF        Anisotropic Filtering
+AFAIU     As Far As I Understand
 AFP       Apple Filing Protocol
 AGP       Accelerated Graphics Port
 AH        Active Hub
@@ -313,6 +314,7 @@ BRR       Business Readiness Rating
 BSA       Business Software Alliance
 BSB       Backside Bus
 BSD       Berkeley Software Distribution
+BSON      Binary JSON
 BSS       Block Started by Symbol
 BT        BitTorrent
 BT        Bluetooth
@@ -332,13 +334,13 @@ CAT       (1) - concatenate files and print on the standard output
 CAT       Computer-Aided Translation
 CC        C Compiler
 CD        Compact Disc
+CD-R      CD-Recordable
+CD-ROM    CD Read-Only Memory
+CD-RW     CD-Rewritable
 CDE       Common Desktop Environment
 CDMA      Code Division Multiple Access
 CDN       Content Delivery Network
 CDP       Continuous Data Protection
-CD-R      CD-Recordable
-CD-ROM    CD Read-Only Memory
-CD-RW     CD-Rewritable
 CDSA      Common Data Security Architecture
 CERT      Computer Emergency Response Team
 CES       Consumer Electronics Show
@@ -348,9 +350,9 @@ CFG       Context-Free Grammar
 CFG       Control Flow Graph
 CG        Computer Graphics
 CGA       Color Graphics Array
+CGI       Comitê Gestor da Internet
 CGI       Common Gateway Interface
 CGI       Computer-Generated Imagery
-CGI       Comitê Gestor da Internet
 CGT       Computational Graph Theory
 CHAP      Challenge-Handshake Authentication Protocol
 CHS       Cylinder-Head-Sector
@@ -416,6 +418,7 @@ CVE       Common Vulnerabilities and Exposures
 CVS       Concurrent Versioning System
 DAC       Digital-To-Analog Converter
 DAC       Discretionary Access Control
+DAEMON    Disk And Execution MONitor
 DAO       Data Access Objects
 DAO       Disk-At-Once
 DAP       Directory Access Protocol
@@ -425,6 +428,7 @@ DB        Database
 DBA       Database Administrator
 DBCS      Double Byte Character Set
 DBI       Database Interface (Perl)
+DBM       Data Base Management
 DBMS      Database Management System
 DCC       Direct Client-to-Client
 DCCA      Debian Common Core Alliance
@@ -474,6 +478,10 @@ DPC       Deferred Procedure Call
 DPI       Deep Packet Inspection
 DPI       Dots Per Inch
 DPMS      Display Power Management Signaling
+DQL       Database Query Language
+DQL       Doctrine Query Language
+DQL       Document Query Language
+DQL       Domain Qualifier List
 DRAM      Dynamic Random Access Memory
 DRI       Direct Rendering Infrastructure
 DRM       Digital Rights Management
@@ -488,6 +496,7 @@ DSN       Database Source Name
 DSP       Digital Signal Processor
 DSSSL     Document Style Semantics and Specification Language
 DST       Daylight Saving Time
+DSV       Delimiter-Separated Values
 DTD       Document Type Definition
 DTE       Data Terminal Equipment
 DTP       Desktop Publishing
@@ -536,6 +545,7 @@ EOL       End of Line
 EOM       End Of Message
 EPIC      Explicitly Parallel Instruction Computing
 EPROM     Erasable Programmable Read-Only Memory
+EPUB      Electronic PUBlication
 ERP       Enterprise Resource Planning
 ESB       Enterprise service bus
 ESCON     Enterprise Systems Connection
@@ -579,6 +589,7 @@ FPGA      Field Programmable Gate Array
 FPS       Floating Point Systems
 FPU       Floating Point Unit
 FQDN      Fully Qualified Domain Name
+FQN       Fully Qualified Name
 FRU       Field Replaceable Unit
 FS        File System
 FSB       Front Side Bus
@@ -604,6 +615,7 @@ GDB       GNU Debugger
 GDI       Graphics Device Interface
 GEQO      Genetic Query Optimizer
 GFDL      GNU Free Documentation License
+GID       Group ID
 GIF       Graphics Interchange Format
 GIGO      Garbage In, Garbage Out
 GIMP      GNU Image Manipulation Program
@@ -611,6 +623,7 @@ GIMPS     Great Internet Mersenne Prime Search
 GIN       Generalized Inverted Index
 GIS       Geographic Information System
 GiST      Generalized Search Tree
+GIST      Generalized Search Tree
 GLUT      OpenGL Utility Toolkit
 GML       Geography Markup Language
 GMT       Greenwich Mean Time
@@ -670,7 +683,6 @@ IANA      Internet Assigned Numbers Authority
 iBCS      Intel Binary Compatibility Standard
 IBM       International Business Machines
 IC        Integrated Circuit
-I²C       Inter-Integrated Circuit
 ICANN     Internet Corporation for Assigned Names and Numbers
 ICE       In-Circuit Emulator
 ICE       Intrusion Countermeasure Electronics
@@ -692,6 +704,7 @@ IGRP      Interior Gateway Routing Protocol
 IHV       Independent Hardware Vendor
 IIOP      Internet Inter-Orb Protocol
 IIS       Internet Information Services
+IIUC      If I Understand Correctly
 IL        Intermediate Language
 IM        Instant Messaging
 IMAP      Internet Message Access Protocol
@@ -732,12 +745,14 @@ ITIL      Information Technology Infrastructure Library
 ITL       Interval Temporal Logic
 ITU       International Telecommunication Union
 IVRS      Interactive Voice Response System
+I²C       Inter-Integrated Circuit
 J2EE      Java 2 Enterprise Edition
 J2ME      Java 2 Micro Edition
 J2SE      Java 2 Standard Edition
+JAPH      Just Another Perl Hacker
+JAX-RPC   Java XML for Remote Procedure Calls
 JAXB      Java Architecture for XML Binding
 JAXP      Java API for XML Processing
-JAX-RPC   Java XML for Remote Procedure Calls
 JBOD      Just a Bunch of Disks
 JCE       Java Cryptography Extension
 JCL       Job Control Language
@@ -765,18 +780,20 @@ JSP       JavaServer Pages
 JTAG      Joint Test Action Group
 JUG       Java Users Group
 JVM       Java Virtual Machine
+K&R       Kernighan and Ritchie
 KB        Keyboard
 KB        Kilobit
 KB        Kilobyte
 KB        Knowledge Base
+KDD       Knowledge Discovery and Data Mining
 KDE       K Desktop Environment
 KHZ       Kilohertz
 KM        Knowledge Machine
-K&R       Kernighan and Ritchie
 KRL       Knowledge Representation Language
 KVM       Keyboard, Video, Mouse
 L10N      Localization
 L2TP      Layer two Tunneling Protocol
+LACNIC    Latin American and Caribbean Internet Addresses Registry
 LAMP      Linux Apache MySQL Perl
 LAMP      Linux Apache MySQL PHP
 LAMP      Linux Apache MySQL Python
@@ -785,7 +802,11 @@ LBA       Logical Block Addressing
 LCD       Liquid Crystal Display
 LCOS      Liquid Crystal On Silicon
 LCR       Least Cost Routing
+LDA       Local Delivery Agent
 LDAP      Lightweight Directory Access Protocol
+LDP       Label Distribution Protocol
+LDP       Linux Document Projects
+LDP       Loader Debugger Protocol
 LE        Logical Extents
 LED       Light-Emitting Diode
 LF        Line Feed
@@ -799,6 +820,7 @@ LILO      Linux Loader
 LISP      LISt Processing
 LKML      Linux Kernel Mailing List
 LM        Lan Manager
+LMGTFY    Let Me Google That For You
 LOC       Lines of Code
 LPC       Lars Pensjö C
 LPI       Linux Professional Institute
@@ -855,6 +877,7 @@ MNG       Multiple-image Network Graphics
 MOBO      Motherboard
 MOM       Message-Oriented Middleware
 MOO       MUD Object Oriented
+MOP       Meta Object Protocol
 MOSFET    Metal-Oxide Semiconductor Field Effect Transistor
 MOTD      Message Of The Day
 MPAA      Motion Picture Association of America
@@ -862,6 +885,7 @@ MPEG      Motion Pictures Experts Group
 MPL       Mozilla Public License
 MPLS      Multiprotocol Label Switching
 MPU       Microprocessor Unit
+MRA       Mail Retrieval Agent
 MS        Memory Stick
 MSA       Mail Submission Agent
 MSB       Most Significant Bit
@@ -976,6 +1000,8 @@ PAN       Personal Area Network
 PAP       Password Authentication Protocol
 PARC      Palo Alto Research Center
 PATA      Parallel ATA
+PATRICIA  Practical Algorithm To Retrieve Information Coded In Alphanumeric
+PAUSE     Perl Authors Upload Server
 PC        Personal Computer
 PCB       Printed Circuit Board
 PCB       Process Control Block
@@ -989,10 +1015,11 @@ PD        Public Domain
 PDA       Personal Digital Assistant
 PDF       Portable Document Format
 PDH       Plesiochronous Digital Hierarchy
+PDL       Perl Data Language
 PDP       Programmed Data Processor
 PE        Physical Extents
-PERL      Practical Extraction and Reporting Language
 PERL      Pathologically Eclectic Rubbish Lister
+PERL      Practical Extraction and Reporting Language
 PGA       Pin Grid Array
 PGO       Profile-Guided Optimization
 PGP       Pretty Good Privacy
@@ -1011,16 +1038,18 @@ PITR      Point-In-Time Recovery (Continuous Archiving)
 PKCS      Public Key Cryptography Standards
 PKI       Public Key Infrastructure
 PL        Procedural Languages (server-side)
-PLC       Power Line Communication
-PLC       Programmable Logic Controller
-PLD       Programmable Logic Device
 PL/I      Programming Language One
 PL/M      Programming Language for Microcomputers
 PL/P      Programming Language for Prime
+PLC       Power Line Communication
+PLC       Programmable Logic Controller
+PLD       Programmable Logic Device
 PLT       Power Line Telecoms
 PMM       POST Memory Manager
 PNG       Portable Network Graphics
 PnP       Plug-and-Play
+POD       Ping Of Death
+POD       Plain Old Documentation
 PoE       Power over Ethernet
 POID      Persistent Object Identifier
 POJO      Plain Old Java Object
@@ -1036,6 +1065,7 @@ PPPOE     PPP over Ethernet
 PPTP      Point-to-Point Tunneling Protocol
 PS        PostScript
 PSA       Professional Services Automation
+PSGI      Perl Web Server Gateway Interface
 PSU       Power Supply Unit
 PSVI      Post-Schema-Validation Infoset
 PV        Physical Volume
@@ -1073,6 +1103,7 @@ RDS       Remote Data Services
 REFAL     Recursive Functions Algorithmic Language
 REGEX     Regular Expression
 REGEXP    Regular Expression
+REPL      Read, Evaluate, Print, Loop
 REST      Representational State Transfer
 RF        Radio Frequency
 RFC       Request For Comments
@@ -1182,18 +1213,18 @@ SMTP      Simple Mail Transfer Protocol
 SNA       Systems Network Architecture
 SNMP      Simple Network Management Protocol
 SNTP      Simple Network Time Protocol
+SO-DIMM   Small Outline DIMM
 SOA       Service-Oriented Architecture
 SOAP      Simple Object Access Protocol
 SOC       System-on-a-Chip
-SO-DIMM   Small Outline DIMM
 SOE       Standard Operating Environment
 SOHO      Small Office/Home Office
 SOI       Silicon On Insulator
 SP        Service Pack
+SP-GIST   Space-Partitioned Generalized Search Tree
 SPA       Single Page Application
 SPARC     Scalable Processor Architecture
 SPF       Sender Policy Framework
-SP-GIST   Space-Partitioned Generalized Search Tree
 SPI       Serial Peripheral Interface
 SPI       Server Programming Interface
 SPI       Stateful Packet Inspection
@@ -1218,6 +1249,10 @@ SSL       Secure Sockets Layer
 SSP       Supplementary Special-purpose Plane
 SSPI      Security Support Provider Interface
 SSSE      Supplementary Streaming SIMD Extensions
+STDERR    Standard Error
+STDIN     Standard Input
+STDIO     Standard I/O
+STDOUT    Standard Output
 SU        superuser
 SUS       Single UNIX Specification
 SUSE      Software und System-Entwicklung
@@ -1230,6 +1265,7 @@ SWT       Standard Widget Toolkit
 SYSOP     System operator
 SYSV      Unix System V
 TAO       Track-At-Once
+TAP       Test Anywhere Protocol
 TASM      Turbo ASseMbler
 TB        TeraByte
 TCL       Tool Command Language
@@ -1240,6 +1276,7 @@ TFT       Thin Film Transistor
 TFTP      Trivial File Transfer Protocol
 TI        Texas Instruments
 TID       Tuple Identifier
+TIMTOWDI  There Is More Than One Way To Do It
 TLA       Three-Letter Acronym
 TLD       Top-Level Domain
 TLS       Thread-Local Storage
@@ -1249,6 +1286,7 @@ TMP       temporary
 TNC       Terminal Node Controller
 TNC       Threaded Neill-Concelman connector
 TOAST     The Oversized-Attribute Storage Technique
+TOR       The Onion Router
 TPC       Transaction Processing Performance Council
 TPF       Transaction Processing Facility
 TROFF     Trace Off
@@ -1278,6 +1316,7 @@ UDP       User Datagram Protocol
 UEFI      Unified Extensible Firmware Interface
 UHF       Ultra High Frequency
 UI        User Interface
+UID       User ID
 UL        Upload
 ULA       Uncommitted Logic Array
 UMA       Upper Memory Area
@@ -1308,6 +1347,8 @@ VB        Visual Basic
 VBA       Visual Basic for Applications
 VBS       Visual Basic Script
 VCPI      Virtual Control Program Interface
+VCS       Version Control System
+VCS       Virtual Console Memory
 VDSL      Very High Bitrate Digital Subscriber Line
 VESA      Video Electronics Standards Association
 VFAT      Virtual FAT
@@ -1351,6 +1392,7 @@ WEBDAV    WWW Distributed Authoring and Versioning
 WEP       Wired Equivalent Privacy
 WFI       Wait For Interrupt
 WIMAX     Worldwide Interoperability for Microwave Access
+WINE      Wine Is Not an Emulator
 WLAN      Wireless Local Area Network
 WOL       Wake-on-LAN
 WOM       Wake-on-Modem
@@ -1381,6 +1423,7 @@ XMMS      X Multimedia System
 XMPP      eXtensible Messaging and Presence Protocol
 XMS       Extended Memory Specification
 XNS       Xerox Network Systems
+XOXO      eXtensible Open XHTML Outlines
 XP        Cross-Platform
 XP        Extreme Programming
 XPCOM     Cross Platform Component Object Model
@@ -1400,6 +1443,7 @@ Y2K       Year Two Thousand
 YAAF      Yet Another Application Framework
 YACC      Yet Another Compiler Compiler
 YAML      YAML Ain't Markup Language
+YAPC      Yet Another Perl Conference
 YaST      Yet another Setup Tool
 ZCAV      Zone Constant Angular Velocity
 ZCS       Zero Code Suppression
@@ -1410,43 +1454,3 @@ ZMA       Zone Multicast Address
 ZOI       Zero One Infinity
 ZOPE      Z Object Publishing Environment
 ZPL       Z-level Programming Language
-LDP       Label Distribution Protocol
-LDP       Linux Document Projects
-LDP       Loader Debugger Protocol
-TOR       The Onion Router
-WINE      Wine Is Not an Emulator
-PDL       Perl Data Language
-BSON      Binary JSON
-VCS       Version Control System
-VCS       Virtual Console Memory
-DSV       Delimiter-Separated Values
-DAEMON    Disk And Execution MONitor
-XOXO      eXtensible Open XHTML Outlines
-REPL      Read, Evaluate, Print, Loop
-PATRICIA  Practical Algorithm To Retrieve Information Coded In Alphanumeric
-GIST      Generalized Search Tree
-LMGTFY    Let Me Google That For You
-KDD       Knowledge Discovery and Data Mining
-AFAIU     As Far As I Understand
-TIMTOWDI  There Is More Than One Way To Do It
-POD       Ping Of Death
-POD       Plain Old Documentation
-TAP       Test Anywhere Protocol
-LACNIC    Latin American and Caribbean Internet Addresses Registry
-EPUB      Electronic PUBlication
-IIUC      If I Understand Correctly
-PSGI      Perl Web Server Gateway Interface
-PAUSE     Perl Authors Upload Server
-DQL       Doctrine Query Language
-DQL       Document Query Language
-DQL       Domain Qualifier List
-DQL       Database Query Language
-DBM       Data Base Management
-GID       Group ID
-JAPH      Just Another Perl Hacker
-STDERR    Standard Error
-STDIN     Standard Input
-STDIO     Standard I/O
-STDOUT    Standard Output
-UID       User ID
-FQN       Fully Qualified Name
