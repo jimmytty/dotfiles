@@ -117,7 +117,7 @@ eval "$(dircolors $HOME/.dircolors)"
 
 ### PERL
 source ~/perl5/perlbrew/etc/bashrc
-perlbrew use perl-5.18.2
+perlbrew use perl-5.20.0
 export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/share/man/"
 
 ### ALIAS
@@ -130,6 +130,6 @@ alias wicd='sudo /usr/bin/wicd-curses'
 
 export PSQL_EDITOR='/usr/bin/vim -c '\''set nowrap syntax=sql'\'''
 export XDG_CONFIG_HOME="$HOME"
-export INFOPATH="$HOME/info/:$HOME/usr/share/info/:$HOME/.emacs.d/el-get/auctex/doc/:$HOME/.emacs.d/el-get/el-get/:$HOME/.emacs.d/el-get/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/info/:$HOME/.emacs.d/el-get/emacs-w3m/doc/:$HOME/.emacs.d/el-get/magit/:$HOME/.emacs.d/el-get/magithub/:$HOME/.emacs.d/el-get/mmm-mode/:$HOME/usr/local/share/info/:"
+export INFOPATH="$HOME/usr/share/info/:$HOME/usr/local/share/info/:"
 export NETHACKDIR="$HOME/.nethack/"
 export R_PROFILE="$HOME/R/rprofile.r"
