@@ -8,15 +8,15 @@ BEGIN {
 use common::sense;
 use autodie;
 use Encode;
+use List::Util qw[first];
+use File::Basename;
+use File::Spec::Unix;
 use URI;
 use URI::QueryParam;
 use URI::Escape;
 use HTML::TreeBuilder::LibXML;
-
-#use HTML::Entities;
 use Text::Unidecode;
 use Unicode::CheckUTF8 qw(is_utf8);
-use Data::Dumper;
 
 use Log::Log4perl qw(:easy);
 my $logfile = dirname($0) . q(/hooks_log4perl.conf);
@@ -34,20 +34,18 @@ sub url2filename {    # kill me!
     my $scheme = $uri->scheme();
     my $path   = $uri->path();
 
-    return ( undef() ) unless ($scheme);
-    return ($path) if ( $scheme eq q(file) );
+    return undef unless $scheme;
+    return $path if $scheme eq q(file);
 
     my $opaque = $uri->opaque();
-    use File::Basename;
-    use File::Spec::Unix;
-    my @path = File::Spec->splitdir(qq($opaque));
+    my @path   = File::Spec->splitdir(qq($opaque));
     @path = grep( /./, @path );
     my $filename = join( q(_), $scheme, @path );
     $filename = substr( $filename, 0, 250 ) if ( length($filename) > 250 );
     $filename .= q(.html);
     my $cachefile = qq($ENV{ELINKS_CACHE}/$filename);
 
-    return ($cachefile);
+    return $cachefile;
 
 } ## end sub url2filename
 
@@ -85,26 +83,22 @@ sub pre_format_html_hook {
     $tree->store_comments();
     $tree->parse($html);
 
-    if (   $uri->host() eq q(github.com)
-        && $uri->path(q(/WUB/issues)) )
+    if ( first { $uri->host() eq $_ }
+        ( q(getninjas.com.br), q(www.getninjas.com.br), ) )
     {
-        my @xpath = (
-            q{//script},                                #
-            q{//div[@id="keyboard_shortcuts_pane"]},    #
-            q{//div[@id="markdown-help"]},              #
-            q{//ul[h4[normalize-space(string(.))='Edit Labels']]},
-            q{//div[@class="edit-color-label-form js-new-label-form"]},      #
-            q{//div[@id="footer"]},                                          #
-            q{//div[@id="wrapper"]/div/div[@class="container clearfix"]},    #
-            q{//div[@class="hentry"]/div[@class="pagehead repohead instapaper_ignore readability-menu"]},
+        my @node = (
+            q{//div[@class='header-button']},           #
+            q{//div[@class='professionals-column']},    #
+            q{//div[@class='flash_messages']},          #
+            q{//nav[@id='sco-nav'][@class='area']},     #
+            q{//div[@id='sidebar']},                    #
+            q{//aside[@id='new-sidebar']},              #
         );
-
-        while ( my $trash
-            = $tree->findnodes( q[(] . join( q(|), @xpath ) . q[)] )->[0] )
-        {
-            $trash->delete();
+        my $xpath = q[(] . join( q(|), @node ) . q[)];
+        while ( my $node = $tree->findnodes($xpath)->[0] ) {
+            $node->delete();
         }
-    } ## end if ( $uri->host() eq q(github.com)...)
+    } ## end if ( first { $uri->host...})
 
     $html = $tree->as_HTML();
     $tree->eof();
@@ -114,129 +108,134 @@ sub pre_format_html_hook {
 } ## end sub pre_format_html_hook
 
 sub goto_url_hook {
-    my $url  = $_[0];
-    my $file = q();
-    my $f    = sub { ($file) = grep( -e, glob( $_[0] ) ) };
+    my $cur_url = $_[0];
+    my $new_url;
 
-    foreach ($url) {
-        when (q(aria2c))     { $f->(q(/usr/doc/aria2-*/README.html)) }
-        when (q(asciidoc))   { $f->(q(/usr/doc/asciidoc-*/doc/)) }
-        when (q(bind))       { $f->(q(/usr/doc/bind-*/arm/Bv*ARM.html)) }
-        when (q(bzip2))      { $f->(q(/usr/doc/bzip2-*/manual.html)) }
-        when (q(clisp))      { $f->(q(/usr/doc/clisp-*/doc/)) }
-        when (q(cron))       { $f->(q(/usr/doc/dcron-*/)) }
-        when (q(ctags))      { $f->(q(/usr/doc/ctags-*/)) }
-        when (q(cups))       { $f->(q(/usr/doc/cups-*/index.html)) }
-        when (q(cyrus-sasl)) { $f->(q(/usr/doc/cyrus-sasl-*/doc/index.html)) }
-        when (q(docbook-utils)) {
-            $f->(q(/usr/doc/docbook-utils-*/html/index.html))
-        }
-        when (q(elinks)) { $f->(q(/usr/doc/elinks-*/doc/)) }
-        when (q(elinks.manual)) {
-            $f->(q(/usr/doc/elinks-*/doc/html/manual.html-chunked/index.html))
-        }
-        when (q(enscript))    { $f->(q(/usr/doc/enscript-*/FAQ.html)) }
-        when (q(espeak))      { $f->(q(/usr/doc/espeak-*/index.html)) }
-        when (q(expat))       { $f->(q(/usr/doc/expat-*/reference.html)) }
-        when (q(expect))      { $f->(q(/usr/doc/expect-*/)) }
-        when (q(imagemagick)) { $f->(q(/usr/doc/ImageMagick-*/index.html)) }
-        when (q(kbd))         { $f->(q(/usr/doc/kbd-*/kbd.FAQ.html)) }
-        when (q(linux-faqs)) {
-            $f->(q(/usr/doc/Linux-FAQs/Threads-FAQ/html/index.html))
-        }
-        when (q(linux-howtos)) { $f->(q(/usr/doc/Linux-HOWTOs/INDEX.html)) }
-        when (q(m4))           { $f->(q(/usr/doc/m4-*/)) }
-        when (q(mpg123))       { $f->(q(/usr/doc/mpg123-*/)) }
-        when (q(mplayer)) { $f->(q(/usr/doc/MPlayer-*/HTML/en/MPlayer.html)) }
-        when (q(mutt))    { $f->(q(/usr/doc/mutt/)) }
-        when (q(mutt.manual))   { $f->(q(/usr/doc/mutt/manual.txt)) }
-        when (q(muttng))        { $f->(q(/usr/doc/muttng-*/)) }
-        when (q(muttng.manual)) { $f->(q(/usr/doc/muttng-*/html/index.html)) }
-        when (q(mysql))         { $f->(q(/usr/doc/mysql-*/)) }
-        when ( [qw[ntp ntpd ntpdate ntpc]] ) {
-            $f->(q(/usr/doc/ntp-*/html/index.html))
-        }
-        when (q(pcre))     { $f->(q(/usr/doc/pcre-*/html/index.html)) }
-        when (q(postgis))  { $f->(q(/usr/doc/postgis-*/html/postgis.html)) }
-        when (q(rsync))    { $f->(q(/usr/doc/rsync-*/)) }
-        when (q(sendmail)) { $f->(q(/usr/doc/sendmail-*/)) }
-        when (q(sgml-common)) {
-            $f->(q(/usr/doc/sgml-common-*/html/index.html))
-        }
-        when (q(sgmlspl)) { $f->(q(/usr/doc/sgmlspl-*/sgmlspl/sgmlspl.html)) }
-        when (q(sysstat)) { $f->(q(/usr/doc/sysstat-*/)) }
-        when (q(tidy))    { $f->(q(/usr/doc/tidy-*/htmldoc/)) }
-        when (q(transfig)) { $f->(q(/usr/doc/transfig-*/manual/)) }
-        when ( [qw[netcat nc]] )   { $f->(q(/usr/doc/nc-*/)) }
-        when ( [qw[openssl ssl]] ) { $f->(q(/usr/doc/openssl-*/)) }
-        when ( [qw[p7zip 7zip]] )  { $f->(q(/usr/doc/p7zip-*/DOCS/)) }
-        when (q(wpa_supplicant)) { $f->(q(/usr/doc/wpa_supplicant-*/)) }
-        when ( [qw[postgresql pgsql psql]] ) {
-            $f->(q(/usr/doc/postgresql-*/html/index.html))
-        }
-        when ( [qw[subversion svn]] ) { $f->(q(/usr/doc/subversion-*/)) }
-        when (q(xz))  { $f->(q(/usr/doc/xz-*/)) }
-        when (q(zsh)) { $f->(q(/usr/doc/zsh-*/html-docs/zsh.html)) }
-        when (q(lua)) { $f->(q(/usr/doc/lua-*/html/readme.html)) }
-        when (q(linuxdoc-tools)) {
-            $f->(q(/usr/doc/linuxdoc-tools-*/html/guide.html))
-        }
-        when (q(lilo))    { $f->(q(/usr/doc/lilo-*/)) }
-        when (q(libxslt)) { $f->(q(/usr/doc/libxslt-*/html/index.html)) }
-        when (q(libxml2)) { $f->(q(/usr/doc/libxml2-*/)) }
-        when (q(libxml2.manual)) {
-            $f->(q(/usr/doc/libxml2-*/html/html/index.html))
-        }
-        when (q(libxml2.tutorial)) {
-            $f->(q(/usr/doc/libxml2-*/html/tutorial/index.html))
-        }
-        when (q(libnet)) { $f->(q(/usr/doc/libnet-*/)) }
-        when (q(iptraf)) { $f->(q(/usr/doc/iptraf-*/)) }
-        when (q(iptraf.manual)) {
-            $f->(q(/usr/doc/iptraf-*/Documentation/manual.html))
-        }
-        when (q(iproute2))     { $f->(q(/usr/doc/iproute2-*o/)) }
-        when (q(hal))          { $f->(q(/usr/doc/hal-*/spec/hal-spec.html)) }
-        when (q(sjeng))        { $f->(q(/usr/doc/Sjeng-Free-*/)) }
-        when (q(autoconf))     { $f->(q(/usr/doc/autoconf-*/)) }
-        when (q(bash))         { $f->(q(/usr/doc/bash-*/)) }
-        when (q(bc))           { $f->(q(/usr/doc/bc-*/)) }
-        when (q(bitlbee))      { $f->(q(/usr/doc/bitlbee-*/)) }
-        when (q(bridge-utils)) { $f->(q(/usr/doc/bridge-utils-*/doc/)) }
-        when (q(curl))         { $f->(q(/usr/doc/curl-*/)) }
-        when (q(curl.manual))  { $f->(q(/usr/doc/curl-*/MANUAL)) }
-        when (q(dc3dd))        { $f->(q(/usr/doc/dc3dd-*/)) }
-        when (q(dhcp))         { $f->(q(/usr/doc/dhcp-*/)) }
-        when (q(dnsmasqs))     { $f->(q(/usr/doc/dnsmasq-*/)) }
-        when (q(docboolk-xsl)) { $f->(q(/usr/doc/docbook-xsl-*/index.html)) }
-        when (q(doxygen))      { $f->(q(/usr/doc/doxygen-*/html/index.html)) }
-        when (q(dvd+rw-tools)) { $f->(q(/usr/doc/dvd+rw-tools-*/index.html)) }
-        when (q(ed))           { $f->(q(/usr/doc/ed-*/)) }
-        when (q(elm))          { $f->(q(/usr/doc/elm-*/)) }
-        when (q(fetchmail))    { $f->(q(/usr/doc/fetchmail-*/)) }
-        when (q(flac))         { $f->(q(//usr/doc/flac-*/index.html)) }
-        when (q(gc))           { $f->(q(/usr/doc/gc-*/)) }
-        when ( [ q(about:config), q(config) ] ) {
-            $f->(qq($ENV{HOME}/.elinks/elinks.conf))
-        }
-        when ( [ q(about:hooks), q(hooks) ] ) {
-            $f->(qq($ENV{HOME}/.elinks/hooks.pl))
-        }
-        when ( [ q(about:cache), q(cache) ] ) {
-            $f->(qq($ENV{ELINKS_CACHE}/))
-        }
-        when (q(git)) { $f->(q(/usr/doc/git-*/Documentation/)) }
-        when ( [qw[slack slackware]] ) {
-            $f->(qq($ENV{HOME}/doc/slackbook/html/index.html))
-        }
-        when (q(R))     { $f->(q(/usr/doc/R-*/)) }
-        when (q(tetex)) { $f->(q(/usr/doc/tetex-*/index.html)) }
-        when (q(w3m))   { $f->(q(/usr/doc/w3m-*/)) }
-        when (q(tig))   { $f->(q(/usr/doc/tig-*/)) }
-    } ## end foreach ($url)
+    my $f = sub {
+        my $path = File::Spec->catfile(@_);
+        my $file = ( grep {-e} glob $path )[0];
+        return $file;
+    };
 
-    $url = $file if ($file);
-    return ($url);
+    my %goto_url = (
+        q(aria2c)           => q(/usr/doc/aria2-*/README.html),
+        q(asciidoc)         => q(/usr/doc/asciidoc-*/doc/),
+        q(autoconf)         => q(/usr/doc/autoconf-*/),
+        q(bash)             => q(/usr/doc/bash-*/),
+        q(bc)               => q(/usr/doc/bc-*/),
+        q(bind)             => q(/usr/doc/bind-*/arm/Bv*ARM.html),
+        q(bitlbee)          => q(/usr/doc/bitlbee-*/),
+        q(bridge-utils)     => q(/usr/doc/bridge-utils-*/doc/),
+        q(bzip2)            => q(/usr/doc/bzip2-*/manual.html),
+        q(clisp)            => q(/usr/doc/clisp-*/doc/),
+        q(ctags)            => q(/usr/doc/ctags-*/),
+        q(cups)             => q(/usr/doc/cups-*/index.html),
+        q(curl)             => q(/usr/doc/curl-*/),
+        q(curl.manual)      => q(/usr/doc/curl-*/MANUAL),
+        q(cyrus-sasl)       => q(/usr/doc/cyrus-sasl-*/doc/index.html),
+        q(dc3dd)            => q(/usr/doc/dc3dd-*/),
+        q(cron)             => q(/usr/doc/dcron-*/),
+        q(dhcp)             => q(/usr/doc/dhcp-*/),
+        q(dnsmasqs)         => q(/usr/doc/dnsmasq-*/),
+        q(docbook-utils)    => q(/usr/doc/docbook-utils-*/html/index.html),
+        q(docboolk-xsl)     => q(/usr/doc/docbook-xsl-*/index.html),
+        q(doxygen)          => q(/usr/doc/doxygen-*/html/index.html),
+        q(dvd+rw-tools)     => q(/usr/doc/dvd+rw-tools-*/index.html),
+        q(ed)               => q(/usr/doc/ed-*/),
+        q(elinks)           => q(/usr/doc/elinks-*/doc/),
+        q(elm)              => q(/usr/doc/elm-*/),
+        q(enscript)         => q(/usr/doc/enscript-*/FAQ.html),
+        q(espeak)           => q(/usr/doc/espeak-*/index.html),
+        q(expat)            => q(/usr/doc/expat-*/reference.html),
+        q(expect)           => q(/usr/doc/expect-*/),
+        q(fetchmail)        => q(/usr/doc/fetchmail-*/),
+        q(flac)             => q(/usr/doc/flac-*/index.html),
+        q(gc)               => q(/usr/doc/gc-*/),
+        q(git)              => q(/usr/doc/git-*/Documentation/),
+        q(hal)              => q(/usr/doc/hal-*/spec/hal-spec.html),
+        q(imagemagick)      => q(/usr/doc/ImageMagick-*/index.html),
+        q(iproute2)         => q(/usr/doc/iproute2-*o/),
+        q(iptraf)           => q(/usr/doc/iptraf-*/),
+        q(iptraf.manual)    => q(/usr/doc/iptraf-*/Documentation/manual.html),
+        q(kbd)              => q(/usr/doc/kbd-*/kbd.FAQ.html),
+        q(libnet)           => q(/usr/doc/libnet-*/),
+        q(libxml2)          => q(/usr/doc/libxml2-*/),
+        q(libxml2.manual)   => q(/usr/doc/libxml2-*/html/html/index.html),
+        q(libxml2.tutorial) => q(/usr/doc/libxml2-*/html/tutorial/index.html),
+        q(libxslt)          => q(/usr/doc/libxslt-*/html/index.html),
+        q(lilo)             => q(/usr/doc/lilo-*/),
+        q(linux-faqs)   => q(/usr/doc/Linux-FAQs/Threads-FAQ/html/index.html),
+        q(linux-howtos) => q(/usr/doc/Linux-HOWTOs/INDEX.html),
+        q(linuxdoc-tools) => q(/usr/doc/linuxdoc-tools-*/html/guide.html),
+        q(lua)            => q(/usr/doc/lua-*/html/readme.html),
+        q(m4)             => q(/usr/doc/m4-*/),
+        q(mpg123)         => q(/usr/doc/mpg123-*/),
+        q(mplayer)        => q(/usr/doc/MPlayer-*/HTML/en/MPlayer.html),
+        q(mutt)           => q(/usr/doc/mutt/),
+        q(mutt.manual)    => q(/usr/doc/mutt/manual.txt),
+        q(muttng)         => q(/usr/doc/muttng-*/),
+        q(muttng.manual)  => q(/usr/doc/muttng-*/html/index.html),
+        q(mysql)          => q(/usr/doc/mysql-*/),
+        q(nc)             => q(/usr/doc/nc-*/),
+        q(netcat)         => q(/usr/doc/nc-*/),
+        q(ntp)            => q(/usr/doc/ntp-*/html/index.html),
+        q(ntpc)           => q(/usr/doc/ntp-*/html/index.html),
+        q(ntpd)           => q(/usr/doc/ntp-*/html/index.html),
+        q(ntpdate)        => q(/usr/doc/ntp-*/html/index.html),
+        q(openssl)        => q(/usr/doc/openssl-*/),
+        q(ssl)            => q(/usr/doc/openssl-*/),
+        q(7zip)           => q(/usr/doc/p7zip-*/DOCS/),
+        q(p7zip)          => q(/usr/doc/p7zip-*/DOCS/),
+        q(pcre)           => q(/usr/doc/pcre-*/html/index.html),
+        q(postgis)        => q(/usr/doc/postgis-*/html/postgis.html),
+        q(pgsql)          => q(/usr/doc/postgresql-*/html/index.html),
+        q(postgresql)     => q(/usr/doc/postgresql-*/html/index.html),
+        q(psql)           => q(/usr/doc/postgresql-*/html/index.html),
+        q(r)              => q(/usr/doc/R-*/),
+        q(rsync)          => q(/usr/doc/rsync-*/),
+        q(sendmail)       => q(/usr/doc/sendmail-*/),
+        q(sgml-common)    => q(/usr/doc/sgml-common-*/html/index.html),
+        q(sgmlspl)        => q(/usr/doc/sgmlspl-*/sgmlspl/sgmlspl.html),
+        q(sjeng)          => q(/usr/doc/Sjeng-Free-*/),
+        q(subversion)     => q(/usr/doc/subversion-*/),
+        q(svn)            => q(/usr/doc/subversion-*/),
+        q(sysstat)        => q(/usr/doc/sysstat-*/),
+        q(tetex)          => q(/usr/doc/tetex-*/index.html),
+        q(tidy)           => q(/usr/doc/tidy-*/htmldoc/),
+        q(tig)            => q(/usr/doc/tig-*/),
+        q(transfig)       => q(/usr/doc/transfig-*/manual/),
+        q(w3m)            => q(/usr/doc/w3m-*/),
+        q(wpa_supplicant) => q(/usr/doc/wpa_supplicant-*/),
+        q(xz)             => q(/usr/doc/xz-*/),
+        q(zsh)            => q(/usr/doc/zsh-*/html-docs/zsh.html),
+        q(about:cache)    => qq($ENV{ELINKS_CACHE}/),
+        q(slack)          => qq($ENV{HOME}/usr/doc/slackbook/html/index.html),
+        q(slackware)      => qq($ENV{HOME}/usr/doc/slackbook/html/index.html),
+    );
+
+    if ( my $path = delete $goto_url{ lc $cur_url } ) {
+        $new_url = $f->($path);
+    }
+    elsif ( $cur_url eq q(about:goto_url) ) {
+        my $file = File::Spec->catpath( $ENV{TMP_DIR}, q(goto_url.html) );
+        open my $fh, q(>), $file;
+        my @goto_url
+            = sort { lc $goto_url{$a} cmp lc $goto_url{$b} || $a cmp $b }
+            keys %goto_url;
+        say $fh sprintf q{<title>%s</title>}, $cur_url;
+        foreach my $goto_url (@goto_url) {
+            my $file = $f->($goto_url{$goto_url});
+            say $fh sprintf sprintf
+                q{<p><a href="%2$s"><b>%1$s</b></a> => <a href="%2$s">%2$s</a>},
+                $goto_url, $file;
+        }
+        close $fh;
+        $cur_url = $file;
+    } ## end elsif ( $cur_url eq q(about:goto_url))
+
+    $cur_url = $new_url if defined $new_url && $new_url ne q();
+
+    return $cur_url;
 } ## end sub goto_url_hook
 
 #sub follow_url_hook {}
