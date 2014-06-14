@@ -1,13 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2014-05-18 12:09:36 jimmy>
+;;; Time-stamp: <2014-06-14 18:37:26 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (desktop-save-mode)
 (desktop-read)
 (fset 'yes-or-no-p 'y-or-n-p)
-(ido-mode t)
 (package-initialize)
+(ido-mode t)
 
 (add-to-list 'load-path "~/.emacs.d/modules/")
 
@@ -31,8 +31,10 @@
 
 (defun latex-math-preview-ascii ()
   (interactive)
-  (shell-command (format "%s %s" "brightmare" (shell-quote-argument
-						   (replace-regexp-in-string "[
+  (shell-command
+   (format "%s %s" "brightmare"
+           (shell-quote-argument
+            (replace-regexp-in-string "[
 ]+" " "
  (buffer-substring
   (region-beginning)
@@ -48,7 +50,7 @@
 (defun podchecker ()
   (interactive)
   (shell-command-on-region (mark)
-			   (point) "podchecker"))
+               (point) "podchecker"))
 (defun zsh-shell ()
   (interactive)
   (term "/bin/zsh")
@@ -73,12 +75,18 @@
 ;; (add-to-list 'load-path "~/.emacs.d/el-get/vc+/")
 ;; (eval-after-load "vc" '(require 'vc+))
 
+;;; kolon-mode.el --- Syntax highlighting for Text::Xslate's Kolon syntax
+(require 'kolon-mode)
+
+;;; figlet.el --- Annoy people with big, ascii art text
+(require 'figlet)
+
 ;;; insert-time-string.el --- Insert the current time.
 (add-to-list 'load-path "~/.emacs.d/el-get/insert-time-string/")
 (require 'insert-time-string)
 (setq insert-time-string-format-alist
-	  (cons '("pseudo-iso" . "%F %T")
-			insert-time-string-format-alist))
+      (cons '("pseudo-iso" . "%F %T")
+            insert-time-string-format-alist))
 (setq insert-time-string-default-format "pseudo-iso")
 
 ;;; indirect-region.el --- act like indirect-buffer but for region
@@ -88,9 +96,13 @@
 ;;; ledger-mode.el --- Helper code for use with the "ledger" command-line tool
 (require 'ledger-mode)
 (setq ledger-use-iso-dates t)
+(setq ledger-binary-path "~/usr/bin/ledger")
 
 ;;; ispell-stopwords.el --- use perl POD "=for stopwords" in ispell
 (autoload 'ispell-stopwords "ispell-stopwords" nil t)
+
+(add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src"))
+(add-to-list 'ispell-skip-region-alist '("#\\+begin_example". "#\\+end_example"))
 
 ;;; windmove.el --- directional window-selection routines
 (global-set-key (kbd "C-c <left>")  'windmove-left)
@@ -107,7 +119,7 @@
 
 ;;; aumix-mode.el --- run the aumix program in a buffer
 (autoload 'aumix "aumix-mode" nil t)
-(setq aumix-mode-program "rexima")
+(setq aumix-mode-program "alsamixer")
 
 ;;; mailcap-mode.el --- mailcap file editing mode
 (autoload 'mailcap-mode "mailcap-mode" nil t)
@@ -282,9 +294,9 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/asciidoc/")
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
 (add-hook 'doc-mode-hook
-	  '(lambda ()
-		 (turn-on-auto-fill)
-		 (require 'asciidoc)))
+      '(lambda ()
+         (turn-on-auto-fill)
+         (require 'asciidoc)))
 
 ;;; ecmascript-mode.el --- major mode for editing ECMAScript code
 (add-to-list 'load-path "~/.emacs.d/el-get/ecmascript-mode/")
@@ -294,12 +306,10 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
  (unless (require 'el-get nil t)
    (url-retrieve
-	"https://raw.github.com/dimitri/el-get/master/el-get-install.el"
-	(lambda (s)
-	  (end-of-buffer)
-	 (eval-print-last-sexp))))
-;; (el-get 'sync)
-;; (el-get 'wait)
+    "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
+    (lambda (s)
+      (end-of-buffer)
+     (eval-print-last-sexp))))
 
 ;;; elisp-format.el --- Format elisp code
 (add-to-list 'load-path "~/.emacs.d/el-get/elisp-format/")
@@ -311,10 +321,11 @@
 (require 'ess-rutils)
 (setq ess-directory "~/R/")
 (setq ess-history-directory "~/R/")
-
 ;;; ess-edit.el --- convenient editing of R code
 (add-to-list 'load-path "~/.emacs.d/el-get/ess-edit/")
 (require 'ess-edit)
+;;; ess-R-data-view.el --- Data viewer for GNU R
+(require 'ess-R-data-view)
 
 ;;; essh.el --- a set of commands that emulate for bash what ESS is to R.
 (add-to-list 'load-path "~/.emacs.d/el-get/essh/")
@@ -327,7 +338,7 @@
 (autoload 'fetchmail-mode "fetchmail-mode.el"
   "Mode for editing .fetchmailrc files" t)
 (setq auto-mode-alist (append '(("\..fetchmailrc$" . fetchmail-mode))
-				  auto-mode-alist))
+                  auto-mode-alist))
 
 ;;; gnuplot.el -- drive gnuplot from within emacs
 (add-to-list 'load-path "~/.emacs.d/el-get/gnuplot/")
@@ -359,10 +370,16 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/info+/")
 (require 'info+)
 
+;;; get-rfc.el --- Getting and viewing RFCs
+(add-to-list 'load-path "~/.emacs.d/el-get/get-rfc/")
+(require 'get-rfc)
+(setq get-rfc-local-rfc-directory "~/.emacs.d/RFC/")
+
 ;;; irfc.el --- Interface for IETF RFC document.
 (require 'irfc)
-;; (add-to-list 'auto-mode-alist '("\\rfc[0-9]+\.txt\\'" . irfc-mode))
+(add-to-list 'auto-mode-alist '("\\rfc[0-9]+\.txt\\'" . irfc-mode))
 (setq irfc-assoc-mode t)
+(setq irfc-download-base-url "http://tools.ietf.org/rfc/")
 
 ;;; js2-mode.el --- an improved JavaScript editing mode
 (add-to-list 'load-path "~/.emacs.d/el-get/js2-mode/")
@@ -384,8 +401,6 @@
 
 ;;; magit.el --- control Git from Emacs
 (require 'magit)
-;;; magithub.el --- Magit extensions for using GitHub
-(eval-after-load 'magit '(require 'magithub))
 
 ;;; markdown-mode.el --- Emacs Major mode for Markdown-formatted text files
 (autoload 'markdown-mode "markdown-mode"
@@ -408,8 +423,6 @@
 (global-set-key "\C-ck" 'mode-compile-kill)
 
 ;;; muttrc-mode.el --- Major mode to edit muttrc under Emacs
-(add-to-list 'load-path "~/.emacs.d/el-get/muttrc-mode/")
-(autoload 'muttrc-mode "muttrc-mode.el" "Major mode to edit muttrc files" t)
 (add-to-list 'auto-mode-alist '("\\.muttrc\\'"   . muttrc-mode))
 (add-to-list 'auto-mode-alist '("\\.muttngrc\\'" . muttrc-mode))
 (add-to-list 'auto-mode-alist '("\\abookrc\\'"   . muttrc-mode))
@@ -453,7 +466,9 @@
 ;;; perltidy.el --- Tidy perl code
 (add-to-list 'load-path "~/.emacs.d/el-get/perltidy/")
 (require 'perltidy)
-(global-set-key (kbd "C-c t") 'perltidy-buffer)
+(eval-after-load "perl-mode"
+  '(progn
+     (define-key perl-mode-map (kbd "C-c t") 'perltidy-buffer)))
 
 ;;; pod-mode.el --- Major mode for editing .pod-files
 (autoload 'pod-mode "pod-mode" "Mode for editing POD files" t)
@@ -464,13 +479,13 @@
 (require 'pst-format)
 (autoload 'pst-format-decode "pst-format")
 (add-to-list 'format-alist
-	 '(pst-format
-	   "Perl \"Storable\" module data."
-	   "\\`\\(pst0\\|perl-store\\)"
-	   pst-format-decode
-	   pst-format-encode
-	   t
-	   nil))
+     '(pst-format
+       "Perl \"Storable\" module data."
+       "\\`\\(pst0\\|perl-store\\)"
+       pst-format-decode
+       pst-format-encode
+       t
+       nil))
 
 ;;; quickrun.el --- Run commands quickly
 (add-to-list 'load-path "~/.emacs.d/el-get/quickrun/")
@@ -486,13 +501,6 @@
 (add-to-list 'auto-mode-alist '("\\.reminders\\'"        . remind-conf-mode))
 (add-to-list 'auto-mode-alist '("\\.remind/.*\\'"        . remind-conf-mode))
 
-;;; remind-to-diary.el --- convert remind `simple calendar' output to diary format
-(add-to-list 'load-path "~/.emacs.d/el-get/remind-to-diary/")
-(require 'remind-to-diary)
-(add-hook 'calendar-initial-window-hook 'remind-to-diary-run)
-(add-hook 'diary-list-entries-hook 'remind-to-diary-run)
-(add-hook 'diary-list-entries-hook 'diary-include-other-diary-files)
-
 ;;; rtf-mode.el --- Emacs major mode for viewing/editing raw RTF source
 (add-to-list 'load-path "~/.emacs.d/el-get/rtf-mode/")
 (require 'rtf-mode)
@@ -506,15 +514,15 @@
   "Edit current XML element with XSH"
   (interactive "Mxsh2-command: ")
   (progn
-	(sgml-backward-up-element)
-	(let ((beg (point))
-	  (coding-system-for-read 'utf-8)
-	  (coding-system-for-write 'utf-8))
-	  (sgml-forward-element)
-	  (shell-command-on-region beg (point)
-				   (concat "xsh2 -qP- " (shell-quote-argument
-							 xsh-command) " | sed 1d")
-				   t ))))
+    (sgml-backward-up-element)
+    (let ((beg (point))
+      (coding-system-for-read 'utf-8)
+      (coding-system-for-write 'utf-8))
+      (sgml-forward-element)
+      (shell-command-on-region beg (point)
+                   (concat "xsh2 -qP- " (shell-quote-argument
+                             xsh-command) " | sed 1d")
+                   t ))))
 
 ;;; showtip.el --- Show tip at cursor
 (add-to-list 'load-path "~/.emacs.d/el-get/showtip/")
@@ -539,7 +547,7 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/tsv-mode/")
 (autoload 'tsv-mode "tsv-mode" "A mode to edit table like file" t)
 (autoload 'tsv-normal-mode "tsv-mode" "A minor mode to edit table like file" t)
-(add-to-list 'auto-mode-alist '("\\.tsv$" . tsv-mode))
+;(add-to-list 'auto-mode-alist '("\\.tsv$" . tsv-mode))
 
 ;;; tt-mode.el --- Emacs major mode for editing Template Toolkit files
 (autoload 'tt-mode "tt-mode")
@@ -633,6 +641,7 @@
  '(browse-url-text-browser "lynx")
  '(c-basic-offset 4)
  '(c-default-style (quote ((other . "gnu"))))
+ '(calendar-date-style (quote iso))
  '(column-number-mode t)
  '(cperl-highlight-variables-indiscriminately t)
  '(default-justification (quote full))
@@ -641,6 +650,8 @@
  '(desktop-load-locked-desktop t)
  '(desktop-save-mode t)
  '(diary-file "~/.diary")
+ '(diary-list-entries-hook (quote (diary-include-other-diary-files diary-sort-entries)))
+ '(diary-mark-entries-hook (quote (diary-mark-included-diary-files)))
  '(dired-listing-switches "-ahl")
  '(erc-autoaway-idle-seconds 1800)
  '(erc-autoaway-message "@4D")
@@ -661,6 +672,7 @@
  '(european-calendar-style t)
  '(fill-column 79)
  '(fill-nobreak-predicate (quote (fill-french-nobreak-p fill-single-word-nobreak-p)))
+ '(indent-tabs-mode nil)
  '(latin1-display-face (quote c-annotation-face))
  '(make-backup-files nil)
  '(message-sendmail-extra-arguments (quote ("-a" "lists")))
@@ -674,7 +686,7 @@
  '(newsticker-narrow-hook nil)
  '(newsticker-retrieval-method (quote extern))
  '(newsticker-start-hook (quote (newsticker-start-ticker)))
- '(newsticker-url-list (quote (("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil) ("cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil) ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil) ("inovacaotecnologica" "http://www.inovacaotecnologica.com.br/boletim/rss.xml" nil nil nil) ("perlhacks" "http://perlhacks.com/feed/" nil nil nil) ("perlnews" "http://perlnews.org/feed/" nil nil nil) ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil) ("planet.perl" "http://planet.perl.org/rss20.xml" nil nil nil) ("postgresql" "http://www.postgresql.org/news.rss" nil nil nil) ("worg" "http://repo.or.cz/w/Worg.git/rss" nil nil nil) ("xsh" "http://xsh.sourceforge.net/news.rss" nil nil nil) ("common-lisp" "http://common-lisp.net/index.xml" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil) ("tecnoveneno" "http://tecnoveneno.blogspot.com/feeds/posts/default" nil nil nil) ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil) ("blogs-perl" "http://blogs.perl.org/atom.xml" nil nil nil) ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil) ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil) ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil) ("emacswiki" "http://www.emacswiki.org/emacs/full.rss" nil nil nil) ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil) ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/en/rss.xml" nil nil nil) ("ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil) ("PrePAN" "http://prepan.org/feed" nil nil nil) ("codata.org-blog" "http://codata.org/blog/feed/" nil nil nil) ("br-linux.org" "http://br-linux.org/feed.xml" nil nil nil))))
+ '(newsticker-url-list (quote (("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil) ("cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil) ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil) ("inovacaotecnologica" "http://www.inovacaotecnologica.com.br/boletim/rss.xml" nil nil nil) ("perlhacks" "http://perlhacks.com/feed/" nil nil nil) ("perlnews" "http://perlnews.org/feed/" nil nil nil) ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil) ("planet.perl" "http://planet.perl.org/rss20.xml" nil nil nil) ("postgresql" "http://www.postgresql.org/news.rss" nil nil nil) ("worg" "http://repo.or.cz/w/Worg.git/rss" nil nil nil) ("xsh" "http://xsh.sourceforge.net/news.rss" nil nil nil) ("common-lisp" "http://common-lisp.net/index.xml" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil) ("tecnoveneno" "http://tecnoveneno.blogspot.com/feeds/posts/default" nil nil nil) ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil) ("blogs-perl" "http://blogs.perl.org/atom.xml" nil nil nil) ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil) ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil) ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil) ("emacswiki" "http://www.emacswiki.org/emacs/full.rss" nil nil nil) ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil) ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/en/rss.xml" nil nil nil) ("ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil) ("PrePAN" "http://prepan.org/feed" nil nil nil) ("codata.org-blog" "http://codata.org/blog/feed/" nil nil nil) ("br-linux.org" "http://br-linux.org/feed.xml" nil nil nil) ("perlmodules.net=>App-Table2YAML" "https://www.perlmodules.net/feed/distro/App-Table2YAML" nil nil nil) ("http://horicky.blogspot.com/feeds/posts/default" "Pragmatic Programming Techniques" nil nil nil))))
  '(newsticker-url-list-defaults nil)
  '(newsticker-use-full-width nil)
  '(newsticker-wget-arguments (quote ("--quiet" "--timeout=60" "--tries=3" "--max-redirect=1" "--output-document=-")))
@@ -683,7 +695,7 @@
  '(org-agenda-text-search-extra-files nil)
  '(org-alphabetical-lists t)
  '(org-attach-method (quote ln))
- '(org-babel-load-languages (quote ((emacs-lisp . t) (awk . t) (R . t) (calc . t) (fortran . t) (gnuplot . t) (haskell . t) (js . t) (latex . t) (org . t) (perl . t) (python . t) (scheme . t) (screen . t) (sh . t) (sql . t))))
+ '(org-babel-load-languages (quote ((awk . t) (C . t) (R . t) (calc . t) (css . t) (emacs-lisp . t) (fortran . t) (gnuplot . t) (haskell . t) (js . t) (latex . t) (ledger . t) (lisp . t) (maxima . t) (matlab . t) (ocaml . t) (octave . t) (org . t) (perl . t) (python . t) (scheme . t) (screen . t) (sh . t) (sql . t) (sqlite . t))))
  '(org-confirm-babel-evaluate nil)
  '(org-confirm-elisp-link-function nil)
  '(org-confirm-shell-link-function nil)
@@ -706,12 +718,12 @@
 \\linespread{0.1}
 \\usepackage{amsfonts,graphicx}
 \\usepackage[pdftex,
-			pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
-			pdftitle={{{{TITLE}}}},
-			pdfsubject={{{{DESCRIPTION}}}},
-			pdfkeywords={{{{KEYWORDS}}}},
-			pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
-		   ]{hyperref}
+            pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
+            pdftitle={{{{TITLE}}}},
+            pdfsubject={{{{DESCRIPTION}}}},
+            pdfkeywords={{{{KEYWORDS}}}},
+            pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
+           ]{hyperref}
 \\usepackage[latin1]{inputenc}  % char encoding
 \\pagestyle{empty}
 \\frenchspacing      % no aditional spaces after periods
