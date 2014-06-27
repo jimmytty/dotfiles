@@ -398,6 +398,7 @@ CSE       Computer Science and Engineering
 CSI       Common System Interface
 CSP       Communicating Sequential Processes
 CSRF      Cross-Site Request Forgery
+CSRF      Cross-Site Request Forgery
 CSS       Cascading Style Sheets
 CSS       Closed Source Software
 CSS       Content-Scrambling System
@@ -537,6 +538,7 @@ ELF       Executable and Linkable Format
 ELF       Extremely Low Frequency
 ELM       ELectronic Mail
 EMACS     Editor MACroS
+EMMS      Emacs Multimedia System
 EMS       Expanded Memory Specification
 ENIAC     Electronic Numerical Integrator And Computer
 EOF       End of File
@@ -550,6 +552,7 @@ ERP       Enterprise Resource Planning
 ESB       Enterprise service bus
 ESCON     Enterprise Systems Connection
 ESD       Electrostatic Discharge
+ESNET     Energy Sciences Network
 ESQL      Embedded SQL
 ESR       Eric Steven Raymond
 ETL       Extract, Transform, Load
@@ -579,6 +582,7 @@ FL        Function Level
 FLAC      Free Lossless Audio Codec
 FLOPS     FLoating-Point Operations Per Second
 FLOSS     Free Libre Open Source Software
+FLV       Flash Video
 FMC       Fixed Mobile Convergence
 FOLDOC    Free On-line Dictionary of Computing
 FOSDEM    Free and Open source Software Developers' European Meeting
@@ -1027,6 +1031,7 @@ PGSQL     PostgreSQL
 PGXS      PostgreSQL Extension System
 PHP       PHP: Hypertext Preprocessor
 PIC       Peripheral Interface Controller
+PIC       Position Independent Code
 PIC       Programmable Interrupt Controller
 PID       Process ID
 PID       Process Identifier
