@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2014-06-14 18:37:26 jimmy>
+;;; Time-stamp: <2014-06-27 20:25:09 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (desktop-save-mode)
@@ -69,130 +69,21 @@
   (interactive "r")
   (shell-command-on-region b e "piconv -f latin1 -t utf8 | uni2ascii -q -aU" t t))
 
-;; ;;; vc-.el --- Extensions to `vc.el'.
-;; (add-to-list 'load-path "~/.emacs.d/el-get/vc-/")
-;; ;;; vc+.el --- Extensions for `vc.el'.
-;; (add-to-list 'load-path "~/.emacs.d/el-get/vc+/")
-;; (eval-after-load "vc" '(require 'vc+))
-
-;;; kolon-mode.el --- Syntax highlighting for Text::Xslate's Kolon syntax
-(require 'kolon-mode)
-
-;;; figlet.el --- Annoy people with big, ascii art text
-(require 'figlet)
-
-;;; insert-time-string.el --- Insert the current time.
-(add-to-list 'load-path "~/.emacs.d/el-get/insert-time-string/")
-(require 'insert-time-string)
-(setq insert-time-string-format-alist
-      (cons '("pseudo-iso" . "%F %T")
-            insert-time-string-format-alist))
-(setq insert-time-string-default-format "pseudo-iso")
-
-;;; indirect-region.el --- act like indirect-buffer but for region
-(add-to-list 'load-path "~/.emacs.d/el-get/indirect-region/")
-(require 'indirect-region)
-
-;;; ledger-mode.el --- Helper code for use with the "ledger" command-line tool
-(require 'ledger-mode)
-(setq ledger-use-iso-dates t)
-(setq ledger-binary-path "~/usr/bin/ledger")
-
-;;; ispell-stopwords.el --- use perl POD "=for stopwords" in ispell
-(autoload 'ispell-stopwords "ispell-stopwords" nil t)
-
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src"))
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_example". "#\\+end_example"))
 
-;;; windmove.el --- directional window-selection routines
-(global-set-key (kbd "C-c <left>")  'windmove-left)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>")    'windmove-up)
-(global-set-key (kbd "C-c <down>")  'windmove-down)
-(setq windmove-wrap-around t)
+;;; moz.el --- Lets current buffer interact with inferior mozilla.
+(require 'moz)
 
-;;; dired-async.el --- Copy/move/delete asynchronously in dired.
-;;(eval-after-load "dired-aux" '(require 'dired-async))
+;;; sqlite.el --- use sqlite via elisp
+(require 'sqlite)
 
-;;; proced.el --- operate on system processes like dired
-(global-set-key (kbd "C-x p") 'proced)
+;;; ack.el --- Use ack where you might usually use grep.
+(require 'ack)
+(setq ack-command "ack --noenv --color --pager='cat' --sort-files ")
 
-;;; aumix-mode.el --- run the aumix program in a buffer
-(autoload 'aumix "aumix-mode" nil t)
-(setq aumix-mode-program "alsamixer")
-
-;;; mailcap-mode.el --- mailcap file editing mode
-(autoload 'mailcap-mode "mailcap-mode" nil t)
-(add-to-list 'auto-mode-alist '("/\\.?mailcap\\'" . mailcap-mode))
-
-;;; bitlbee.el --- Help get Bitlbee (http://www.bitlbee.org) up and running.
-(require 'bitlbee)
-
-;;; emms.el --- The Emacs Multimedia System
-(require 'emms-setup)
-(emms-all)
-(emms-default-players)
-(emms-cache-disable)
-(emms-volume-mode-minus)
-(emms-mode-line-disable)
-(setq emms-info-functions (quote (emms-info-cueinfo emms-info-ogginfo emms-info-mp3info)))
-(setq emms-info-mp3find-arguments (quote ("-p" "info-filename=%f\\ninfo-artist=%a\\ninfo-title=%t\\ninfo-album=%l\\ninfo-tracknumber=%n\\ninfo-year=%y\\ninfo-genre=%g\\ninfo-comment=%c\\ninfo-playing-time=%S\\ninfo-composer=%{TCOM}\\ninfo-text_by=%{TEXT}\\ninfo-orchestra=%{TPE2}\\ninfo-conductor=%{TPE3}\\ninfo-disk_n=%{TPOS}")))
-(setq emms-info-mp3info-program-name "mp3info")
-(setq emms-player-list (quote (emms-player-mplayer-playlist emms-player-mplayer)))
-(setq emms-player-mplayer-command-name "/usr/bin/mplayer")
-(setq emms-player-mplayer-parameters (quote ("-slave" "-quiet" "-really-quiet" "-vo" "null")))
-(setq emms-player-mplayer-playlist-command-name "/usr/bin/mplayer")
-(setq emms-playlist-mode-open-playlists nil)
-
-;;; web-mode.el --- major mode for editing html templates
-(require 'web-mode)
-(setq web-mode-enable-block-face t)
-(setq web-mode-enable-heredoc-fontification t)
-
-;;; nginx-mode.el --- major mode for editing nginx config files
-(require 'nginx-mode)
-
-;;; vlf.el --- View Large Files
-(require 'vlf)
-(setq vlf-batch-size 10240)
-
-;;; g.el --- Google Client
-;(add-to-list 'load-path "~/.emacs.d/el-get/g-client/")
-;(load-library "g")
-;;;; deprecated?
-
-;;; Sepia -- Simple Emacs-Perl InterAction: ugly, yet effective.
-(add-to-list 'load-path "~/.emacs.d/sepia")
-(setq sepia-perl5lib (list (expand-file-name "~/.emacs.d/sepia/lib")))
-(defalias 'cperl-mode 'sepia-mode)
-(require 'sepia)
-
-;;; mmm-mode --- Allow Multiple Major Modes in a buffer
-(require 'mmm-auto)
-
-;;; sparql-mode.el --- Edit and interactively evaluate SPARQL queries.
-(autoload 'sparql-mode "sparql-mode.el" "Major mode for editing SPARQL files" t)
-(add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
-
-;;; tex-smart-umlauts.el --- Smart umlaut conversion for TeX.
-;;(add-hook 'LaTeX-mode-hook #'tex-smart-umlauts-decode)
-
-;;; syslog-mode.el --- Mode for viewing system logfiles
-(add-to-list 'load-path "~/.emacs.d/el-get/syslog-mode/")
-(require 'syslog-mode)
-(add-to-list 'auto-mode-alist '("/var/log.*\\'" . syslog-mode))
-
-;;; ldap-mode.el --- major modes for editing LDAP schema and LDIF files
-(require 'ldap-mode)
-(setq ldif-attribute-face (quote default))
-
-;; lang-refactor-perl.el --- Simple refactorings, primarily for Perl
-(require 'lang-refactor-perl)
-
-;; nagios-mode, an Emacs mode for Nagios <http://www.nagios.org/>
-;; configuration files.
-(add-to-list 'load-path "~/.emacs.d/el-get/nagios-mode/")
-(require 'nagios-mode)
+;;; ansi-color.el --- translate ANSI escape sequences into faces
+(require 'ansi-color)
 
 ;;; apache-mode.el --- major mode for editing Apache configuration files
 (autoload 'apache-mode "apache-mode" nil t)
@@ -202,43 +93,18 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-;;; sqlite-dump.el --- view dump of sqlite database file
-(autoload 'sqlite-dump "sqlite-dump" nil t)
-(modify-coding-system-alist 'file "\\.sqlite\\'" 'raw-text-unix)
-(add-to-list 'auto-mode-alist '("\\.sqlite\\'" . sqlite-dump))
-
 ;;; AUCTeX is  a comprehensive customizable integrated  environment for writing
 ;;; input  files   for  TeX, LaTeX,  ConTeXt, Texinfo, and  docTeX  using Emacs
 ;;; or XEmacs.
-(add-to-list 'load-path "~/.emacs.d/el-get/auctex/")
 (load "auctex.el" nil t t)
 (require 'texmathp)
 
-;;; eperiodic.el --- periodic table for Emacs
-(add-to-list 'load-path "~/.emacs.d/el-get/eperiodic/")
-(require 'eperiodic);
-
-;;; ack.el --- Use ack where you might usually use grep.
-(require 'ack)
-(setq ack-command "ack --noenv --color --pager='cat' --sort-files ")
-
-;;; ansi-color.el --- translate ANSI escape sequences into faces
-(require 'ansi-color)
+;;; aumix-mode.el --- run the aumix program in a buffer
+(autoload 'aumix "aumix-mode" nil t)
+(setq aumix-mode-program "alsamixer")
 
 ;;; awk-it.el --- Little utility that combines awk and yasnippet.
-(add-to-list 'load-path "~/.emacs.d/el-get/awk-it/")
 (eval-after-load 'yasnippet '(require 'awk-it))
-
-;;; babel.el --- interface to web translation services such as Babelfish
-(add-to-list 'load-path "~/.emacs.d/el-get/babel/")
-(autoload 'babel "babel"
-  "Use a web translation service to translate the message MSG." t)
-(autoload 'babel-region "babel"
-  "Use a web translation service to translate the current region." t)
-(autoload 'babel-as-string "babel"
-  "Use a web translation service to translate MSG, returning a string." t)
-(autoload 'babel-buffer "babel"
-  "Use a web translation service to translate the current buffer." t)
 
 ;;; bc-mode.el --- BC code editing commands for Emacs
 (add-to-list 'load-path "~/.emacs.d/el-get/bc-mode/")
@@ -246,13 +112,14 @@
 (add-to-list 'auto-mode-alist '(".bc\\'" . bc-mode))
 (add-to-list 'interpreter-mode-alist '("bc" . bc-mode))
 
+;;; bitlbee.el --- Help get Bitlbee (http://www.bitlbee.org) up and running.
+(require 'bitlbee)
+
 ;;; boxquote.el --- Quote text with a semi-box.
-(add-to-list 'load-path "~/.emacs.d/el-get/boxquote/")
 (require 'boxquote)
 
 ;;; cdlatex.el -- Fast input methods for LaTeX environments and math
 (add-to-list 'load-path "~/.emacs.d/el-get/cdlatex-mode/")
-(add-to-list 'load-path "~/.emacs.d/el-get/auctex/")
 (require 'cdlatex)
 
 ;;; col-highlight.el --- Highlight the current column.
@@ -264,7 +131,6 @@
 (require 'column-marker)
 
 ;;; crontab-mode.el --- Mode for editing crontab files
-(add-to-list 'load-path "~/.emacs.d/el-get/crontab-mode")
 (require 'crontab-mode)
 (add-to-list 'auto-mode-alist '("\\.cron\\(tab\\)?\\'" . crontab-mode))
 (add-to-list 'auto-mode-alist '("cron\\(tab\\)?\\."    . crontab-mode))
@@ -273,11 +139,6 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/crosshairs/")
 (eval-after-load 'hl-line+ '(require 'crosshairs))
 
-;;; css-mode.el --- Major mode for editing Cascading Style Sheets
-(add-to-list 'load-path "~/.emacs.d/el-get/css-mode/")
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
-(autoload 'css-mode "css-mode" nil t)
-
 ;;; csv-mode.el --- major mode for editing comma-separated value files
 (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
   (autoload 'csv-mode "csv-mode"
@@ -285,6 +146,9 @@
 
 ;;; csv-nav.el --- navigate and edit CSV files
 (require 'csv-nav)
+
+;;; dired-async.el --- Copy/move/delete asynchronously in dired.
+;;(eval-after-load "dired-aux" '(require 'dired-async))
 
 ;;; doc-mode.el --- a major-mode for highlighting a hierarchy structured text.
 (add-to-list 'load-path "~/.emacs.d/el-get/doc-mode/")
@@ -315,6 +179,26 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/elisp-format/")
 (require 'elisp-format)
 
+;;; emms.el --- The Emacs Multimedia System
+(require 'emms-setup)
+(emms-all)
+(emms-default-players)
+(emms-cache-disable)
+(emms-volume-mode-minus)
+(emms-mode-line-disable)
+(setq emms-info-functions (quote (emms-info-cueinfo emms-info-ogginfo emms-info-mp3info)))
+(setq emms-info-mp3find-arguments (quote ("-p" "info-filename=%f\\ninfo-artist=%a\\ninfo-title=%t\\ninfo-album=%l\\ninfo-tracknumber=%n\\ninfo-year=%y\\ninfo-genre=%g\\ninfo-comment=%c\\ninfo-playing-time=%S\\ninfo-composer=%{TCOM}\\ninfo-text_by=%{TEXT}\\ninfo-orchestra=%{TPE2}\\ninfo-conductor=%{TPE3}\\ninfo-disk_n=%{TPOS}")))
+(setq emms-info-mp3info-program-name "mp3info")
+(setq emms-player-list (quote (emms-player-mplayer-playlist emms-player-mplayer)))
+(setq emms-player-mplayer-command-name "/usr/bin/mplayer")
+(setq emms-player-mplayer-parameters (quote ("-slave" "-quiet" "-really-quiet" "-vo" "null")))
+(setq emms-player-mplayer-playlist-command-name "/usr/bin/mplayer")
+(setq emms-playlist-mode-open-playlists nil)
+
+;;; eperiodic.el --- periodic table for Emacs
+(add-to-list 'load-path "~/.emacs.d/el-get/eperiodic/")
+(require 'eperiodic);
+
 ;;; ess.el --- Emacs Speaks Statistics: statistical programming within Emacs
 (require 'ess-site)
 (autoload 'ess-rdired "ess-rdired" "View *R* objects in a dired-like buffer." t)
@@ -340,8 +224,15 @@
 (setq auto-mode-alist (append '(("\..fetchmailrc$" . fetchmail-mode))
                   auto-mode-alist))
 
+;;; figlet.el --- Annoy people with big, ascii art text
+(require 'figlet)
+
+;;; get-rfc.el --- Getting and viewing RFCs
+(add-to-list 'load-path "~/.emacs.d/el-get/get-rfc/")
+(require 'get-rfc)
+(setq get-rfc-local-rfc-directory "~/.emacs.d/RFC/")
+
 ;;; gnuplot.el -- drive gnuplot from within emacs
-(add-to-list 'load-path "~/.emacs.d/el-get/gnuplot/")
 (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
 (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
 (setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
@@ -356,24 +247,28 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/hl-line+/")
 (eval-after-load 'col-highlight '(require 'hl-line+))
 
-;;; html-accent.el  ---  Function  that  replace  accented  char  by  its  html
-;;; representation
+;;; html-accent.el --- Function that replace accented char by its html representation
 (add-to-list 'load-path "~/.emacs.d/el-get/html-accent/")
 (autoload 'html-accent "html-accent" "Accent HTML" t)
 (autoload 'accent-html "html-accent" "HTML codes to accent" t)
 
 ;;; htmlize.el --- Convert buffer text and decorations to HTML.
-(add-to-list 'load-path "~/.emacs.d/el-get/htmlize/")
 (require 'htmlize)
 
+;;; indirect-region.el --- act like indirect-buffer but for region
+(add-to-list 'load-path "~/.emacs.d/el-get/indirect-region/")
+(require 'indirect-region)
+
 ;;; info+.el --- Extensions to `info.el'.
-(add-to-list 'load-path "~/.emacs.d/el-get/info+/")
 (require 'info+)
 
-;;; get-rfc.el --- Getting and viewing RFCs
-(add-to-list 'load-path "~/.emacs.d/el-get/get-rfc/")
-(require 'get-rfc)
-(setq get-rfc-local-rfc-directory "~/.emacs.d/RFC/")
+;;; insert-time-string.el --- Insert the current time.
+(add-to-list 'load-path "~/.emacs.d/el-get/insert-time-string/")
+(require 'insert-time-string)
+(setq insert-time-string-format-alist
+      (cons '("pseudo-iso" . "%F %T")
+            insert-time-string-format-alist))
+(setq insert-time-string-default-format "pseudo-iso")
 
 ;;; irfc.el --- Interface for IETF RFC document.
 (require 'irfc)
@@ -381,26 +276,42 @@
 (setq irfc-assoc-mode t)
 (setq irfc-download-base-url "http://tools.ietf.org/rfc/")
 
+;;; ispell-stopwords.el --- use perl POD "=for stopwords" in ispell
+(autoload 'ispell-stopwords "ispell-stopwords" nil t)
+
 ;;; js2-mode.el --- an improved JavaScript editing mode
-(add-to-list 'load-path "~/.emacs.d/el-get/js2-mode/")
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;; json-mode.el --- Major mode for editing JSON files
 (require 'json-mode)
 
-;;; levenshtein.el --- Edit distance between two strings.
-(add-to-list 'load-path "~/.emacs.d/el-get/levenshtein/")
-(require 'levenshtein)
+;;; kolon-mode.el --- Syntax highlighting for Text::Xslate's Kolon syntax
+(require 'kolon-mode)
+
+;;; lang-refactor-perl.el --- Simple refactorings, primarily for Perl
+(require 'lang-refactor-perl)
+
+;;; ldap-mode.el --- major modes for editing LDAP schema and LDIF files
+(require 'ldap-mode)
+(setq ldif-attribute-face (quote default))
+
+;;; ledger-mode.el --- Helper code for use with the "ledger" command-line tool
+(require 'ledger-mode)
+(setq ledger-use-iso-dates t)
+(setq ledger-binary-path "~/usr/bin/ledger")
 
 ;;; lua-mode.el --- a major-mode for editing Lua scripts
-(add-to-list 'load-path "~/.emacs.d/el-get/lua-mode/")
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
 ;;; magit.el --- control Git from Emacs
 (require 'magit)
+
+;;; mailcap-mode.el --- mailcap file editing mode
+(autoload 'mailcap-mode "mailcap-mode" nil t)
+(add-to-list 'auto-mode-alist '("/\\.?mailcap\\'" . mailcap-mode))
 
 ;;; markdown-mode.el --- Emacs Major mode for Markdown-formatted text files
 (autoload 'markdown-mode "markdown-mode"
@@ -413,8 +324,7 @@
 ;;; memory-usage.el --- Analyze the memory usage of Emacs in various ways
 (require 'memory-usage)
 
-;;; mode-compile.el  ---  Smart  command   for  compiling  files  according  to
-;;; major-mode.
+;;; mode-compile.el --- Smart command for compiling files according to major-mode.
 (autoload 'mode-compile "mode-compile"
   "Command to compile current buffer file based on the major mode" t)
 (global-set-key "\C-cc" 'mode-compile)
@@ -429,12 +339,19 @@
 (add-to-list 'auto-mode-alist '("\\.mutt/.*\\'"  . muttrc-mode))
 (setq mutt-alias-file-list (quote ("~/.abook/mutt_alias")))
 
-;;; org-R.el --- Computing and data visualisation in Org-mode using R
-(require 'org-R)
+;;; nagios-mode, an Emacs mode for Nagios configuration files.
+(add-to-list 'load-path "~/.emacs.d/el-get/nagios-mode/")
+(require 'nagios-mode)
+
+;;; nginx-mode.el --- major mode for editing nginx config files
+(require 'nginx-mode)
 
 ;;; org-panel.el --- Simple routines for us with bad memory
 (require 'org-panel)
 (eval-after-load 'org-mode 'org-pan)
+
+;;; org-R.el --- Computing and data visualisation in Org-mode using R
+(require 'org-R)
 
 ;;; orgtbl-sqlinsert.el --- orgtbl to SQL insert statements.
 (require 'orgtbl-sqlinsert)
@@ -460,7 +377,7 @@
 (require 'perlcritic)
 
 ;;; perlmonks.el --- A simple interface to www.perlmonks.org
-(add-to-list 'load-path "~/.emacs.d/el-get/perlmonks/")
+;(add-to-list 'load-path "~/.emacs.d/el-get/perlmonks/")
 ;(require 'perlmonks)
 
 ;;; perltidy.el --- Tidy perl code
@@ -468,12 +385,15 @@
 (require 'perltidy)
 (eval-after-load "perl-mode"
   '(progn
-     (define-key perl-mode-map (kbd "C-c t") 'perltidy-buffer)))
+     (define-key  perl-mode-map (kbd "C-c t") 'perltidy-buffer)))
 
 ;;; pod-mode.el --- Major mode for editing .pod-files
 (autoload 'pod-mode "pod-mode" "Mode for editing POD files" t)
 (add-to-list 'auto-mode-alist '("\\.pod$" . pod-mode))
 (add-hook 'pod-mode-hook 'font-lock-mode)
+
+;;; proced.el --- operate on system processes like dired
+(global-set-key (kbd "C-x p") 'proced)
 
 ;;; pst-format.el --- view perl Storable files as human readable text
 (require 'pst-format)
@@ -532,6 +452,19 @@
 (autoload 'sparql-mode "sparql-mode.el"  "Major mode for editing SPARQL files" t)
 (add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
 
+;;; sparql-mode.el --- Edit and interactively evaluate SPARQL queries.
+(autoload 'sparql-mode "sparql-mode.el" "Major mode for editing SPARQL files" t)
+(add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
+
+;;; sqlite-dump.el --- view dump of sqlite database file
+(autoload 'sqlite-dump "sqlite-dump" nil t)
+(modify-coding-system-alist 'file "\\.sqlite\\'" 'raw-text-unix)
+(add-to-list 'auto-mode-alist '("\\.sqlite\\'" . sqlite-dump))
+
+;;; syslog-mode.el --- Mode for viewing system logfiles
+(require 'syslog-mode)
+(add-to-list 'auto-mode-alist '("/var/log.*\\'" . syslog-mode))
+
 ;;; tidy.el --- Interface to the HTML Tidy program
 (add-to-list 'load-path "~/.emacs.d/el-get/tidy/")
 (autoload 'tidy-buffer "tidy" "Run Tidy HTML parser on current buffer" t)
@@ -569,6 +502,10 @@
 ;;; unfill.el --- The inverse of fill-paragraph and fill-region
 (require 'unfill)
 
+;;; vlf.el --- View Large Files
+(require 'vlf)
+(setq vlf-batch-size 10240)
+
 ;;; vline.el --- show vertical line (column highlighting) mode.
 (add-to-list 'load-path "~/.emacs.d/el-get/vline/")
 (require 'vline)
@@ -598,6 +535,11 @@
 (setq w3m-use-form nil)
 (setq w3m-use-tab-menubar nil)
 
+;;; web-mode.el --- major mode for editing html templates
+(require 'web-mode)
+(setq web-mode-enable-block-face t)
+(setq web-mode-enable-heredoc-fontification t)
+
 ;;; wget.el --- Interface program of wget on Emacs
 (require 'wget)
 (setq wget-download-directory "~/work/")
@@ -605,6 +547,13 @@
 ;;; wgrep.el --- Writable grep buffer and apply the changes to files
 (add-to-list 'load-path "~/.emacs.d/el-get/wgrep/")
 (require 'wgrep)
+
+;;; windmove.el --- directional window-selection routines
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(setq windmove-wrap-around t)
 
 ;;; workgroups.el --- workgroups for windows (for Emacs)
 (add-to-list 'load-path "~/.emacs.d/el-get/workgroups/")
@@ -651,6 +600,7 @@
  '(desktop-save-mode t)
  '(diary-file "~/.diary")
  '(diary-list-entries-hook (quote (diary-include-other-diary-files diary-sort-entries)))
+ '(diary-mail-addr "")
  '(diary-mark-entries-hook (quote (diary-mark-included-diary-files)))
  '(dired-listing-switches "-ahl")
  '(erc-autoaway-idle-seconds 1800)
@@ -669,7 +619,6 @@
  '(erc-port 6667)
  '(erc-server "127.0.0.1")
  '(erc-track-remove-disconnected-buffers t)
- '(european-calendar-style t)
  '(fill-column 79)
  '(fill-nobreak-predicate (quote (fill-french-nobreak-p fill-single-word-nobreak-p)))
  '(indent-tabs-mode nil)
@@ -686,12 +635,12 @@
  '(newsticker-narrow-hook nil)
  '(newsticker-retrieval-method (quote extern))
  '(newsticker-start-hook (quote (newsticker-start-ticker)))
- '(newsticker-url-list (quote (("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil) ("cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil) ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil) ("inovacaotecnologica" "http://www.inovacaotecnologica.com.br/boletim/rss.xml" nil nil nil) ("perlhacks" "http://perlhacks.com/feed/" nil nil nil) ("perlnews" "http://perlnews.org/feed/" nil nil nil) ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil) ("planet.perl" "http://planet.perl.org/rss20.xml" nil nil nil) ("postgresql" "http://www.postgresql.org/news.rss" nil nil nil) ("worg" "http://repo.or.cz/w/Worg.git/rss" nil nil nil) ("xsh" "http://xsh.sourceforge.net/news.rss" nil nil nil) ("common-lisp" "http://common-lisp.net/index.xml" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil) ("tecnoveneno" "http://tecnoveneno.blogspot.com/feeds/posts/default" nil nil nil) ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil) ("blogs-perl" "http://blogs.perl.org/atom.xml" nil nil nil) ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil) ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil) ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil) ("emacswiki" "http://www.emacswiki.org/emacs/full.rss" nil nil nil) ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil) ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/en/rss.xml" nil nil nil) ("ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil) ("PrePAN" "http://prepan.org/feed" nil nil nil) ("codata.org-blog" "http://codata.org/blog/feed/" nil nil nil) ("br-linux.org" "http://br-linux.org/feed.xml" nil nil nil) ("perlmodules.net=>App-Table2YAML" "https://www.perlmodules.net/feed/distro/App-Table2YAML" nil nil nil) ("http://horicky.blogspot.com/feeds/posts/default" "Pragmatic Programming Techniques" nil nil nil))))
+ '(newsticker-url-list (quote (("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil) ("cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil) ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil) ("inovacaotecnologica" "http://www.inovacaotecnologica.com.br/boletim/rss.xml" nil nil nil) ("perlhacks" "http://perlhacks.com/feed/" nil nil nil) ("perlnews" "http://perlnews.org/feed/" nil nil nil) ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil) ("planet.perl" "http://planet.perl.org/rss20.xml" nil nil nil) ("postgresql" "http://www.postgresql.org/news.rss" nil nil nil) ("worg" "http://repo.or.cz/w/Worg.git/rss" nil nil nil) ("xsh" "http://xsh.sourceforge.net/news.rss" nil nil nil) ("common-lisp" "http://common-lisp.net/index.xml" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil) ("tecnoveneno" "http://tecnoveneno.blogspot.com/feeds/posts/default" nil nil nil) ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil) ("blogs-perl" "http://blogs.perl.org/atom.xml" nil nil nil) ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil) ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil) ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil) ("emacswiki" "http://www.emacswiki.org/emacs/full.rss" nil nil nil) ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil) ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil) ("aiyumi" "http://aiyumi.warpstar.net/en/rss.xml" nil nil nil) ("ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil) ("PrePAN" "http://prepan.org/feed" nil nil nil) ("codata.org-blog" "http://codata.org/blog/feed/" nil nil nil) ("br-linux.org" "http://br-linux.org/feed.xml" nil nil nil) ("perlmodules.net=>App-Table2YAML" "https://www.perlmodules.net/feed/distro/App-Table2YAML" nil nil nil) ("GitHub::JimmyTTY" "https://github.com/jimmytty.atom" nil nil nil) ("Software Livre Brasil" "http://softwarelivre.org/portal/feed" nil nil nil))))
  '(newsticker-url-list-defaults nil)
  '(newsticker-use-full-width nil)
  '(newsticker-wget-arguments (quote ("--quiet" "--timeout=60" "--tries=3" "--max-redirect=1" "--output-document=-")))
  '(org-agenda-diary-file (quote diary-file))
- '(org-agenda-files (quote ("~/org-mode/todo.org" "/home/jimmy/org-mode/computer_science.org" "/home/jimmy/org-mode/database.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/misc.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/perl.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/r.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
+ '(org-agenda-files (quote ("~/OFFICE/office.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/computer_science.org" "/home/jimmy/org-mode/database.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/misc.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/perl.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/r.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
  '(org-agenda-text-search-extra-files nil)
  '(org-alphabetical-lists t)
  '(org-attach-method (quote ln))
