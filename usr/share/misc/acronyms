@@ -678,6 +678,7 @@ HTM       Hierarchical Temporal Memory
 HTML      Hypertext Markup Language
 HTTP      Hypertext Transfer Protocol
 HTTPD     Hypertext Transport Protocol Daemon
+HTTPS     HyperText Transfer Protocol Secure
 HTX       HyperTransport eXpansion
 HURD      Hird of Unix-Replacing Daemons
 HVD       Holographic Versatile Disc
@@ -692,6 +693,7 @@ ICE       In-Circuit Emulator
 ICE       Intrusion Countermeasure Electronics
 ICMP      Internet Control Message Protocol
 ICP       Internet Cache Protocol
+ICQ       I Seek You
 ICT       Information and Communication Technology
 IDE       Integrated Development Environment
 IDE       Integrated Drive Electronics
@@ -1006,6 +1008,7 @@ PARC      Palo Alto Research Center
 PATA      Parallel ATA
 PATRICIA  Practical Algorithm To Retrieve Information Coded In Alphanumeric
 PAUSE     Perl Authors Upload Server
+PBP       Perl Best Practices
 PC        Personal Computer
 PCB       Printed Circuit Board
 PCB       Process Control Block
@@ -1022,6 +1025,7 @@ PDH       Plesiochronous Digital Hierarchy
 PDL       Perl Data Language
 PDP       Programmed Data Processor
 PE        Physical Extents
+PERL      (1)  - The Perl language interpreter
 PERL      Pathologically Eclectic Rubbish Lister
 PERL      Practical Extraction and Reporting Language
 PGA       Pin Grid Array
@@ -1081,8 +1085,8 @@ PXI       PCI eXtensions for Instrumentation
 QA        Quality Assurance
 QDR       Quad Data Rate
 QFP       Quad Flat Package
-QOS       Quality of Service
-QOTD      Quote of the Day
+QOS       Quality Of Service
+QOTD      Quote Of The Day
 QT        Quasar Toolkit
 QTAM      Queued Teleprocessing Access Method
 RACF      Resource Access Control Facility
@@ -1181,6 +1185,7 @@ SDSL      Symmetric DSL
 SE        Single Ended
 SEAL      Semantics-directed Environment Adaptation Language
 SEI       Software Engineering Institute
+SEM       Security Event Manager
 SEO       Search Engine Optimization
 SFTP      Secure FTP
 SFTP      Simple File Transfer Protocol
@@ -1190,8 +1195,10 @@ SGML      Standard Generalized Markup Language
 SGR       Select Graphic Rendition
 SHA       Secure Hash Algorithm
 SHDSL     Single-pair High-speed Digital Subscriber Line
+SIEM      Security Information and Event Management
 SIGCAT    Special Interest Group on CD-ROM Applications and Technology
 SIGGRAPH  Special Interest Group on Graphics
+SIM       Security Information Management
 SIMD      Single Instruction, Multiple Data
 SIMM      Single Inline Memory Module
 SIP       Session Initiation Protocol
@@ -1292,6 +1299,7 @@ TNC       Terminal Node Controller
 TNC       Threaded Neill-Concelman connector
 TOAST     The Oversized-Attribute Storage Technique
 TOR       The Onion Router
+TOS       Type Of Service
 TPC       Transaction Processing Performance Council
 TPF       Transaction Processing Facility
 TROFF     Trace Off
@@ -1351,6 +1359,7 @@ VAX       Virtual Address eXtension
 VB        Visual Basic
 VBA       Visual Basic for Applications
 VBS       Visual Basic Script
+VCD       Video Compact Disc
 VCPI      Virtual Control Program Interface
 VCS       Version Control System
 VCS       Virtual Console Memory
