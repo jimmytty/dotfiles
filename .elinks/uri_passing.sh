@@ -47,10 +47,16 @@ EOF
             --html \
             --input "$filename" \
             --command "$xsh_src" |
-        $pandoc_cmd
+        $pandoc_cmd |         piconv -f utf8 -t latin1
     ) &>> $pandoc_file
 
     exit 0
+}
+
+emacs_w3m () {
+    /usr/bin/emacsclient \
+        --no-wait \
+        --eval '(w3m "'"$uri"'")'
 }
 
 $func_name
