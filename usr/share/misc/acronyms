@@ -251,6 +251,7 @@ ARPA      Advanced Research Projects Agency
 ARPANET   Advanced Research Projects Agency Network
 AS        Access Server
 ASCII     American Standard Code for Information Interchange
+ASDF      Another System Definition Facility
 ASG       Abstract Semantic Graph
 ASIC      Application-Specific Integrated Circuit
 ASIMO     Advanced Step in Innovative Mobility
@@ -449,6 +450,7 @@ DFA       Deterministic Finite Automaton
 DFD       Data Flow Diagram
 DFS       Depth-First Search
 DFS       Distributed File System
+DGA       Domain Generation Algorithm
 DGD       Dworkin's Game Driver
 DHCP      Dynamic Host Configuration Protocol
 DHTML     Dynamic Hypertext Markup Language
@@ -619,6 +621,7 @@ GDB       GNU Debugger
 GDI       Graphics Device Interface
 GEQO      Genetic Query Optimizer
 GFDL      GNU Free Documentation License
+GFS       Google File System
 GID       Group ID
 GIF       Graphics Interchange Format
 GIGO      Garbage In, Garbage Out
@@ -658,6 +661,7 @@ HCI       Human Computer Interaction
 HCL       Hardware Compatibility List
 HD        High Density
 HDD       Hard Disk Drive
+HDFS      Hadoop Distributed File System
 HDL       Hardware Description Language
 HDMI      High-Definition Multimedia Interface
 HF        High Frequency
@@ -864,6 +868,7 @@ MHZ       Megahertz
 MIB       Management Information Base
 MICR      Magnetic Ink Character Recognition
 MIDI      Musical Instrument Digital Interface
+MIM       man-in-the-middle attack
 MIMD      Multiple Instruction, Multiple Data
 MIME      Multipurpose Internet Mail Extensions
 MIMO      Multiple-Input Multiple-Output
@@ -873,6 +878,8 @@ MIPS      Million Instructions Per Second
 MIS       Management Information Systems
 MISD      Multiple Instruction, Single Data
 MIT       Massachusetts Institute of Technology
+MITM      man-in-the-middle attack
+MITMA     man-in-the-middle attack
 MMDS      Mortality Medical Data System
 MMI       Man Machine Interface.
 MMIO      Memory-Mapped I/O
@@ -989,6 +996,7 @@ ORDBMS    Object-Relational Database Management System
 ORM       Oject-Relational Mapping
 OS        Open Source
 OS        Operating System
+OSCAR     Open System for CommunicAtion in Realtime
 OSCON     O'Reilly Open Source CONvention
 OSDN      Open Source Developer Network
 OSI       Open Source Initiative
@@ -1178,6 +1186,7 @@ SDIO      Secure Digital Input Output
 SDK       Software Development Kit
 SDL       Simple DirectMedia Layer
 SDN       Service Delivery Network
+SDN       Software-Defined Networking
 SDP       Session Description Protocol
 SDR       Software-Defined Radio
 SDRAM     Synchronous Dynamic Random Access Memory
@@ -1187,6 +1196,7 @@ SEAL      Semantics-directed Environment Adaptation Language
 SEI       Software Engineering Institute
 SEM       Security Event Manager
 SEO       Search Engine Optimization
+SFD       Software Freedom Day
 SFTP      Secure FTP
 SFTP      Simple File Transfer Protocol
 SFTP      SSH File Transfer Protocol
@@ -1283,6 +1293,7 @@ TB        TeraByte
 TCL       Tool Command Language
 TCP       Transmission Control Protocol
 TCU       Telecommunication Control Unit
+TDD       Test Driven Development
 TDMA      Time Division Multiple Access
 TFT       Thin Film Transistor
 TFTP      Trivial File Transfer Protocol
