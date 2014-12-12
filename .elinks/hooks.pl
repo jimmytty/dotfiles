@@ -7,16 +7,18 @@ BEGIN {
 
 use common::sense;
 use autodie;
+use experimental q(smartmatch);
 use Encode;
-use List::Util qw[first];
 use File::Basename;
 use File::Spec::Unix;
-use URI;
-use URI::QueryParam;
-use URI::Escape;
+use List::Util qw[first];
+use Time::Piece;
 use HTML::TreeBuilder::LibXML;
 use Text::Unidecode;
 use Unicode::CheckUTF8 qw(is_utf8);
+use URI::Escape;
+use URI::QueryParam;
+use URI;
 
 use Log::Log4perl qw(:easy);
 my $logfile = dirname($0) . q(/hooks_log4perl.conf);
@@ -99,6 +101,25 @@ sub pre_format_html_hook {
             $node->delete();
         }
     } ## end if ( first { $uri->host...})
+    elsif ( $uri->host() eq q(metacpan.org)
+        && [ $uri->path_segments() ] ~~ [ q(), q(search) ] )
+    {
+        my %result;
+        my $node = $tree->findnodes(q{//div[@class="content search-results"]})
+            ->[0];
+        my $xpath = q{div[@class="module-result"]};
+        foreach my $result ( $node->findnodes($xpath) ) {
+            my $datetime = $result->findvalue(q{span[@class="relatize"]});
+            my $t = Time::Piece->strptime( $datetime, q(%d %b %Y %T %Z) );
+            push @{ $result{ $t->epoch() } }, $result;
+        }
+
+        foreach my $timestamp ( sort { $a <=> $b } keys %result ) {
+            foreach my $result ( @{ $result{$timestamp} } ) {
+                $node->unshift_content($result);
+            }
+        }
+    } ## end elsif ( $uri->host() eq q(metacpan.org)...)
 
     $html = $tree->as_HTML();
     $tree->eof();
@@ -225,7 +246,7 @@ sub goto_url_hook {
             keys %goto_url;
         say $fh sprintf q{<title>%s</title>}, $cur_url;
         foreach my $goto_url (@goto_url) {
-            my $file = $f->($goto_url{$goto_url});
+            my $file = $f->( $goto_url{$goto_url} );
             say $fh sprintf sprintf
                 q{<p><a href="%2$s"><b>%1$s</b></a> => <a href="%2$s">%2$s</a>},
                 $goto_url, $file;
