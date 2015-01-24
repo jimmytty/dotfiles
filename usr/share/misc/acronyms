@@ -1,4 +1,4 @@
-$vera 1.21.a [ftp://ftp.gnu.org/gnu/vera/vera-1.21a.tar.gz]]
+$vera 1.21.a [ftp://ftp.gnu.org/gnu/vera/vera-1.21a.tar.gz]
 100VG        100 Voice Grade [technology]
 10GE         10 GigaBIT Ethernet (ethernet, BIT)
 1D2B         1 D-channel 2 B-channels (BRI, ISDN)
@@ -562,8 +562,8 @@ ANT          Another Neat Tool (Java)
 ANTC         Advanced Networking Test Center (org., USA, AMD, FDDI)
 ANTLR        ANother Tool for Language Recognition, "Antlr"
 ANTS         Advanced .NET Testing System (.NET, Red-Gate)
-ANTS         AT&T Novell Telephone Services (AT&T, Novell), "A/NTS" 
-ANUML        Australian National University Meta Language, "ANU ML" 
+ANTS         AT&T Novell Telephone Services (AT&T, Novell), "A/NTS"
+ANUML        Australian National University Meta Language, "ANU ML"
 AO           Arvutikasutaja Oskustunnistus (Org, Estonia), http://www.ao.ee/
 AOA          American Optometric Association (org., USA)
 AOAC         Always On, Always Connected (NBS)
@@ -673,7 +673,7 @@ ARAT         Always Running APIC Timer (Intel, APIC)
 ARB          Architecture Review Board (OpenGL, manufacturer, org.), http://www.opengl.org/about/arb/
 ARC          Advanced RISC Computing [architecture] (ACE, RISC)
 ARCA         Advanced RISC Computing Architecture (ACE, RISC)
-ARCNET       Attached Resource Computer NETwork (Datapoint), "ARCnet" 
+ARCNET       Attached Resource Computer NETwork (Datapoint), "ARCnet"
 ARD          Apple Remote Desktop (Apple, Macintosh)
 ARE          All Routes Explorer (ATM)
 AREXX        Amiga Restructured EXtended eXecutor [language] (Amiga, Commodore, REXX)
@@ -908,7 +908,7 @@ AUTOSAR      AUTomotive Open Systems Architecture [initiative] (org.)
 AUTOSEVOCOM  AUTOmated SEcure VOice COMmunications (predecessor, SVIP, mil., USA)
 AUTOVON      AUTOmatic VOice Network (predecessor, DSN, DISA)
 AUU          ATM User-to-User (ATM)
-AUX          Apple UniX (Apple, Unix), "A/UX" 
+AUX          Apple UniX (Apple, Unix), "A/UX"
 AUX          Auxiliary Power Unit (Airbus, A380)
 AV           Audio/Video, "A/V"
 AV           AudioVisual [macintosh] (Apple)
@@ -1098,7 +1098,7 @@ BGI          Borland Graphics Interface (Borland)
 BGP          Border Gateway Protocol (RFC 1267/1771, IP), ftp://ftp.rfc-editor.org/in-notes/rfc1721.txt, ftp://ftp.rfc-editor.org/in-notes/rfc1267.txt
 BGT          Broadcast and Group Translators
 BHCA         Busy Hour Call Attempts
-BHLI         Broadband High Layer Information, "B-HLI" 
+BHLI         Broadband High Layer Information, "B-HLI"
 BHN          Bayerisches Hochschulnetz (network), http://www.bhn.de
 BHO          Browser Helper Objects (MS, IE)
 BHT          Branch History Table (CPU)
@@ -1114,7 +1114,7 @@ BIB          Bus Interface Board
 BIC          Bank Identifier Code (banking)
 BIC          Bit Independence Criterion (cryptography, BIT)
 BIC          Bus Interface Chip (DVR)
-BICI         Broadband InterCarrier Interface (B-ISDN), "B-ICI" 
+BICI         Broadband InterCarrier Interface (B-ISDN), "B-ICI"
 BID          Bugtraq IDentification (Securityfocus)
 BIDCO        BIDirectional COmmunication Standard, BidCoS
 BIDI         BIDirectional
@@ -1136,9 +1136,9 @@ BIP          Bit Interleaved Parity (SONET, ..., BIT)
 BIPV         Bit Interleaved Parity Violation (BIT)
 BIRA         Belgian Institute for Automatic Control (org., Belgium)
 BIS          Business Information System
-BISDN        Broadband Integrated Services Digital Network (ATM), "B-ISDN" 
+BISDN        Broadband Integrated Services Digital Network (ATM), "B-ISDN"
 BISP         Business Information System Program
-BISSI        Broadband Inter-Switching System Interface (B-ISDN), "B-ISSI" 
+BISSI        Broadband Inter-Switching System Interface (B-ISDN), "B-ISSI"
 BIST         Built-In Self Test (Power4, IBM)
 BISUP        Broadband ISDN User's Part (B-ISDN), "B-ISUP"
 BISYNC       Binary SYNchronous Communications (IBM)
@@ -1160,7 +1160,7 @@ BLAST        BLocked ASynchronous Transmission
 BLER         BLock Error Rate (CD)
 BLERA        BLock Error Rate After [recording] (DVD), "BLERa"
 BLERB        BLock Error Rate Before [recording] (DVD), "BLERb"
-BLLI         Broadband Low Layer Information (BISDN), "B-LLI" 
+BLLI         Broadband Low Layer Information (BISDN), "B-LLI"
 BLM          Bayerische Landeszentrale fuer neue Medien (org.), http://www.blm.de
 BLMX         Board-Level Multitasking eXecutive (OS)
 BLOB         Binary Large OBject
@@ -1599,25 +1599,25 @@ CDC          Connected Device Configuration (JVM)
 CDC          Control Data Corporation (manufacturer), http://www.cdc.com
 CDC          Cult of the Dead Cow (org.), "cDc", http://www.cultdeadcow.com
 CDD          Component Design Document
-CDDA         Compact Disk - Digital Audio (CD, Digital audio), "CD-DA" 
+CDDA         Compact Disk - Digital Audio (CD, Digital audio), "CD-DA"
 CDDI         Copper Distributed Data Interface (FDDI, UTP)
 CDE          Certified Directory Engineer (Novell, Netware), http://www.novell.com/education/cde/
 CDE          Common Desktop Environment (Unix)
-CDE          Compact Disk - Erasable (CD), "CD-E" 
+CDE          Compact Disk - Erasable (CD), "CD-E"
 CDE          Cooperative Development Environment (Oracle)
 CDEF         Control DEfinition Functions (Apple, MDEF)
 CDF          Channel Definition Format (MS, Internet, XML)
 CDF          Compound Document Framework (IBM, OLE)
 CDFS         Compact Disk File System (CD, OS/2, IBM)
-CDG          Compact Disk + Graphics (CD), "CD+G" 
-CDI          Compact Disk - Interactive (CD), "CD-I" 
+CDG          Compact Disk + Graphics (CD), "CD+G"
+CDI          Compact Disk - Interactive (CD), "CD-I"
 CDIF         CASE Data Interchange Format (CASE)
 CDK          Control Development Toolkit (MS, VB)
 CDM          Compressed Data Mode
 CDM          Conceptional Data Model (DB, PDM, Powerdesigner)
 CDMA         Code Division Multiple Access (telecommunication, mobile-systems)
-CDMIDI       Compact Disk + Musical Instruments Digital Interface (CD, MIDI), "CD+MIDI" 
-CDMO         Compact Disk - Magneto Optical (CD), "CD-MO" 
+CDMIDI       Compact Disk + Musical Instruments Digital Interface (CD, MIDI), "CD+MIDI"
+CDMO         Compact Disk - Magneto Optical (CD), "CD-MO"
 CDMRW        Compact Disk - Mount Rainier Washington (CD-RW, CD), "CD-MRW"
 CDMS         Command and Data Management System (ESA, Venus-Express)
 CDMS         Communication Driver Maintenance System (ISDN, HST)
@@ -1628,13 +1628,13 @@ CDO          Common Data Objects (MS, ASP)
 CDPC         Cellular Digital Packet Data
 CDPD         Cellular Digital Packet Data (mobile-systems)
 CDPN         Context Dependent Path Names (CDSL, NFS, GFS)
-CDR          Compact Disk - Recordable (CD), "CD-R" 
+CDR          Compact Disk - Recordable (CD), "CD-R"
 CDR          Contents of the Decrement Register (IBM, ELISP, CAR)
 CDRA         Character Data Representation Architecture
 CDRAM        Cached Dynamic Random Access Memory (RAM, DRAM, IC)
 CDRM         Cross Domain Resource Manager (VTAM, SSCP, IBM)
-CDROM        Compact Disk - Read Only Memory (CD, ROM), "CD-ROM" 
-CDROMXA      Compact Disk - ROM / eXtended Architecture (CD, MPC, ROM), "CD-ROM/XA" 
+CDROM        Compact Disk - Read Only Memory (CD, ROM), "CD-ROM"
+CDROMXA      Compact Disk - ROM / eXtended Architecture (CD, MPC, ROM), "CD-ROM/XA"
 CDRW         Compact Disk - ReWritable (CD), "CD-RW"
 CDS          Cell Directory Service (DCE)
 CDS          Class Data Sharing (Java)
@@ -1650,7 +1650,7 @@ CDT          Compressed Domain Transcoder (DVD)
 CDTV         Commodore Dynamic Total Vision (Commodore)
 CDV          Cell Delay Variation (UNI, ATM, QOS)
 CDVT         Cell Delay Variation Tolerance (UNI, ATM, CDV)
-CDWO         Compact Disk - Write Once (CD), "CD-WO" 
+CDWO         Compact Disk - Write Once (CD), "CD-WO"
 CE           Communaute / Comunique Europeenne (Europe)
 CE           Communications-Electronics, "C-E"
 CE           Compact Edition (MS, Windows)
@@ -2128,7 +2128,7 @@ CRTC         Cathode Ray Tube Controller (EGA, VGA, MCGA)
 CRTM         Core Root of Trust for Management (TCPA)
 CS           Carrier Selection
 CS           Chip Select (IC)
-CS           Client/Server, "C/S" 
+CS           Client/Server, "C/S"
 CS           Code Segment [register] (CPU, Intel, assembler)
 CS           Coding Scheme (GPRS, mobile-systems)
 CS           Computer Science
@@ -2182,7 +2182,7 @@ CSM          Certified Scrum Master (Scrum)
 CSM          Cluster System Management (IBM)
 CSM          Compatibility Support Module (UEFI)
 CSMA         Carrier Sense Multiple Access
-CSMACA       Carrier Sense Multiple Access with Collision Avoidance, "CSMA/CA" 
+CSMACA       Carrier Sense Multiple Access with Collision Avoidance, "CSMA/CA"
 CSMACD       Carrier Sense Multiple Access with Collision Detection (IEEE 802.3, ethernet, CSMA/CD), "CSMA/CD"
 CSMS         C Specific Media Support (NEST, MLID, Novell)
 CSMUX        Circuit Switching MUltipleXer (FDDI), "CS-MUX"
@@ -2617,7 +2617,7 @@ DESRT        DEStek [group] Real Time (OS, Destek Group), "DES RT"
 DESTA        Digital Ethernet thin-wire STation Adapter (ethernet)
 DESX         Data Encryption Standard eXtended (DES, cryptography)
 DET          Directory Entry Table (Novell, Netware)
-DETEBERKOM   DEutsche TElekom BERliner KOMmunikationssystem, "DeTeBerkom" 
+DETEBERKOM   DEutsche TElekom BERliner KOMmunikationssystem, "DeTeBerkom"
 DEUNA        Digital Ethernet Unibus Network Adapter (ethernet)
 DEVFS        DEVice File System (Linux, DRI), "DevFS"
 DEVIL        Developer's Image Library (OpenIL), "DevIL", http://openil.sourceforge.net/
@@ -2659,7 +2659,7 @@ DGP          Dissimilar Gateway Protocol
 DGPS         Differential Global Positioning System (GPS)
 DGS          Display GhostScript (GNU, GNUStep, PS)
 DGSA         Defense Goal Security Architecture (mil., USA)
-DGUX         Data General / UniX (Unix), "DG/UX" 
+DGUX         Data General / UniX (Unix), "DG/UX"
 DHCF         Distributed Host Command Facility (IBM, CCS)
 DHCP         Dynamic Host Configuration Protocol (TCP/IP, IETF, RFC 2131), ftp://ftp.rfc-editor.org/in-notes/rfc2131.txt
 DHES         Direct Heat Exhaust System
@@ -2813,7 +2813,7 @@ DMS          Distributed Media Services (COSE)
 DMS          Document Management System
 DMS          Document Management System (CMS)
 DMSC         Drive Motor Speed Control
-DMSCMS       Display Management System/Conversional Monitor System, "DMS/CMS" 
+DMSCMS       Display Management System/Conversional Monitor System, "DMS/CMS"
 DMSIG        Defense Message System Implementation Group (org., DMS, mil., USA)
 DMSP         Distributed Mail System Protocol (Internet)
 DMSTWG       Defense Message System Transition Working Group (org., DMS, mil., USA)
@@ -2923,7 +2923,7 @@ DPMS         DOS Protected Mode Services (Novell, DOS)
 DPN          Data Packet Network (Nortel)
 DPN          Data Processing Node (MODEM)
 DPN          Deutsches Provider Network (ISP), http://www.dpn.de
-DPNPH        Data Packet Network-Packet Handler, "DPN-PH" 
+DPNPH        Data Packet Network-Packet Handler, "DPN-PH"
 DPNSS        Digital Private Network Signaling System (British Telecom)
 DPOE         DOCSIS Provisioning Over EPON (DOCSIS, EPON), "DPoE"
 DPOF         Digital / Direct Print Order Format (printing)
@@ -3217,7 +3217,7 @@ E4           European digital transmission format 4 [139.264 Mbps]
 E4X          Ecmascript for XML (ECMA, XML)
 E5           European digital transmission format 5 [565.148 Mbps]
 EA           Effective Address (Power4, IBM, CPU)
-EA           Eingabe/Ausgabe, "E/A" 
+EA           Eingabe/Ausgabe, "E/A"
 EA           Enterprise Agreement (Adobe)
 EA           Enterprise Agreement (MS)
 EA           Escrowed Authenticator (cryptography, EES)
@@ -3228,7 +3228,7 @@ EAC          Enhanced Audio CODEC (EVD, CODEC)
 EACEM        European Association of Consumer Electronics Manufacturers (org., Europe)
 EAD          Encoded Archival Description (SGML)
 EADAS        Engineering and Administrative Data Acquisition System (EADAS)
-EADASNM      EADAS/Network Management (EADAS), "EADAS/NM" 
+EADASNM      EADAS/Network Management (EADAS), "EADAS/NM"
 EADF         Elliptical Aperture with Dynamic Focus
 EAF          Export address table Access Filtering
 EAI          Enterprise Application Integration
@@ -3277,7 +3277,7 @@ EBNF         Extended Backus-Naur-Form
 EBR          Enterprise Backup and Restore (ENS, Banyan, VINES)
 EBR          Extended Boot Record (MBR)
 EBR          External Backup Restore (IDS, Informix, DB)
-EBROM        Electronic Book - Read Only Memory (ROM), "EB-ROM" 
+EBROM        Electronic Book - Read Only Memory (ROM), "EB-ROM"
 EBU          European Broadcasting Union (org., Europe)
 EBUS         Elektronisches teile-BUchungsSystem (MBAG)
 EBV          Elektronische BildVerarbeitung
@@ -3322,7 +3322,7 @@ ECN          European Counter Network
 ECN          Explicit Congestion Notification (IP, RFC 2481), ftp://ftp.rfc-editor.org/in-notes/rfc2481.txt
 ECNE         Enterprise Certified Novell Engineer (Novell, Netware)
 ECOC         European Conference on Optical Communications (Konferenz)
-ECOM         Electronic Computer Originated Mail, "E-COM" 
+ECOM         Electronic Computer Originated Mail, "E-COM"
 ECOOP        European Conference on Object Orientated Programming (OOP, conference)
 ECP          Enhanced Capability Port (MS)
 ECP          Enhanced Communication Port / Protocol
@@ -3364,7 +3364,7 @@ EDM          Extended Data Message
 EDMCC        European Distributed Memory Computing Conference (GI, ITG, IFIP, conference)
 EDMS         Engineering Document Management System
 EDO          Extended Data Out [RAM] (RAM, DRAM, IC)
-EDODRAM      Extended Data Out Dynamic Random Access Memory (RAM), "EDO-DRAM" 
+EDODRAM      Extended Data Out Dynamic Random Access Memory (RAM), "EDO-DRAM"
 EDORAM       Extended Data Out Random Access Memory (RAM, IC), "EDO-RAM"
 EDOS         Elektronisches DateiOrganisationsSystem (MBAG)
 EDP          Electronic Data Processing
@@ -3815,7 +3815,7 @@ FC           Feedback Control
 FC           Fibre Channel (FC)
 FC           Frame Control (FDDI, Token Ring)
 FCA          Flow Control Ack (DLSW)
-FCAL         Fibre Channel - Arbitrated Loop, "FC-AL" 
+FCAL         Fibre Channel - Arbitrated Loop, "FC-AL"
 FCAPS        Fault, Configuration, Accounting, Performance, Security [management areas]
 FCB          File Control Block (DOS)
 FCBS         File Control BlockS (DOS)
@@ -3857,7 +3857,7 @@ FDCT         Fast Discrete Cosine Transformation (DCT)
 FDD          Floppy Disk Drive
 FDD          Frequency Division Duplex (mobile-systems)
 FDDI         Fiber Distributed Data Interface (ANSI, ISO 8314)
-FDDITPPMD    FDDI Twisted Pair-Physical layer, Medium Dependent, "FDDI TP-PMD" 
+FDDITPPMD    FDDI Twisted Pair-Physical layer, Medium Dependent, "FDDI TP-PMD"
 FDE          Full Duplex Ethernet (ethernet)
 FDES         Full Duplex EtherSwitch (Kalpana)
 FDI          [fachverband der ] Fuehrungskraefte der Druckindustrie und Informationsverarbeitung (org.)
@@ -4296,7 +4296,7 @@ GGP          Gateway to Gateway Protocol (RFC 823), ftp://ftp.rfc-editor.org/in-
 GGS          GueteGemeinschaft Software [e.v.] (org.)
 GGSN         Gateway GPRS Support Node (GPRS, mobile-systems)
 GHOST        Goal Hierarchy and Objectives Structuring Technique (TUB)
-GHTSTN       Guest Host Technique SuperTwisted Nematic (LCD), "GHT-STN" 
+GHTSTN       Guest Host Technique SuperTwisted Nematic (LCD), "GHT-STN"
 GI           Gesellschaft fuer Informatik (org.), http://www.gi-ev.de
 GIAC         Global Information Assurance Certification (org.), http://www.giac.org
 GIBI         GIgaBInary [(2^10)^3] (IEC)
@@ -4379,7 +4379,7 @@ GNX400       Gateway Network eXchange 400 (Proteon, SNA, SDLC), "GNX 400"
 GOBS         Grundsaetze Ordnungsmaessiger DVgestuetzter BuchfuehrungsSysteme (DV), "GoBS"
 GOCA         Graphic Object Content Architecture (IBM, MO:DCA)
 GOD          Global OutDial
-GOD          Grundsaetze ordnungsmaessiger Datenverarbeitung, "GoD" 
+GOD          Grundsaetze ordnungsmaessiger Datenverarbeitung, "GoD"
 GOEP         Generic Object Exchange Profile (Bluetooth, SPP)
 GOK          GNOME On-screen Keyboard (GNOME)
 GOMS         Goals, Operators, Methods, Selection [theory]
@@ -4513,7 +4513,7 @@ HAL          Hackers At Large (org.)
 HAL          Hard Array Logic
 HAL          Hardware Abstraction Layer (Windows NT)
 HAL          Heuristically programmed ALgorithmic computer (2001)
-HALPC        Houston Area League of PC-Users, "HAL-PC" 
+HALPC        Houston Area League of PC-Users, "HAL-PC"
 HAMPS        Host AUTODIN Message Processing System (AUTODIN, mil.)
 HAND         have a nice day
 HAND         Have A Nice Day (slang, Usenet, IRC)
@@ -4594,7 +4594,7 @@ HES          Honeywell Executive System (OS, Honeywell 800)
 HEVC         High Efficiency Video Coding (MPEG)
 HF           Have Fun (slang, Usenet, IRC)
 HFC          Hybrid Fiber Coax [network] (DOCSIS)
-HFD          Hauptanschluss fuer Direktruf / Datenleitung (DTAG), "HfD" 
+HFD          Hauptanschluss fuer Direktruf / Datenleitung (DTAG), "HfD"
 HFDS         Highly Functional Distributed System (MTRON)
 HFP          Hands Free Profile (Bluetooth, SPP)
 HFS          Hierachical File System (Apple, CD, MACOS)
@@ -4683,7 +4683,7 @@ HPRILOE      ??? - Remote Insight Lights-Out Edition, "HP-RILOE"
 HPS          Hardware Product Services
 HPS          High Performance Switch (IBM)
 HPTS         High Performance Transaction Systems
-HPUX         Hewlett Packard / UniX (Unix), "HP/UX" 
+HPUX         Hewlett Packard / UniX (Unix), "HP/UX"
 HPVEE        Hewlett-Packard Visual Engineering Environment (HP, GUI), "HP VEE"
 HPVUE        Hewlett Packard - Visual User Environment (HP, GUI), "HP-VUE"
 HQL          Hibernate Query Language
@@ -4708,8 +4708,8 @@ HSI          High Speed Interconnect (Nvidia, AGP, PCIe)
 HSI          High Speed Interface
 HSI          Hue, Saturation, Intensity (DTP)
 HSIE         Homeland Security Information Exchange (Expertelligence, Grid), "HS/IE"
-HSIS         ??? High Speed Interface / SNA, "HSI/S" 
-HSLAN        High Speed Local Area Network, "HS-LAN" 
+HSIS         ??? High Speed Interface / SNA, "HSI/S"
+HSLAN        High Speed Local Area Network, "HS-LAN"
 HSLFX        Hierarchical Specification Language - Function Extension (HDL, NTT, LSI), "HSL-FX"
 HSLN         High Speed Local Network
 HSM          Hardware Security Module (banking)
@@ -4917,7 +4917,7 @@ ICS          IBM Cabling System
 ICS          International Classification for Standards (ISO)
 ICS          Internet Connection Sharing (MS, IE, DHCP)
 ICS          Irish Computer Society (org., Irland), http://www.ics.ie
-ICSC         Intelligent Channel/Storage Control, "IC/SC" 
+ICSC         Intelligent Channel/Storage Control, "IC/SC"
 ICSI         International Computer Science Institute (org., USA), http://http.icsi.berkeley.edu
 ICSS         Internet Connection Secure Server (IBM, WWW)
 ICST         International Conference on Sensing Technology
@@ -5174,7 +5174,7 @@ IMSESA       Information Management System/Enterprise Systems Architecture (IBM)
 IMSI         International Mobile Subscriber Identity (MM, GSM, mobile-systems)
 IMSO         Integrated Micro Systems Operation (Intel)
 IMSP         Internet Message Support Protocol (Internet)
-IMSVS        Information Management System/Virtual Storage, "IMS/VS" 
+IMSVS        Information Management System/Virtual Storage, "IMS/VS"
 IMT2000      International Mobile Telecommunications [at] 2000 [Mhz] (mobile-systems), "IMT-2000"
 IMTC         International Multimedia Teleconferencing Consortium (org., MS, Intel, Apple, IBM, SNI, AT&T, ...), http://www.imtc.org/imtc
 IMUNE        Intrusion Mitigation Unified Network Engine (Symantec, IDS)
@@ -5187,7 +5187,7 @@ INAP         Intelligent Network Application Protocol (IN)
 INCM         Intelligent Network Conceptual Model (IN)
 INCORE       INternet COntent Rating for Europe (org., Internet), http://www.incore.org
 INDC         [international conference on] Information Networks and Data Communication (IFIP, conference)
-INET         International NETworking conference (Konferenz), "iNET" 
+INET         International NETworking conference (Konferenz), "iNET"
 INGRES       INteractive Graphic REtrieval System
 INHOPE       INternet HOtline Providers in Europe (org., ISP)
 INL          Inter Node Link
@@ -5207,7 +5207,7 @@ INTERNIC     Inter Network Information Center (org., Internet), "InterNIC", http
 INTP         INTercom Profile (Bluetooth), "IntP"
 INX          INformation eXchange
 INXS         INternet eXchange Service (ECRC)
-IO           Input/Output, "I/O" 
+IO           Input/Output, "I/O"
 IOAT         Input/Output Acceleration Technology (Intel, Xeon), "I/OAT"
 IOC          Initial Operational Capability
 IOC          Input / Output Controller
@@ -5492,7 +5492,7 @@ ITYM         I think you mean
 ITYM         I Think You Meant (telecommunication, Usenet, IRC)
 IU           Integer Unit (CPU)
 IUCV         Inter-User Communications Vehicle (IBM, TCP/IP, API, VM/ESA, CP)
-IUK          Informations- und Kommunikationstechnik, "IuK" 
+IUK          Informations- und Kommunikationstechnik, "IuK"
 IUKDG        Informations- Und KommunikationsDiensteGesetz telecommunication, Germany
 IUMA         Internet Underground Music Archive (WWW), http://www.iuma.com
 IUP          Interim Update Package (3COM)
@@ -5988,7 +5988,7 @@ LMML         Learning Material Markup Language
 LMQ          Load Miss Queue (Power4, IBM, CPU)
 LMS          Library Maintenance System (BS2000)
 LMSO         laughing my socks off
-LMU          LAN Manager for Unix (Unix), "LM/U" 
+LMU          LAN Manager for Unix (Unix), "LM/U"
 LMX          LAN Manager for uniX (LAN, Unix, MS), "LM/X"
 LNA          Low Noise Amplifier (GPS)
 LNB          Line Number Block
@@ -6167,7 +6167,7 @@ MAPOS        Multiple Access Protocol over SONET/SDH (SONET, SDH, RFC 2171), ftp
 MAPP         Microsoft Active Protections Program (MS)
 MAPS         Microsoft Active Protection System (MS, MSE)
 MAPS         Multiple Airflow Pass-through Structure (Scythe), M.A.P.S.
-MAPTOP       Manufacturing Automation Protocol/Technical Office Protocol, "MAP/TOP" 
+MAPTOP       Manufacturing Automation Protocol/Technical Office Protocol, "MAP/TOP"
 MAR          Microprogram Address Register (IC)
 MAR          Microsoft Authorized Refurbisher [program] (MS)
 MARC         MAchine Readable Cataloging [record]
@@ -6238,7 +6238,7 @@ MCP          Media and Communications Processor (IC)
 MCP          Merlin Convenience Pack (IDB, OS/2)
 MCP          Multiple-Chip Product (Intel)
 MCP          Multiport / Multiprotocol Communication Processor
-MCPAS        Master Control Program/Advanced System, "MCP/AS" 
+MCPAS        Master Control Program/Advanced System, "MCP/AS"
 MCPC         Multi Channel Per Carrier
 MCPS         Microsoft Certified Product Specialist (MS, ATEC)
 MCR          Minimum Cell Rate (UNI, ATM, PCR, ABR)
@@ -6562,7 +6562,7 @@ MOU          Memorandum Of Understanding (IPOC, TLD, Internet)
 MOUS         Microsoft Office User Specialist (MS, Windows)
 MOVE         Microsoft Overlay Virtual Environment (MS)
 MOVI         [projekt] MObile VIsualisierung (DFG)
-MOWORM       Magneto-Optical Write Once Read Many, "MO-WORM" 
+MOWORM       Magneto-Optical Write Once Read Many, "MO-WORM"
 MP           Management Pack (MS, MOM)
 MP           MegaPIXEL (PIXEL, photo)
 MP           Multi Processor
@@ -6620,7 +6620,7 @@ MPTA         Multi Protocol Transport Architecture (IBM, SNA)
 MPTCP        MultiPath TCP (TCP)
 MPTN         Multi Protocol Transport Networking (IBM)
 MPTS         Multi Protocol Transport Services (IBM, MPTN)
-MPTS2        Multi Protocol Transport Services / 2 (IBM, OS/2), "MPTN/2" 
+MPTS2        Multi Protocol Transport Services / 2 (IBM, OS/2), "MPTN/2"
 MPU          MicroProcessor Unit (SIA, RL)
 MPU401       MIDI Processing Unit 401 (Roland, MIDI), "MPU 401"
 MPW          Macintosh Programmers Workshop (Apple)
@@ -6821,9 +6821,9 @@ MVS          Multiple Virtual Storage (IBM, OS, OS/MVS)
 MVS          Multiple Virtual System (OS)
 MVSESA       Multiple Virtual Storage/Extended System Architecture (IBM), "MVS/ESA"
 MVSESASP     Multiple Virtual Storage/Extended System Architecture System Product (IBM), "MVS/ESA SP"
-MVSSP        Multiple Virtual Storage/System Product, "MVS/SP" 
+MVSSP        Multiple Virtual Storage/System Product, "MVS/SP"
 MVSTSO       Multiple Virtual Storage/Time Sharing Option (IBM), "MVS/TSO"
-MVSXA        Multiple Virtual Storage/eXtended Architecture, "MVS/XA" 
+MVSXA        Multiple Virtual Storage/eXtended Architecture, "MVS/XA"
 MVT          Multiprogramming with a Variable number of Tasks (IBM, OS/MVT, OS)
 MWC          Mobile World Congress (mobile-systems, conference)
 MWCM         Molecular Wire Crossbar Memory (RAM, IC, HP)
@@ -7017,7 +7017,7 @@ NEC          National Electrical Code (USA)
 NEC          Nippon Electronic Corporation (manufacturer), http://www.nec.com
 NED          NASA Extragalactic Database (DB)
 NEDO         New Energy and industrial technology Development Organization (org., Japan)
-NEFS         Network Extensible File System, "NeFS" 
+NEFS         Network Extensible File System, "NeFS"
 NEII         National Engineering Information Initiative (org., USA)
 NEM          No-Eviction Mode (Intel, HT, CPU)
 NEM          Nothing Else Matters (slang, Usenet, IRC)
@@ -7040,8 +7040,8 @@ NETDA        NETwork Design and Analysis
 NETPARS      NETwork Performing Analysis Reporting System
 NETSS        National Electronic Telecommunication Surveillance System (USA)
 NEWS         Netware Early Warning System (Novell, Netware)
-NEWS         Networked Extensible Windowing System (Sun), "NeWS" 
-NEWT         NeWS Terminal, "NeWT" 
+NEWS         Networked Extensible Windowing System (Sun), "NeWS"
+NEWT         NeWS Terminal, "NeWT"
 NEXT         NEw eXtended Technology, "NeXT" , http://www.next.com
 NFA          Name Field Address (Forth)
 NFA          Non-determistic Finite-state Automation
@@ -7084,7 +7084,7 @@ NIC          Network Information Center (Internet, org.)
 NIC          Network Interface Card / Controller
 NIC          Numeric Intensive Computing
 NICAM        Near-Instantaneously Companded Audio Multiplex (audio)
-NICD         NIckel CaDmium [batterie], "NiCd" 
+NICD         NIckel CaDmium [batterie], "NiCd"
 NICE         Network Information and Control Exchange (DECNET)
 NICOL        Network Information Center On-Line
 NICOLAS      Network Information Center On-Line Aid System
@@ -7100,7 +7100,7 @@ NIHCL        National Institute of Health [c++] Class Library (PD)
 NII          National Information Infrastructure [program] (USA, org.), http://nii.nist.gov
 NIIT         National Information Infrastructure Testbed (ISH, USA)
 NILFS        New Implementation of a Log-structured File System (FS)
-NIMH         NIckel Metal Hydride [battery], "NiMH" 
+NIMH         NIckel Metal Hydride [battery], "NiMH"
 NIMT         National Institute for Management Technology (org., Irland), http://www.nimt.rtc-cork.ie/nimt.html
 NIPC         National Infrastructure Protection Center (org., USA)
 NIPT         [international symposium on] New Information Processing Technologies (conference, MITI)
@@ -7115,7 +7115,7 @@ NISO         National Information Standards Organization (org., USA)
 NISS         National Information on Software and Services (USA)
 NISSPAC      NISS Public Access Collections (NISS)
 NIST         National Institute of Standards and Technology (org., USA), http://www.nist.gov
-NISYP        Network Information System / Yellow Pages, "NIS/yp" 
+NISYP        Network Information System / Yellow Pages, "NIS/yp"
 NIT          Network Information Tabel (DVB)
 NITF         National Imagery Transmission Format
 NITOL        Norway-net with IT for Open Learning (network)
@@ -7276,7 +7276,7 @@ NSERC        Natural Sciences and Research Council (org., USA)
 NSF          National Science Foundation (org., USA), http://www.nsf.gov
 NSF          Norges StandardiseringsForbund (org., Norway), http://www.standard.no
 NSF          Notes Storage Facility (Lotus)
-NSFIP        NextStep Fuer IntelProzessoren, "NSfIP" 
+NSFIP        NextStep Fuer IntelProzessoren, "NSfIP"
 NSFNET       National Science Foundation NETwork (network, USA, Internet), "NSFnet"
 NSFW         Not Safe For Work (slang, WWW)
 NSG          Network Services Group
@@ -7558,7 +7558,7 @@ OLS          Online Library System
 OLSR         Optimized Link State Routing (MANET, OLSR, RFC 3626), ftp://ftp.rfc-editor.org/in-notes/rfc3626.txt
 OLT          Optical Line Terminal (EPON)
 OLTEP        OnLine Test Executive Program
-OLTM         Optical Line Terminating Multiplexer, "O-LTM" 
+OLTM         Optical Line Terminating Multiplexer, "O-LTM"
 OLTP         OnLine Transaction Processing
 OLWM         OpenLook Window Manager (OpenLook)
 OM1          Open MPEG consortium 1 (org., MPEG), "OM-1", http://www.openmpeg.org
@@ -7575,7 +7575,7 @@ OMFI         Open Media Framework Interchange (OMF)
 OMG          Object Management Group (IBM, HP, DEC, Tandem, Sun, org.), http://www.omg.org
 OMG          Oh My G-d (slang, Usenet, IRC)
 OMI          Open Messaging Interface
-OMISTN       Optical Mode Interface SuperTwisted Nematic (LCD), "OMI-STN" 
+OMISTN       Optical Mode Interface SuperTwisted Nematic (LCD), "OMI-STN"
 OMN          Open Network Management
 OMR          Optical Mark Reader (Fax)
 OMR          Optical Mark Recognition
@@ -7590,7 +7590,7 @@ ONA          Open Network Architecture
 ONAC         Operations Network Administration Center
 ONAL         Off Network Access Line
 ONC          Open Network Computing (Sun)
-ONCXDR       Open Network Computing eXternal Data Representation (Sun), "ONC XDR" 
+ONCXDR       Open Network Computing eXternal Data Representation (Sun), "ONC XDR"
 ONE          Omnifunctional Networking Environment (Panasonic)
 ONE          Open Network Environment (Netscape)
 ONFI         Open NAND Flash Interface (Flash), "ONFi", http://onfi.org
@@ -7684,7 +7684,7 @@ ORDBMS       Object Relational Database Management System (DBMS, DB)
 ORK          Office Resource Kit (MS, Windows)
 ORM          Object Role Modeling (OO, DB)
 ORM          Optical Remote Module
-OROM         Optical Read Only Memory (ROM), "O-ROM" 
+OROM         Optical Read Only Memory (ROM), "O-ROM"
 ORS          Output Record Separator (AWK)
 ORT          Ongoing Reliability Test
 OS           Operating System
@@ -7735,7 +7735,7 @@ OSI          Open Systems Interconnection (ISO 9646-1)
 OSICS        OSI Communication Systems (OSI)
 OSID         Origination Signaling IDentifier
 OSINLCP      [PPP] OSI Network Layer Control Protocol (OSI, PPP, RFC 1377), ftp://ftp.rfc-editor.org/in-notes/rfc1377.txt
-OSIRM        Open Systems Interconnection/Reference Model (ISO), "OSI/RM" 
+OSIRM        Open Systems Interconnection/Reference Model (ISO), "OSI/RM"
 OSKA         ObjektSchluesselKAtalog (ATKIS)
 OSL          Open Subscription License
 OSM          Operating system Service Module (I2O)
@@ -7768,7 +7768,7 @@ OSTP         Office of Science and Technology Policy (org., USA), http://www.whi
 OSVS1        Operating System / Virtual System - 1 (OS, IBM, S/370), "OS/VS-1"
 OSVS2        (IBM, MVS), "OS/VS2"
 OSVS2        Operating System / Virtual System - 2 (OS, IBM, S/370), "OS/VS-2"
-OSWL2        OS-9 Windows / Level 2, "OSW/L2" 
+OSWL2        OS-9 Windows / Level 2, "OSW/L2"
 OSWS         Operating System Work Station
 OT           Object Technology
 OT           Off Topic (slang, Usenet)
@@ -7812,7 +7812,7 @@ OWL          Object Windows Library (Borland, API)
 OWL          Ontology Web Language (WWW, W3C)
 OWL          Open Windows Library (API)
 OWLDL        Ontology Web Language Description Logic (OWL), "OWL DL"
-OWORM        Optical Write Once Read Many, "O-WORM" 
+OWORM        Optical Write Once Read Many, "O-WORM"
 OWS          OpenGIS Web Service (OGC, Internet)
 P2CC2P       PCI to CPU / CPU tp PCI [concurrency] (BIOS, PC, PCI, CPU), "P2C/C2P"
 P2P          Peer to Peer [network]
@@ -7909,7 +7909,7 @@ PCD          Portal Content Directory (SAP, EP)
 PCD          Process Control Device
 PCDA         Program Controlled Data Acquisition
 PCDATA       Parsed Character DATA (DTD, CDATA)
-PCDOS        Personal Computer DOS (OS, DOS, IBM, PC), "PC-DOS" 
+PCDOS        Personal Computer DOS (OS, DOS, IBM, PC), "PC-DOS"
 PCELS        Policy Core Extension lightweight directory access protocol Schema (LDAP, RFC 3703/4104), ftp://ftp.rfc-editor.org/in-notes/rfc3703.txt, ftp://ftp.rfc-editor.org/in-notes/rfc4104.txt
 PCERT        Purdue Computer Emergency Response Team
 PCF          Point Coordination Function (MAC, 802.11a, WLAN)
@@ -7968,7 +7968,7 @@ PCSD         Printer Control Sequence Description
 PCSI         Pacific Communication Sciences, Inc. (manufacturer), http://www.pcsi.com
 PCT          Private Communication Technology (Internet, MS, Visa)
 PCT          Probe Control Table (FFST/2)
-PCTCP        Personal Computer/Transmission Control Protocol, "PC/TCP" 
+PCTCP        Personal Computer/Transmission Control Protocol, "PC/TCP"
 PCTE         Portable Common Tool Environment (CASE, ESPRIT)
 PCTS         POSIX Compliance Test Suite (POSIX)
 PCV          P-bit Coding Violation [error event] (DS3/E3, BIT)
@@ -8228,7 +8228,7 @@ PLE          Personal Learning Edition (Maya)
 PLE          Property List Editor (Apple, Macintosh)
 PLED         Polymer Light Emitting Display (LED)
 PLI          Programming Language One (DEC), "PL/I"
-PLIP         Parallel Line Internet Protocol (IP), "PL/IP" 
+PLIP         Parallel Line Internet Protocol (IP), "PL/IP"
 PLL          Phase Locked Loop
 PLM          Programming Language for Microcomputers
 PLMN         Public Land Mobile Network (mobile-systems, GSM)
@@ -8287,7 +8287,7 @@ PMTU         Path MTU Recovery (MTU, TCP/IP)
 PMU          PowerMeter Unit
 PMW          Project Manager Workbench
 PMX          Packet MultipleXer (MUX)
-PMX          Presentation Manager for the X window system, "PM/X" 
+PMX          Presentation Manager for the X window system, "PM/X"
 PNA          Personal Navigation Assistant (GPS, PDA)
 PNG          persona non grata
 PNG          Portable Network Graphics [format] (RFC 2083), ftp://ftp.rfc-editor.org/in-notes/rfc2083.txt
@@ -8425,7 +8425,7 @@ PRO          Precision RISC Organization (org.)
 PROFIBUS     PROcess FIeld BUS
 PROFS        PRofessional OFfice System (IBM, VM)
 PROLOG       PROgramming in LOGic
-PROM         Partial Read Only Memory (ROM), "P-ROM" 
+PROM         Partial Read Only Memory (ROM), "P-ROM"
 PROM         Programmable Read Only Memory (ROM, IC)
 PROMATS      PROgrammable Magnetic Tape System
 PROPAL       PROgrammed PAL
@@ -8444,7 +8444,7 @@ PS           Power Supply
 PS           PowerShell (MS, Windows)
 PS           Privilege Service (DCE)
 PS           Process Status (Unix)
-PS2          Personal System /2, "PS/2" 
+PS2          Personal System /2, "PS/2"
 PS3          Playstation 3 (Sony)
 PS4          Playstation 4 (Sony)
 PSA          Python Software Activity (Python)
@@ -8644,7 +8644,7 @@ QMC          Quine McCluskey approach
 QMF          Query Management Facility (IBM)
 QMR          Quarterly Maintenance Releases (Lotus)
 QMS          Queue Management Service (Netware)
-QOS          Quality Of Service (ATM, CLR, CTD, CDV), "QoS" 
+QOS          Quality Of Service (ATM, CLR, CTD, CDV), "QoS"
 QP           Queue Pair (Infiniband, HCA)
 QPA          Quality Program Analysis
 QPE          Qtopia Palmtop Environment (PDA)
@@ -8773,7 +8773,7 @@ RDB          Receive Data Buffer
 RDB          Relational DataBase (DB)
 RDB          Rigid Disk Block (Amiga, Commodore)
 RDBMS        Relational DataBase Management System (DBMS, DB)
-RDBMSMIB     Relational DataBase Management System - Management Information Base (DB), "RDBMS-MIB" 
+RDBMSMIB     Relational DataBase Management System - Management Information Base (DB), "RDBMS-MIB"
 RDC          Remote Data Connector
 RDD          Random Digital Dial
 RDD          Replaceable Database Driver (Clipper, CA-VO, DB)
@@ -9487,7 +9487,7 @@ SDL          Simple Directmedia Layer
 SDL          Specification and Description Language (CCITT)
 SDL          System Design Language
 SDLC         Synchronous Data Link Control (IBM, SNA)
-SDLGR        Specification and Description Language / Graphical Representation, "SDL/GR" 
+SDLGR        Specification and Description Language / Graphical Representation, "SDL/GR"
 SDLLC        Synchronous Data Link Control Conversion (SNA, IBM)
 SDLP         Standard Device Level Protocol
 SDLT         Super Digital Line Tape (DLT, Streamer), http://www.sdlt.com
@@ -9657,7 +9657,7 @@ SHF          Super-High Frequency
 SHID         slaps head in disgust
 SHOE         Simple HTML Ontology Extensions (HTML, WWW)
 SHTSI        Somebody Had To Say It (slang, Usenet)
-SHTTP        Secure HyperText Transfer Protocol (HTTP), "S-HTTP" 
+SHTTP        Secure HyperText Transfer Protocol (HTTP), "S-HTTP"
 SHV          Standard High Volume [motherboard] (SMP, Intel)
 SI           Schweizer Informatikergesellschaft (org., Switzerland), http://www.s-i.ch
 SI           Skyrslutaeknifelags Islands (org., Iceland), http://www.sky.is
@@ -9862,7 +9862,7 @@ SML          Shared Memory Link (TCP/IP)
 SML          Siemens Modular Link
 SML          Standard Machine Language
 SML          Standard Meta Language
-SMLNJ        Standard Meta Language / New Jersey, "SML/NJ" 
+SMLNJ        Standard Meta Language / New Jersey, "SML/NJ"
 SMLSFB       so many losers, so few bullets
 SMM          System Management Mode (CPU)
 SMM          System Manager's Manual (BSD, Unix)
@@ -10105,7 +10105,7 @@ SPT          Shortest Path Tree (PIM, ST, Multicast)
 SPTS         Single Program Transport Stream
 SPU          Synergistic Processing Unit (IBM, Cell)
 SPU          System Processing Unit
-SPUCDL       Serial Peripheral Unit Controller/Data Link, "SPUC/DL" 
+SPUCDL       Serial Peripheral Unit Controller/Data Link, "SPUC/DL"
 SPUD         Storage Pedestal Upgrade Disk / Drive
 SPUR         Supercomputing Program for Undergraduate Research
 SPX          Sequenced Packet eXchange (Novell, Netware)
@@ -10240,7 +10240,7 @@ SST          Saitek Smart Technology
 SST          Secure & Smart Technology (TPM), "S&ST"
 SST          Simple SIPP Transition (Internet, SIPP)
 SST          South Sumatra Time [+0700] (TZ)
-SSTP         Screened Shielded Twisted Pair [cable] (STP, TP), "S/STP" 
+SSTP         Screened Shielded Twisted Pair [cable] (STP, TP), "S/STP"
 ST           Seagate Technology (HDD)
 ST           Security Target (CC)
 ST           Segment Table / Type
@@ -10307,7 +10307,7 @@ STM6         Synchronous Transport Mode 6 [933,12 Mbps] (ATM, STM, SDH, OC-18), 
 STM64        Synchronous Transport Mode 64 [9953,28 Mbps] (ATM, STM, SDH, OC-192), "STM-64"
 STM8         Synchronous Transport Mode 8 [1244,16 Mbps] (ATM, STM, SDH, OC-24), "STM-8"
 STN          Scientific and Technical Network (network, JICST, FIZ)
-STNLCD       SuperTwisted Nematic Liquid Crystal Display (LCD), "STN-LCD" 
+STNLCD       SuperTwisted Nematic Liquid Crystal Display (LCD), "STN-LCD"
 STOC         Symposium on Theory Of Computing (Konferenz)
 STONE        STructured and OpeN Environment (FZI Karlsruhe, Germany)
 STORK        Secure indenTity acrOss boRders acKnowledged
@@ -10318,7 +10318,7 @@ STP          Service Transaction Program (IBM)
 STP          Shielded Twisted Pair [cable] (TP)
 STP          Signaling Transfer Point (IN)
 STP          Software Technology Park
-STP          Software Through Pictures, "StP" 
+STP          Software Through Pictures, "StP"
 STP          Spanning Tree Protocol (IEEE 802.1)
 STP          System Training Program
 STR          Synchronous Transmit Receive
@@ -10407,9 +10407,9 @@ SWT          Standard Widget Toolkit (Eclipse, GUI, WTP)
 SXGA         Super eXtended Graphics Adapter / Array
 SXU          Synergistic eXecution Unit (IBM, Cell, SPU)
 SYMM         SYnchronized MultiMedia working group (WAI)
-SYSAD        SYStem ADministrator, "SysAd" 
+SYSAD        SYStem ADministrator, "SysAd"
 SYSEX        SYStem EXecutive (OS, IBM, S/360)
-SYSOP        SYStem OPerator (BBS), "SysOp" 
+SYSOP        SYStem OPerator (BBS), "SysOp"
 T1           [digital] Transmission link 1 [1.544 Mbit/s] (DS1, BIT), http://www.t1.org
 T2           [digital] Transmission link 2 [6.312 Mbps] (DS2)
 T3           [digital] Transmission link 3 [44.736 Mbps] (DS3)
@@ -10648,7 +10648,6 @@ TIL          Tech Info Library (Apple, WWW), http://til.info.apple.com/til/til.h
 TIM          Thermal Interface Material (CPU)
 TIM          Token Interface Module (Token Ring)
 TIMTOWTDI    There Is More Than One Way To Do It (PERL)
-TIMTOWTDI    There Is More Than One Way To Do It (PERL, slang)
 TINA         Telecommunication Information Network Agent (IN)
 TINA         Telecommunication Information Networking Architecture (IN)
 TINAC        TINA Consortium (org., IN, TINA), "TINA-C"
@@ -10743,7 +10742,7 @@ TNC          Trusted Network Connect (TCG)
 TNEF         Transportation Neutral Encapsulation Format (MAPI, MIME, MS)
 TNFS         Trusted Network File System (NFS)
 TNL          Technical NewsLetter (IBM)
-TNLCD        Twisted Nematic Liquid Crystal Display (LCD), "TN-LCD" 
+TNLCD        Twisted Nematic Liquid Crystal Display (LCD), "TN-LCD"
 TNMOC        The National Museum Of Computing (org., UK), http://www.tnmoc.org/
 TNPC         Taiwanese New Pc Consortium (org., Taiwan)
 TNS          Transit Network Selection
@@ -10803,7 +10802,7 @@ TPM          Traditional Power Management
 TPM          Transactions-Per-Minute
 TPM          Trusted Platform Module (TCPA)
 TPMS         Transaction Processing Management System
-TPPMD        Twisted Pair Physical layer Medium Dependent (FDDI), "TP-PMD" 
+TPPMD        Twisted Pair Physical layer Medium Dependent (FDDI), "TP-PMD"
 TPQ          True Phone Quality (CAT)
 TPR          Task Priority Register (IC)
 TPRM         Transaction Programmer's Reference Manual (Sun)
@@ -10995,7 +10994,7 @@ UDOR         Ultra Density Optical - Recordable (UDO), "UDO-R"
 UDORW        Ultra Density Optical - ReWritable (UDO), "UDO-RW"
 UDP          Usenet Death Penalty (Usenet, spam)
 UDP          User Datagram Protocol (Internet, RFC 768), ftp://ftp.rfc-editor.org/in-notes/rfc768.txt
-UDPIP        User Datagram Protocol / Internet Protocol (IP), "UDP/IP" 
+UDPIP        User Datagram Protocol / Internet Protocol (IP), "UDP/IP"
 UDRP         Uniform [Domain-name] Dispute Resolution Policy (ICANN)
 UDSL         Universal Digital Subscriber Line
 UDT          User-defined DataType (DB)
@@ -11373,7 +11372,7 @@ VMBR         Virtual Machine Based Rootkit
 VMC          VESA Media Channel (VESA)
 VMC          Virtual Machine Console (VMware)
 VMCF         Virtual Machine Communications Facility (IBM, VM)
-VMCMS        Virtual Machine / Conversational Monitoring System (IBM, VM), "VM/CMS" 
+VMCMS        Virtual Machine / Conversational Monitoring System (IBM, VM), "VM/CMS"
 VMD          Virtual Manufacturing Device (MMS)
 VME          Virtual Machine Environment (IBM, VM)
 VME          Virtual Mobile Engine (Sony, PSP)
@@ -11386,7 +11385,7 @@ VMP          Virtual MultiPorting (POWER, CPU)
 VMS          Virtual Memory [operating] System (DEC, OS)
 VMS          Voice Mail System (GMS)
 VMS          Voice Management System
-VMSP         Virtual Machine / System Product (IBM, VM), "VM/SP" 
+VMSP         Virtual Machine / System Product (IBM, VM), "VM/SP"
 VMT          Virtual Method Table
 VMTP         Versatile Message Transaction Protocol (RFC 1045), ftp://ftp.rfc-editor.org/in-notes/rfc1045.txt
 VMTSS        Virtual Machine Time-Sharing System (IBM)
@@ -11486,7 +11485,7 @@ VSD          Vendor Specific Driver
 VSE          Virtual Storage Extended (IBM)
 VSEA         Visual Studio Enterprise Architect [edition] (MS, XML)
 VSED         Visual Studio Enterprise Developer [edition] (MS, XML)
-VSEESA       Virtual Storage Extended/Enterprise Systems Architecture, "VSE/ESA" 
+VSEESA       Virtual Storage Extended/Enterprise Systems Architecture, "VSE/ESA"
 VSESP        Virtual Storage Extended/System Product (IBM), "VSE/SP"
 VSI          Verband der SoftwareIndustrie deutschlands [e.v.] (org.), http://www.vsi.de
 VSI          Virtual Socket Interface alliance (org., ASIC, RL), http://www.vsi.org
@@ -11531,7 +11530,7 @@ VUE          Visual User Environment (HP)
 VUI          Virtual User Interface (AMS, UI)
 VUMA         VESA Unified Memory Architecture (VESA)
 VUMASBE      VESA Unified Memory Architecture - System BIOS Extension (VESA), "VUMA-SBE"
-VUP          VAX Units of Performance (VAX, DEC), "VUPs" 
+VUP          VAX Units of Performance (VAX, DEC), "VUPs"
 VUP          Version UPgrade (MS)
 VV           Virtuelle Verbindung
 VVIDD        VESA Video Interface for Digital Displays (VESA, LCD)
@@ -11627,7 +11626,7 @@ WFMC         WorkFlow Management Coalition (org.), "WfMC", http://www.aiim.org/w
 WFP          Windows Filtering Platform (MS, Windows)
 WFQ          Weighted Fair Queueing (VoIP)
 WFS          Web Feature Service (OGC)
-WFW          Windows For Workgroups (MS), "WfW" 
+WFW          Windows For Workgroups (MS), "WfW"
 WG           Working Group (SC, ISO, IEC, ETSI)
 WGA          Windows Genuine Advantage [program] (MS, Windows)
 WHAT         Web Hypertext Applications Technology [working group] (WWW, org.), http://www.whatwg.org
@@ -11672,7 +11671,7 @@ WISPR        Wireless ??? ISP Roaming (WLAN, ISP, org., WECA), "WISPr"
 WITCH        Wolverhampton Instrument for Teaching Computation from Harwell
 WITT         Workstation Interactive Test Tool (IBM)
 WIX          Windows Installer XML (MS, Windows, XML), "WiX"
-WIZOP        WIzard sysOP, "WizOp" 
+WIZOP        WIzard sysOP, "WizOp"
 WKS          Well Known Services (DNS, Internet)
 WLAN         Wireless Local Area Network (LAN, WLAN, IEEE)
 WLANA        Wireless Local Area Network Alliance (org., WLAN, LAN), http://www.wlana.com
@@ -11718,7 +11717,7 @@ WORDIA       WORD Internet Assistant (MS)
 WORM         Write Once Read Many (CD)
 WOSA         Windows Open System Architecture (MS)
 WOSAXCEM     WOSA eXtensions for Control, Engineering and Manufacturing (WOSA, MS)
-WOSAXFS      WOSA eXtensions for Financial Services (WOSA, MS), "WOSA X FS" 
+WOSAXFS      WOSA eXtensions for Financial Services (WOSA, MS), "WOSA X FS"
 WOSAXRT      WOSA eXtensions for Real-Time market data (WOSA, MS)
 WOSC         World Organization of Systems and Cybernetics (org., France)
 WOW          Windows On Windows
@@ -11828,11 +11827,11 @@ XBRL         Extensible Business Reporting Language (XFRML, XML)
 XC           eXtended Configuration (IBM, ESA, VM)
 XCBF         XML Common Biometric Format (XML)
 XCBL         XML Common Business Library (XML), "xCBL", http://www.xcbl.org
-XCCI         X Common Client Interface (X-Windows), "X CCI" 
+XCCI         X Common Client Interface (X-Windows), "X CCI"
 XCEM         eXtensions for Control, Engineering and Manufacturing (API, MS, Windows)
 XCHS         eXtended Cylinder Head Sectors (EIDE)
 XCMOS        eXtended CMOS (IC, CMOS)
-XCMS         X Color Management System (X-Windows), "Xcms" 
+XCMS         X Color Management System (X-Windows), "Xcms"
 XCOFF        eXtended Common Object File Format (Unix)
 XCRL         extensible Customer Relationships Language (OASIS, CIQ, CRML), "xCRL"
 XCUTS        X Commands and Utilities Test Suite (X/Open)
@@ -11881,7 +11880,7 @@ XMS          eXtended Multiprocessor operating System (OS)
 XN           eXecution Node
 XNS          Xerox Network Services / Systems / Standard (Xerox, XNS)
 XNSCP        [PPP] XNS IDP Control Protocol (RFC 1764, Xerox, XNS, PPP, XNS, IDP), ftp://ftp.rfc-editor.org/in-notes/rfc1764.txt
-XNSIDP       Xerox Network Services - Internet Datagram Protocol (Xerox, Internet, XNS), "XNS-IDP" 
+XNSIDP       Xerox Network Services - Internet Datagram Protocol (Xerox, Internet, XNS), "XNS-IDP"
 XNSITP       Xerox Network Services/Internet Transport Protocol (Xerox, XNS), "XNS/ITP"
 XNTP         eXperimental Network Time Protocol (NTP)
 XOFF         eXchange OFF (MODEM)
@@ -12150,13 +12149,16 @@ BAL       Basic Assembly Language
 BAM       Block Availability Map
 BASH      Bourne-again shell
 BASIC     Beginner's All-Purpose Symbolic Instruction Code
+BBCode    Bulletin Board Code
 BBP       Baseband Processor
 BBS       Bulletin Board System
 BCNF      Boyce   Codd normal form
 BEEP      Blocks Extensible Exchange Protocol
+BEM       Boundary Element Method
 BER       Bit Error Rate
 BFD       Bidirectional Forwarding Detection
 BFD       Binary File Descriptor
+BFD       Binary Floating Point (IEEE 754-1985)
 BFS       Breadth-First Search
 BFT       Byzantine Fault Tolerant
 BGP       Border Gateway Protocol
@@ -12201,13 +12203,13 @@ CAT       (1) - concatenate files and print on the standard output
 CAT       Computer-Aided Translation
 CC        C Compiler
 CD        Compact Disc
-CD-R      CD-Recordable
-CD-ROM    CD Read-Only Memory
-CD-RW     CD-Rewritable
 CDE       Common Desktop Environment
 CDMA      Code Division Multiple Access
 CDN       Content Delivery Network
 CDP       Continuous Data Protection
+CD-R      CD-Recordable
+CD-ROM    CD Read-Only Memory
+CD-RW     CD-Rewritable
 CDSA      Common Data Security Architecture
 CERT      Computer Emergency Response Team
 CES       Consumer Electronics Show
@@ -12300,6 +12302,7 @@ DES       Data Encryption Standard
 DEV       development
 DFA       Deterministic Finite Automaton
 DFD       Data Flow Diagram
+DFD       Decimal Floating Point
 DFS       Depth-First Search
 DFS       Distributed File System
 DGA       Domain Generation Algorithm
@@ -12468,7 +12471,6 @@ GIMP      GNU Image Manipulation Program
 GIMPS     Great Internet Mersenne Prime Search
 GIN       Generalized Inverted Index
 GIST      Generalized Search Tree
-GiST      Generalized Search Tree
 GLUT      OpenGL Utility Toolkit
 GML       Geography Markup Language
 GMT       Greenwich Mean Time
@@ -12525,6 +12527,7 @@ I18N      Internationalization
 IANA      Internet Assigned Numbers Authority
 iBCS      Intel Binary Compatibility Standard
 IBM       International Business Machines
+I²C       Inter-Integrated Circuit
 ICANN     Internet Corporation for Assigned Names and Numbers
 ICE       In-Circuit Emulator
 ICE       Intrusion Countermeasure Electronics
@@ -12580,14 +12583,13 @@ ITIL      Information Technology Infrastructure Library
 ITL       Interval Temporal Logic
 ITU       International Telecommunication Union
 IVRS      Interactive Voice Response System
-I²C       Inter-Integrated Circuit
 J2EE      Java 2 Enterprise Edition
 J2ME      Java 2 Micro Edition
 J2SE      Java 2 Standard Edition
 JAPH      Just Another Perl Hacker
-JAX-RPC   Java XML for Remote Procedure Calls
 JAXB      Java Architecture for XML Binding
 JAXP      Java API for XML Processing
+JAX-RPC   Java XML for Remote Procedure Calls
 JBOD      Just a Bunch of Disks
 JCE       Java Cryptography Extension
 JCL       Job Control Language
@@ -12616,7 +12618,6 @@ JTAG      Joint Test Action Group
 JUG       Java Users Group
 JVM       Java Virtual Machine
 JWT       JSON Web Tokens
-K&R       Kernighan and Ritchie
 KB        Keyboard
 KB        Kilobit
 KB        Kilobyte
@@ -12625,11 +12626,13 @@ KDD       Knowledge Discovery and Data Mining
 KDE       K Desktop Environment
 KHZ       Kilohertz
 KM        Knowledge Machine
+K&R       Kernighan and Ritchie
 KRL       Knowledge Representation Language
 KVM       Kernel-based Virtual Machine
 L10N      Localization
 L2TP      Layer two Tunneling Protocol
 LACNIC    Latin American and Caribbean Internet Addresses Registry
+LALR      Look Ahead Left Recursive
 LAMP      Linux Apache MySQL Perl
 LAMP      Linux Apache MySQL PHP
 LAMP      Linux Apache MySQL Python
@@ -12857,12 +12860,12 @@ PITR      Point-In-Time Recovery (Continuous Archiving)
 PKCS      Public Key Cryptography Standards
 PKI       Public Key Infrastructure
 PL        Procedural Languages (server-side)
-PL/I      Programming Language One
-PL/M      Programming Language for Microcomputers
-PL/P      Programming Language for Prime
 PLC       Power Line Communication
 PLC       Programmable Logic Controller
 PLD       Programmable Logic Device
+PL/I      Programming Language One
+PL/M      Programming Language for Microcomputers
+PL/P      Programming Language for Prime
 PLT       Power Line Telecoms
 PMM       POST Memory Manager
 PNG       Portable Network Graphics
@@ -12907,6 +12910,7 @@ RAM       Random Access Memory
 RARP      Reverse Address Resolution Protocol
 RAS       Reliability, Availability and Serviceability
 RAS       Remote Access Service
+RBNF      Routing Backus-Naur Form (RFC 5511)
 RC        Region Code
 RC        Release Candidate
 RC        Run Commands
@@ -13025,17 +13029,17 @@ SMTP      Simple Mail Transfer Protocol
 SNA       Systems Network Architecture
 SNMP      Simple Network Management Protocol
 SNTP      Simple Network Time Protocol
-SO-DIMM   Small Outline DIMM
 SOA       Service-Oriented Architecture
 SOAP      Simple Object Access Protocol
 SOC       System-on-a-Chip
+SO-DIMM   Small Outline DIMM
 SOHO      Small Office/Home Office
 SOI       Silicon On Insulator
 SP        Service Pack
-SP-GIST   Space-Partitioned Generalized Search Tree
 SPA       Single Page Application
 SPARC     Scalable Processor Architecture
 SPF       Sender Policy Framework
+SP-GIST   Space-Partitioned Generalized Search Tree
 SPI       Serial Peripheral Interface
 SPI       Server Programming Interface
 SPI       Stateful Packet Inspection
