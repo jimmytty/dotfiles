@@ -12203,13 +12203,13 @@ CAT       (1) - concatenate files and print on the standard output
 CAT       Computer-Aided Translation
 CC        C Compiler
 CD        Compact Disc
+CD-R      CD-Recordable
+CD-ROM    CD Read-Only Memory
+CD-RW     CD-Rewritable
 CDE       Common Desktop Environment
 CDMA      Code Division Multiple Access
 CDN       Content Delivery Network
 CDP       Continuous Data Protection
-CD-R      CD-Recordable
-CD-ROM    CD Read-Only Memory
-CD-RW     CD-Rewritable
 CDSA      Common Data Security Architecture
 CERT      Computer Emergency Response Team
 CES       Consumer Electronics Show
@@ -12364,6 +12364,7 @@ DVD-ROM   DVD-Read Only Memory
 DVD-RW    DVD-Rewritable
 DVI       Digital Visual Interface
 DVR       Digital Video Recorder
+DWIM      Do What I Mean
 EAP       Extensible Authentication Protocol
 EBCDIC    Extended Binary Coded Decimal Interchange Code
 EBML      Extensible Binary Meta Language
@@ -12422,6 +12423,7 @@ FDMA      Frequency-Division Multiple Access
 FDS       Fedora Directory Server
 FEC       Forward Error Correction
 FEMB      Front-End Motherboard
+FFI       Foreign Function Interface
 FHS       Filesystem Hierarchy Standard
 FICON     FIber CONnectivity
 FIFO      First In First Out
@@ -12582,13 +12584,14 @@ ITIL      Information Technology Infrastructure Library
 ITL       Interval Temporal Logic
 ITU       International Telecommunication Union
 IVRS      Interactive Voice Response System
+I²C       Inter-Integrated Circuit
 J2EE      Java 2 Enterprise Edition
 J2ME      Java 2 Micro Edition
 J2SE      Java 2 Standard Edition
 JAPH      Just Another Perl Hacker
+JAX-RPC   Java XML for Remote Procedure Calls
 JAXB      Java Architecture for XML Binding
 JAXP      Java API for XML Processing
-JAX-RPC   Java XML for Remote Procedure Calls
 JBOD      Just a Bunch of Disks
 JCE       Java Cryptography Extension
 JCL       Job Control Language
@@ -12617,6 +12620,7 @@ JTAG      Joint Test Action Group
 JUG       Java Users Group
 JVM       Java Virtual Machine
 JWT       JSON Web Tokens
+K&R       Kernighan and Ritchie
 KB        Keyboard
 KB        Kilobit
 KB        Kilobyte
@@ -12625,7 +12629,8 @@ KDD       Knowledge Discovery and Data Mining
 KDE       K Desktop Environment
 KHZ       Kilohertz
 KM        Knowledge Machine
-K&R       Kernighan and Ritchie
+KML       Kernel Loadable Modules
+KMOD      Kernel Loadable Modules
 KRL       Knowledge Representation Language
 KVM       Kernel-based Virtual Machine
 L10N      Localization
@@ -12665,10 +12670,12 @@ LSI       Large-Scale Integration
 LTL       Linear Temporal Logic
 LTR       Left-to-Right
 LUG       Linux User Group
+LUKS      Linux Unified Key Setup
 LUN       Logical Unit Number
 LV        Logical Volume
 LVD       Low Voltage Differential
 LVM       Logical Volume Management
+LXC       Linux Containers
 LZW       Lempel-Ziv-Welch
 MAC       Mandatory Access Control
 MAC       Media Access Control
@@ -12859,12 +12866,12 @@ PITR      Point-In-Time Recovery (Continuous Archiving)
 PKCS      Public Key Cryptography Standards
 PKI       Public Key Infrastructure
 PL        Procedural Languages (server-side)
-PLC       Power Line Communication
-PLC       Programmable Logic Controller
-PLD       Programmable Logic Device
 PL/I      Programming Language One
 PL/M      Programming Language for Microcomputers
 PL/P      Programming Language for Prime
+PLC       Power Line Communication
+PLC       Programmable Logic Controller
+PLD       Programmable Logic Device
 PLT       Power Line Telecoms
 PMM       POST Memory Manager
 PNG       Portable Network Graphics
@@ -12884,6 +12891,7 @@ PPPOA     PPP over ATM
 PPPOE     PPP over Ethernet
 PPTP      Point-to-Point Tunneling Protocol
 PS        PostScript
+PS1       1th Prompt String
 PSA       Professional Services Automation
 PSGI      Perl Web Server Gateway Interface
 PSU       Power Supply Unit
@@ -12893,8 +12901,10 @@ PVG       Physical Volume Group
 PVR       Personal Video Recorder
 PXE       Preboot Execution Environment
 PXI       PCI eXtensions for Instrumentation
+QCOW      QEMU Copy On Write
 QDR       Quad Data Rate
 QFP       Quad Flat Package
+QMP       QEMU Machine Protocol
 QOS       Quality Of Service
 QOTD      Quote Of The Day
 QT        Quasar Toolkit
@@ -13028,17 +13038,17 @@ SMTP      Simple Mail Transfer Protocol
 SNA       Systems Network Architecture
 SNMP      Simple Network Management Protocol
 SNTP      Simple Network Time Protocol
+SO-DIMM   Small Outline DIMM
 SOA       Service-Oriented Architecture
 SOAP      Simple Object Access Protocol
 SOC       System-on-a-Chip
-SO-DIMM   Small Outline DIMM
 SOHO      Small Office/Home Office
 SOI       Silicon On Insulator
 SP        Service Pack
+SP-GIST   Space-Partitioned Generalized Search Tree
 SPA       Single Page Application
 SPARC     Scalable Processor Architecture
 SPF       Sender Policy Framework
-SP-GIST   Space-Partitioned Generalized Search Tree
 SPI       Serial Peripheral Interface
 SPI       Server Programming Interface
 SPI       Stateful Packet Inspection
@@ -13080,6 +13090,7 @@ SYSV      Unix System V
 TAO       Track-At-Once
 TAP       Test Anywhere Protocol
 TASM      Turbo ASseMbler
+TCG       Tiny Code Generator
 TCP       Transmission Control Protocol
 TCU       Telecommunication Control Unit
 TDMA      Time Division Multiple Access
@@ -13193,6 +13204,7 @@ WINE      Wine Is Not an Emulator
 WLAN      Wireless Local Area Network
 WOL       Wake-on-LAN
 WOM       Wake-on-Modem
+WOMM      Works on My Machine
 WOR       Wake-on-Ring
 WORA      Write once, run anywhere
 WORE      Write once, run everywhere
