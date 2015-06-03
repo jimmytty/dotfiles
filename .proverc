@@ -1,5 +1,10 @@
 # .proverc
+--color
 --count
 --failures
 --jobs=9
 --timer
+--parse
+--normalize
+-T
+-W
