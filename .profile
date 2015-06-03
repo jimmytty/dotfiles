@@ -44,9 +44,9 @@ PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
 # to mind).
 if [ "`id -u`" = "0" ]; then
     echo $PATH | grep /usr/local/sbin 1> /dev/null 2> /dev/null
-  if [ ! $? = 0 ]; then
-        PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
-  fi
+    if [ ! $? = 0 ]; then
+	PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+    fi
 fi
 
 # I had problems with the backspace key using 'eval tset' instead of 'TERM=',
@@ -56,7 +56,7 @@ fi
 
 # Set TERM to linux for unknown type or unset variable:
 if [ "$TERM" = "" -o "$TERM" = "unknown" ]; then
-  TERM=linux
+    TERM=linux
 fi
 
 ## Set ksh93 visual editing mode:
@@ -69,18 +69,18 @@ fi
 # Set a default shell prompt:
 #PS1='`hostname`:`pwd`# '
 if [ "$SHELL" = "/bin/pdksh" ]; then
-  PS1='! $ '
+    PS1='! $ '
 elif [ "$SHELL" = "/bin/ksh" ]; then
-  PS1='! ${PWD/#$HOME/~}$ '
+    PS1='! ${PWD/#$HOME/~}$ '
 elif [ "$SHELL" = "/bin/zsh" ]; then
-  PS1='%n@%m:%~%# '
+    PS1='%n@%m:%~%# '
 elif [ "$SHELL" = "/bin/ash" ]; then
-  PS1='$ '
+    PS1='$ '
 else
-  PS1='\u@\h:\w\$ '
+    PS1='\u@\h:\w\$ '
 fi
 PS2='> '
-PATH="$HOME/bin/:$HOME/perl5/bin/:$HOME/usr/bin/:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/share/texmf/bin:/usr/X11R6/bin/:/sbin:/usr/sbin:/usr/local/sbin:"
+PATH="$HOME/bin/:$HOME/perl5/bin/:$HOME/usr/bin/:$HOME/.local/bin/:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/share/texmf/bin:/usr/X11R6/bin/:/sbin:/usr/sbin:/usr/local/sbin:"
 export PATH DISPLAY LESS TERM PS1 PS2
 
 # Default umask.  A umask of 022 prevents new files from being created group
@@ -91,36 +91,37 @@ umask 0077
 # Notify user of incoming mail.  This can be overridden in the user's
 # local startup file (~/.bash.login or whatever, depending on the shell)
 if [ -x /usr/bin/biff ]; then
-  biff y 2> /dev/null
+    biff y 2> /dev/null
 fi
 
 # Append any additional sh scripts found in /etc/profile.d/:
 for profile_script in /etc/profile.d/*.sh ; do
-  if [ -x $profile_script ]; then
-    . $profile_script
-  fi
+    if [ -x $profile_script ]; then
+	. $profile_script
+    fi
 done
 unset profile_script
 
 # For non-root users, add the current directory to the search path:
 if [ ! "`id -u`" = "0" ]; then
-  PATH="$PATH:."
+    PATH="$PATH:."
 fi
 
 ### SETs
 /bin/setterm -bfreq 0
 if [[ $TERM == "linux" ]]; then
-  /usr/bin/setleds +num
+    /usr/bin/setleds +num
 fi
 /usr/bin/mesg n
 eval "$(dircolors $HOME/.dircolors)"
 
 ### PERL
 source ~/perl5/perlbrew/etc/bashrc
-perlbrew use perl-5.20.0
-export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/share/man/"
+perlbrew use perl-5.20.2
+export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/man/:$HOME/usr/share/man/:"
 
 ### ALIAS
+alias ack="$PERLBREW_ROOT/perls/$PERLBREW_PERL/bin/ack"
 alias ls="/bin/ls $LS_OPTIONS"
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 alias slocate='/usr/bin/slocate --database='"$HOME/var/lib/slocate/slocate.db"
@@ -128,8 +129,11 @@ alias shutdown='/usr/bin/sudo /sbin/shutdown'
 alias xsh="VISUAL='vim -c '\''set syntax=html | set encoding=utf8'\''' xsh"
 alias wicd='sudo /usr/bin/wicd-curses'
 
-export PSQL_EDITOR='/usr/bin/vim -c '\''set nowrap syntax=sql'\'''
-export XDG_CONFIG_HOME="$HOME"
+### ENVIRONMENT VARIABLES
 export INFOPATH="$HOME/usr/share/info/:$HOME/usr/local/share/info/:"
 export NETHACKDIR="$HOME/.nethack/"
+export PSQL_EDITOR='/usr/bin/vim -c '\''set nowrap syntax=sql'\'''
 export R_PROFILE="$HOME/R/rprofile.r"
+export TEXMFHOME="/usr/share/texmf/:$HOME/texmf/"
+export XDG_CONFIG_HOME="$HOME"
+export TORSOCKS_CONF_FILE="$HOME/.torsocks.conf"
