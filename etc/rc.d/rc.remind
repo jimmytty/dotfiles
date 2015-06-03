@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use diagnostics;
+
+use POSIX qw(uname strftime);
+use Shell qw(pgrep);
+my $rem_pid = pgrep(q(remind));
+chomp($rem_pid);
+
+print $rem_pid,"\n";
+
+exit() if ( $rem_pid );
+
+local $| = 1;
+open(my $rem_pipe, q(-|), qq(/usr/bin/remind -z0 -dfltvx $ENV{HOME}/.reminders 2>&1)) or die(qq(cannot open pipe: $!\n));
+
+my $logfile = qq($ENV{HOME}/var/log/remind.log);
+open(my $logfh, q(>), $logfile) or die(qq(cannot open file "$logfile": $!\n));
+while ( my $line = <$rem_pipe> ) {
+    chomp($line);
+    print($logfh qq($line\n));
+}
+#close($rem_pipe);
+close($logfile);
