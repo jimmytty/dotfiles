@@ -1,0 +1,2 @@
+sh /etc/rc.d/rc.postgresql stop
+sh /etc/rc.d/rc.mongodb stop
