@@ -1,0 +1,100 @@
+#!/bin/bash
+
+iptables='/usr/sbin/iptables'
+
+stop () {
+    # Clear previous rules
+    $iptables --flush
+    $iptables --delete-chain
+
+    for chain in INPUT FORWARD OUTPUT; do
+        $iptables --policy $chain ACCEPT
+    done
+}
+
+start () {
+    local interface='wlan0'
+    local ip
+    read ip < <(
+        ip -o -4 address show $interface |
+        sed '\%^[0-9]\+:\s\+'$interface'\s\+inet\s\([0-9]\+\(\.[0-9]\+\)\{3\}\)/[0-9][0-9]\sbrd\s.*$%!d;s//\1/'
+    )
+
+    if [[ -z "$ip" ]]; then
+        echo 'Could not find IP ADDRESS'
+        exit 1
+    fi
+
+    # Changing policies
+    $iptables --policy INPUT   DROP
+    $iptables --policy FORWARD DROP
+
+    # Allow all established traffic session
+    $iptables \
+        --append  INPUT \
+        --match   conntrack \
+        --ctstate ESTABLISHED,RELATED \
+        --jump    ACCEPT
+
+    # Allow all to localhost
+    $iptables \
+        --append       INPUT \
+        --in-interface lo \
+        --jump         ACCEPT
+
+    # Allow ping
+    $iptables \
+        --append INPUT \
+        --proto  icmp \
+        --jump   ACCEPT
+
+    # Log some port conections
+    declare -A ports
+    ports=( ['FTP']=21 ['SSH']=22 ['SMTP']=25 ['HTTP']=80 ['POP3']=110 )
+    for port_str in ${!ports[*]}; do
+        port_num=${ports[$port_str]}
+        $iptables \
+            --append       INPUT \
+            --protocol     tcp \
+            --dport        $port_num \
+            ! --source     $ip \
+            --in-interface $interface \
+            --jump         LOG \
+            --log-level    warning \
+            --log-prefix   "MSG:SERVICE=$port_str "
+    done
+
+    # Syn-flood protection:
+    $iptables \
+        --append FORWARD \
+        --protocol tcp \
+        --syn \
+        --match limit \
+        --limit 1/s \
+        --jump ACCEPT
+
+    # Furtive port scanner:
+    $iptables \
+        --append FORWARD \
+        --protocol tcp \
+        --tcp-flags SYN,ACK,FIN,RST RST \
+        --match limit \
+        --limit 1/s \
+        --jump ACCEPT
+
+    # Ping of death:
+    $iptables \
+        --append FORWARD \
+        --protocol icmp \
+        --icmp-type echo-request \
+        --match limit \
+        --limit 1/s \
+        --jump ACCEPT
+}
+
+case "$1" in
+    'start') start ;;
+    'stop') stop ;;
+    'restart') stop; start ;;
+    *) echo "usage $0 start|stop|restart"
+esac
