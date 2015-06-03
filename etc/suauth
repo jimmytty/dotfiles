@@ -1,0 +1,16 @@
+# /etc/suauth - detailed su control file
+#
+# A couple of privileged usernames may
+# su to root with their own password.
+#
+root:OWNPASS
+#
+# Anyone else may not su to root unless in
+# group wheel. This is how BSD does things.
+#
+root:ALL EXCEPT GROUP wheel:DENY
+#
+# Perhaps terry and birddog are accounts
+# owned by the same person.
+# Access can be arranged between them
+# with no password.
