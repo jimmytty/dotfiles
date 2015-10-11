@@ -132,8 +132,8 @@ text/css;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needstermina
 text/css;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} cout=1 ;  copiousoutput
 text/csv;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needsterminal
 text/csv;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} cout=1 ;  copiousoutput
-text/html;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needsterminal
 text/html;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} cout=1 ;  copiousoutput
+text/html;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needsterminal
 text/pascal;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needsterminal
 text/pascal;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} cout=1 ;  copiousoutput
 text/plain;  mailcap fn=%s ct=%t ctn=%{name} cs=%{charset} nterm=1 ;  needsterminal
