@@ -13,12 +13,13 @@ use File::Basename;
 use File::Spec::Unix;
 use List::Util qw[first];
 use Time::Piece;
+use HTML::Element;
+use HTML::Entities;
 use HTML::TreeBuilder::LibXML;
 use Text::Unidecode;
-use Unicode::CheckUTF8 qw(is_utf8);
+use URI;
 use URI::Escape;
 use URI::QueryParam;
-use URI;
 
 use Log::Log4perl qw(:easy);
 my $logfile = dirname($0) . q(/hooks_log4perl.conf);
@@ -80,14 +81,23 @@ sub pre_format_html_hook {
 
     &cache_file( $url, $html );
 
-    my $uri  = URI->new($url);
-    my $tree = HTML::TreeBuilder::LibXML->new();
-    $tree->store_comments();
-    $tree->parse($html);
+    foreach ($html) {
+        s{\r\n}{\n}gmsx;
+    }
 
-    if ( first { $uri->host() eq $_ }
+    my $uri = URI->new($url);
+
+    if ( first { $uri->host() eq $_ } q(www.gnu.tux4.com.br) ) {
+        use HTML::Entities;
+        $html = encode_entities( decode_utf8($html), qq(\200-\377) );
+    }
+    elsif ( first { $uri->host() eq $_ }
         ( q(getninjas.com.br), q(www.getninjas.com.br), ) )
     {
+        my $tree = HTML::TreeBuilder::LibXML->new();
+        $tree->store_comments();
+        $tree->parse($html);
+
         my @node = (
             q{//div[@class='header-button']},           #
             q{//div[@class='professionals-column']},    #
@@ -100,30 +110,69 @@ sub pre_format_html_hook {
         while ( my $node = $tree->findnodes($xpath)->[0] ) {
             $node->delete();
         }
-    } ## end if ( first { $uri->host...})
+        $html = $tree->as_HTML();
+        $tree->eof();
+        $tree = $tree->delete();
+    } ## end elsif ( first { $uri->host...})
     elsif ( $uri->host() eq q(metacpan.org)
         && [ $uri->path_segments() ] ~~ [ q(), q(search) ] )
     {
-        my %result;
-        my $node = $tree->findnodes(q{//div[@class="content search-results"]})
-            ->[0];
-        my $xpath = q{div[@class="module-result"]};
-        foreach my $result ( $node->findnodes($xpath) ) {
-            my $datetime = $result->findvalue(q{span[@class="relatize"]});
-            my $t = Time::Piece->strptime( $datetime, q(%d %b %Y %T %Z) );
-            push @{ $result{ $t->epoch() } }, $result;
-        }
+        # EXPERIMENTAL
+        # my $tree = HTML::TreeBuilder::LibXML->new();
+        # $tree->store_comments();
+        # $tree->parse($html);
 
-        foreach my $timestamp ( sort { $a <=> $b } keys %result ) {
-            foreach my $result ( @{ $result{$timestamp} } ) {
-                $node->unshift_content($result);
-            }
-        }
+      # my %result;
+      # my $node = $tree->findnodes(q{//div[@class="content search-results"]})
+      #     ->[0];
+      # my $xpath = q{div[@class="module-result"]};
+      # foreach my $result ( $node->findnodes($xpath) ) {
+      #     my $datetime = $result->findvalue(q{span[@class="relatize"]});
+      #     my $t = Time::Piece->strptime( $datetime, q(%d %b %Y %T %Z) );
+      #     push @{ $result{ $t->epoch() } }, $result;
+      #     $result->delete();
+      # }
+
+        # foreach my $timestamp ( sort { $a <=> $b } keys %result ) {
+        #     foreach my $result ( @{ $result{$timestamp} } ) {
+        #         $node->unshift_content($result);
+        #     }
+        # }
+        # $html = $tree->as_HTML();
+        # $tree->eof();
+        # $tree = $tree->delete();
     } ## end elsif ( $uri->host() eq q(metacpan.org)...)
+    elsif ( $uri->host() eq q(www.vivaolinux.com.br) ) {
 
-    $html = $tree->as_HTML();
-    $tree->eof();
-    $tree = $tree->delete();
+        # ENCODING PROBLEMS
+        $html =~ tr{\r}{}d;
+        my $tree = HTML::TreeBuilder::LibXML->new();
+        $tree->store_comments();
+        $tree->parse($html);
+
+        my $xpath = q{//input[@type="button"]
+                            [starts-with(@onclick, 'window.location.href=')]
+        };
+
+        foreach my $node ( $tree->findnodes($xpath) ) {
+            my $text     = $node->findvalue(q{@value});
+            my $location = $node->findvalue(
+                q{substring-after(@onclick, 'window.location.href=')});
+            $location =~ tr{"'}{}d;
+            my $a = HTML::Element->new( q(a), href => $location );
+            $a->push_content($text);
+            $a = HTML::TreeBuilder::LibXML->new_from_content( $a->as_HTML() );
+            $node->preinsert( $a->findnodes(q{//a})->[0] );
+            $node->delete();
+        }
+
+        $html = $tree->as_HTML();
+        $html =~ s{\N{NO-BREAK SPACE}}{&nbsp;}gmsx;
+        encode_entities( $html, qq(\200-\377) );
+        $html =~ s{\N{NO-BREAK SPACE}}{&nbsp;}gmsx;
+        $tree->eof();
+        $tree = $tree->delete();
+    } ## end elsif ( $uri->host() eq q(www.vivaolinux.com.br))
 
     return $html;
 } ## end sub pre_format_html_hook
