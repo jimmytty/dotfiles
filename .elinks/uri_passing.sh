@@ -47,7 +47,7 @@ EOF
             --html \
             --input "$filename" \
             --command "$xsh_src" |
-        $pandoc_cmd |         piconv -f utf8 -t latin1
+        $pandoc_cmd | piconv -f utf8 -t latin1 --perlqq
     ) &>> $pandoc_file
 
     exit 0
