@@ -2,6 +2,7 @@ package {{$name}};
 
 use common::sense;
 use charnames q(:full);
+use Carp;
 use English qw[-no_match_vars];
 no autovivification;
 use Moo;
