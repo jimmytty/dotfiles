@@ -1,9 +1,8 @@
-\setenv PAGER 'less -S'
--- \encoding utf8
+\setenv PAGER 'less -IS'
 \timing on
 \pset null '(null)'
 \pset pager 'always'
 \set HISTCONTROL ignoreboth
-\set HISTFILE ~/.psql_history
+\set HISTFILE ~/.psql_history-:DBNAME
 \set HISTSIZE 500
 \set COMP_KEYWORD_CASE lower
