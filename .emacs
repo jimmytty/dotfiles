@@ -1,10 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2014-12-10 19:54:37 jimmy>
+;;; Time-stamp: <2015-10-11 11:12:16 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(desktop-save-mode)
-(desktop-read)
 (fset 'yes-or-no-p 'y-or-n-p)
 (package-initialize)
 (ido-mode t)
@@ -19,12 +17,6 @@
 (global-set-key (kbd "C-c C-k") 'kill-whole-line)
 (global-set-key (kbd "C-x L") 'count-lines-region)
 
-;;; Org-Mode Keys
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
 ;;; FUNCTIONS Section
 (fset 'par
    (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("h|par 79j" 0 "%d")) arg)))
@@ -34,8 +26,8 @@
   (interactive)
   (shell-command
    (format "%s %s" "brightmare"
-           (shell-quote-argument
-            (replace-regexp-in-string "[
+	   (shell-quote-argument
+	    (replace-regexp-in-string "[
 ]+" " "
  (buffer-substring
   (region-beginning)
@@ -51,7 +43,7 @@
 (defun podchecker ()
   (interactive)
   (shell-command-on-region (mark)
-               (point) "podchecker"))
+	       (point) "podchecker"))
 (defun zsh-shell ()
   (interactive)
   (term "/bin/zsh")
@@ -72,6 +64,69 @@
 
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src"))
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_example". "#\\+end_example"))
+
+;;; bug-hunter.el --- Hunt down errors in elisp files
+(require 'bug-hunter)
+
+;;; moz-controller.el --- Control Firefox from Emacs
+(require 'moz-controller)
+
+;;; org --- Outline-based notes management and organizer
+;;; workaround:
+(load-library "org-compat")
+(load-library "org")
+(load-library "org-version")
+(load-library "org-list")
+(load-library "ob-exp")
+
+;;; Org-Mode Keys
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+;;; org2blog.el --- blog from Org mode to wordpress
+(setq org2blog/wp-blog-alist
+      '(("tux4you"
+	 :url "http://tux4.com.br/blogs/jimmy/xmlrpc.php"
+	 :username "jimmy"
+	 :default-title nil
+	 :default-categories nill
+	 :tags-as-categories t)))
+
+;;; wcheck-mode.el --- General interface for text checkers
+;; (autoload 'wcheck-mode "wcheck-mode" "Toggle wcheck-mode." t)
+;; (autoload 'wcheck-change-language "wcheck-mode" "Switch wcheck-mode languages." t)
+;; (autoload 'wcheck-actions "wcheck-mode" "Open actions menu." t)
+;; (autoload 'wcheck-jump-forward "wcheck-mode" "Move point forward to next marked text area." t)
+;; (autoload 'wcheck-jump-backward "wcheck-mode" "Move point backward to previous marked text area." t)
+
+;;; seq.el --- Sequence manipulation functions
+(require 'seq)
+
+;;; revive.el --- Resume Emacs
+(autoload 'save-current-configuration "revive" "Save status" t)
+(autoload 'resume "revive" "Resume Emacs" t)
+(autoload 'wipe "revive" "Wipe Emacs" t)
+
+;;; quickrun.el --- Run commands quickly
+(require 'quickrun)
+
+;;; symon.el --- tiny graphical system monitor
+(require 'symon)
+(setq symon-delay 60)
+
+;;; bbcode-mode.el --- Major mode for writing BBCode markup
+(require 'bbcode-mode)
+
+;;; elfeed.el --- an Emacs Atom/RSS feed reader
+(require 'elfeed)
+(require 'elfeed-org)
+(setq rmh-elfeed-org-files (list "~/.elfeed/elfeedrc.org"))
+(elfeed-org)
+
+;;; pretty-mode.el --- Redisplay parts of the buffer as pretty symbols.
+(require 'pretty-mode)
 
 ;;; number.el --- Working with numbers at point.
 (require 'number)
@@ -103,18 +158,9 @@
 (add-to-list 'auto-mode-alist '("access\\.conf\\'" . apache-mode))
 (add-to-list 'auto-mode-alist '("sites-\\(available\\|enabled\\)/" . apache-mode))
 
-;;; AUCTeX is  a comprehensive customizable integrated  environment for writing
-;;; input  files   for  TeX, LaTeX,  ConTeXt, Texinfo, and  docTeX  using Emacs
-;;; or XEmacs.
-(load "auctex.el" nil t t)
-(require 'texmathp)
-
 ;;; aumix-mode.el --- run the aumix program in a buffer
 (autoload 'aumix "aumix-mode" nil t)
 (setq aumix-mode-program "alsamixer")
-
-;;; awk-it.el --- Little utility that combines awk and yasnippet.
-(eval-after-load 'yasnippet '(require 'awk-it))
 
 ;;; bc-mode.el --- BC code editing commands for Emacs
 (add-to-list 'load-path "~/.emacs.d/el-get/bc-mode/")
@@ -128,17 +174,8 @@
 ;;; boxquote.el --- Quote text with a semi-box.
 (require 'boxquote)
 
-;;; cdlatex.el -- Fast input methods for LaTeX environments and math
-(add-to-list 'load-path "~/.emacs.d/el-get/cdlatex-mode/")
-(require 'cdlatex)
-
 ;;; col-highlight.el --- Highlight the current column.
-(add-to-list 'load-path "~/.emacs.d/el-get/col-highlight/")
 (eval-after-load 'vline '(require 'col-highlight))
-
-;;; column-marker.el --- Highlight certain character columns
-(add-to-list 'load-path "~/.emacs.d/el-get/column-marker/")
-(require 'column-marker)
 
 ;;; crontab-mode.el --- Mode for editing crontab files
 (require 'crontab-mode)
@@ -146,7 +183,6 @@
 (add-to-list 'auto-mode-alist '("cron\\(tab\\)?\\."    . crontab-mode))
 
 ;;; crosshairs.el --- Highlight the current line and column.
-(add-to-list 'load-path "~/.emacs.d/el-get/crosshairs/")
 (eval-after-load 'hl-line+ '(require 'crosshairs))
 
 ;;; csv-mode.el --- major mode for editing comma-separated value files
@@ -160,6 +196,10 @@
 ;;; dired-async.el --- Copy/move/delete asynchronously in dired.
 ;;(eval-after-load "dired-aux" '(require 'dired-async))
 
+;;; dired-subtree.el --- Insert subdirectories in a tree-like fashion
+(require 'dired-subtree)
+
+
 ;;; doc-mode.el --- a major-mode for highlighting a hierarchy structured text.
 (add-to-list 'load-path "~/.emacs.d/el-get/doc-mode/")
 (autoload 'doc-mode "doc-mode" nil t)
@@ -169,8 +209,8 @@
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
 (add-hook 'doc-mode-hook
       '(lambda ()
-         (turn-on-auto-fill)
-         (require 'asciidoc)))
+	 (turn-on-auto-fill)
+	 (require 'asciidoc)))
 
 ;;; ecmascript-mode.el --- major mode for editing ECMAScript code
 (add-to-list 'load-path "~/.emacs.d/el-get/ecmascript-mode/")
@@ -188,6 +228,7 @@
 ;;; elisp-format.el --- Format elisp code
 (add-to-list 'load-path "~/.emacs.d/el-get/elisp-format/")
 (require 'elisp-format)
+(setq elisp-format-column 79)
 
 ;;; emms.el --- The Emacs Multimedia System
 (require 'emms-setup)
@@ -204,10 +245,16 @@
 (setq emms-player-mplayer-parameters (quote ("-slave" "-quiet" "-really-quiet" "-vo" "null")))
 (setq emms-player-mplayer-playlist-command-name "/usr/bin/mplayer")
 (setq emms-playlist-mode-open-playlists nil)
+(define-emms-simple-player icyx '(url)
+  (regexp-opt '("icyx://"))
+  "/usr/bin/mplayer" "-slave" "-quiet" "-really-quiet" "-vo" "null")
+(add-to-list 'emms-player-list 'emms-player-icyx)
 
-;;; eperiodic.el --- periodic table for Emacs
-(add-to-list 'load-path "~/.emacs.d/el-get/eperiodic/")
-(require 'eperiodic);
+;;; emms-info-mediainfo.el --- Info-method for EMMS using medianfo
+(require 'emms-info-mediainfo)
+(add-to-list 'emms-info-functions 'emms-info-mediainfo)
+;;; emms-mark-ext.el --- Extra functions for emms-mark-mode and emms-tag-edit-mode
+(require 'emms-mark-ext)
 
 ;;; ess.el --- Emacs Speaks Statistics: statistical programming within Emacs
 (require 'ess-site)
@@ -232,7 +279,7 @@
 (autoload 'fetchmail-mode "fetchmail-mode.el"
   "Mode for editing .fetchmailrc files" t)
 (setq auto-mode-alist (append '(("\..fetchmailrc$" . fetchmail-mode))
-                  auto-mode-alist))
+		  auto-mode-alist))
 
 ;;; figlet.el --- Annoy people with big, ascii art text
 (require 'figlet)
@@ -254,7 +301,6 @@
 (setq google-translate-enable-ido-completion t)
 
 ;;; hl-line+.el --- Extensions to hl-line.el.
-(add-to-list 'load-path "~/.emacs.d/el-get/hl-line+/")
 (eval-after-load 'col-highlight '(require 'hl-line+))
 
 ;;; html-accent.el --- Function that replace accented char by its html representation
@@ -271,14 +317,6 @@
 
 ;;; info+.el --- Extensions to `info.el'.
 (require 'info+)
-
-;;; insert-time-string.el --- Insert the current time.
-(add-to-list 'load-path "~/.emacs.d/el-get/insert-time-string/")
-(require 'insert-time-string)
-(setq insert-time-string-format-alist
-      (cons '("pseudo-iso" . "%F %T")
-            insert-time-string-format-alist))
-(setq insert-time-string-default-format "pseudo-iso")
 
 ;;; irfc.el --- Interface for IETF RFC document.
 (require 'irfc)
@@ -308,16 +346,15 @@
 
 ;;; ledger-mode.el --- Helper code for use with the "ledger" command-line tool
 (require 'ledger-mode)
-(setq ledger-use-iso-dates t)
-(setq ledger-binary-path "~/usr/bin/ledger")
 
 ;;; lua-mode.el --- a major-mode for editing Lua scripts
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
-;;; magit.el --- control Git from Emacs
+;; ;;; magit.el --- control Git from Emacs
 (require 'magit)
+(load-file "~/.emacs.d/elpa/magit-20151011.49/magit-bisect.el") ; workaround
 
 ;;; mailcap-mode.el --- mailcap file editing mode
 (autoload 'mailcap-mode "mailcap-mode" nil t)
@@ -386,16 +423,13 @@
 ;;; perlcritic.el --- minor mode for Perl::Critic integration
 (require 'perlcritic)
 
-;;; perlmonks.el --- A simple interface to www.perlmonks.org
-;(add-to-list 'load-path "~/.emacs.d/el-get/perlmonks/")
-;(require 'perlmonks)
-
 ;;; perltidy.el --- Tidy perl code
 (add-to-list 'load-path "~/.emacs.d/el-get/perltidy/")
 (require 'perltidy)
 (eval-after-load "perl-mode"
   '(progn
-     (define-key  perl-mode-map (kbd "C-c t") 'perltidy-buffer)))
+     (define-key perl-mode-map (kbd "C-c t") 'perltidy-buffer)
+     (define-key perl-mode-map (kbd "C-c C-c") 'quickrun)))
 
 ;;; pod-mode.el --- Major mode for editing .pod-files
 (autoload 'pod-mode "pod-mode" "Mode for editing POD files" t)
@@ -416,15 +450,6 @@
        pst-format-encode
        t
        nil))
-
-;;; quickrun.el --- Run commands quickly
-(add-to-list 'load-path "~/.emacs.d/el-get/quickrun/")
-(require 'quickrun)
-
-;;; regex-tool --- A regular expression evaluation tool for programmers
-(add-to-list 'load-path "~/.emacs.d/el-get/regex-tool/")
-(require 'regex-tool)
-(setq regex-tool-backend (quote emacs))
 
 ;;; remind-conf-mode.el --- A mode to help configure remind.
 (autoload 'remind-conf-mode "remind-conf-mode" "Mode to help with remind files" t)
@@ -450,9 +475,9 @@
       (coding-system-for-write 'utf-8))
       (sgml-forward-element)
       (shell-command-on-region beg (point)
-                   (concat "xsh2 -qP- " (shell-quote-argument
-                             xsh-command) " | sed 1d")
-                   t ))))
+		   (concat "xsh2 -qP- " (shell-quote-argument
+			     xsh-command) " | sed 1d")
+		   t ))))
 
 ;;; showtip.el --- Show tip at cursor
 (add-to-list 'load-path "~/.emacs.d/el-get/showtip/")
@@ -498,10 +523,6 @@
 ;;; tt-mode.el --- Emacs major mode for editing Template Toolkit files
 (autoload 'tt-mode "tt-mode")
 (setq auto-mode-alist (append '(("\\.tt$" . tt-mode))  auto-mode-alist))
-
-;;; tty-format.el --- text file backspacing and ANSI SGR as faces
-(eval-after-load 'ansi-color  '(require 'tty-format))
-(eval-after-load 'tty-format '(add-hook 'find-file-hooks 'tty-format-guess))
 
 ;;; txt2tags-mode
 (add-to-list 'load-path "~/.emacs.d/el-get/txt2tags-mode/")
@@ -569,7 +590,6 @@
 (setq windmove-wrap-around t)
 
 ;;; workgroups.el --- workgroups for windows (for Emacs)
-(add-to-list 'load-path "~/.emacs.d/el-get/workgroups/")
 (require 'workgroups)
 
 ;;; xs-mode.el --- A simple major mode for write perl XS code
@@ -585,6 +605,9 @@
 ;;; yasnippet.el --- Yet another snippet extension for Emacs.
 (add-to-list 'load-path "~/.emacs.d/el-get/yasnippet/")
 (require 'yasnippet)
+
+;;;
+(desktop-read)
 
 ;;; CUSTOMIZE Section
 (custom-set-variables
@@ -612,12 +635,17 @@
  '(delete-selection-mode t)
  '(describe-char-unidata-list t)
  '(desktop-load-locked-desktop t)
+ '(desktop-restore-eager 30)
  '(desktop-save-mode t)
  '(diary-file "~/.diary")
- '(diary-list-entries-hook (quote (diary-include-other-diary-files diary-sort-entries)))
+ '(diary-list-entries-hook
+   (quote
+    (diary-include-other-diary-files diary-sort-entries)))
  '(diary-mail-addr "")
  '(diary-mark-entries-hook (quote (diary-mark-included-diary-files)))
- '(dired-listing-switches "-ahl --time-style=long-iso")
+ '(dired-find-subdir nil)
+ '(dired-listing-switches " -ahl --time-style=long-iso")
+ '(ediff-split-window-function (quote split-window-horizontally))
  '(erc-autoaway-idle-seconds 1800)
  '(erc-autoaway-message "@4D")
  '(erc-autoaway-mode t)
@@ -629,15 +657,36 @@
  '(erc-log-insert-log-on-open t)
  '(erc-log-mode t)
  '(erc-log-write-after-insert t)
- '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu netsplit networks noncommands readonly ring stamp track)))
+ '(erc-modules
+   (quote
+    (autoaway autojoin button completion fill irccontrols list match menu netsplit networks noncommands readonly ring stamp track)))
  '(erc-play-sound nil)
  '(erc-port 6667)
  '(erc-server "127.0.0.1")
  '(erc-track-remove-disconnected-buffers t)
  '(fill-column 79)
  '(fill-nobreak-predicate (quote (fill-french-nobreak-p fill-single-word-nobreak-p)))
+ '(htmlize-output-type (quote inline-css))
+ '(htmlize-use-rgb-txt nil)
  '(indent-tabs-mode nil)
  '(latin1-display-face (quote c-annotation-face))
+ '(ledger-binary-path "~/usr/bin/ledger")
+ '(ledger-reports
+   (quote
+    (("misc" "hr;echo '# [CASH]';ledger --flat balance assets:cash;hr;echo '# [EXPENSES]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^expenses';hr;echo '# [INCOME]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^income';hr;echo '# [BUDGET]';ledger --prepend-format=\"[$(date +%Y-%m)]\" --budget --flat --effective --period=\"$(date +%Y-%m)\" balance '^expenses'")
+     ("balance_-_assets:cash" "ledger --flat --file=/home/jimmy/.ledger/ledger.dat balance assets:cash")
+     ("cleared" "ledger --flat cleared")
+     ("stats" "ledger stats")
+     ("accounts" "ledger accounts")
+     ("payees" "ledger payees")
+     ("budget_-_expenses" "ledger --file=%(ledger-file) --no-total --prepend-format=\"[$(date +%Y-%m)]\" --budget --flat --effective --period=\"$(date +%Y-%m)\" balance '^expenses'")
+     ("register_-_amount_expenses" "ledger --file=%(ledger-file) --begin=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^expenses'")
+     ("balance_-_savings" "ledger --file=%(ledger-file) --begin='last month' balance savings")
+     ("bal" "ledger -f %(ledger-file) bal")
+     ("reg" "ledger -f %(ledger-file) reg")
+     ("payee" "ledger -f %(ledger-file) reg @%(payee)")
+     ("account" "ledger -f %(ledger-file) reg %(account)"))))
+ '(ledger-use-iso-dates t)
  '(make-backup-files nil)
  '(message-sendmail-extra-arguments (quote ("-a" "lists")))
  '(newsticker-automatically-mark-items-as-old nil)
@@ -651,24 +700,176 @@
  '(newsticker-retrieval-interval 31536000)
  '(newsticker-retrieval-method (quote extern))
  '(newsticker-scroll-smoothly nil)
- '(newsticker-start-hook nil)
+ '(newsticker-start-hook (quote (newsticker-start-ticker)))
  '(newsticker-ticker-interval -1)
- '(newsticker-url-list (quote (("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil) ("perl.blogs" "http://blogs.perl.org/atom.xml" nil nil nil) ("br-linux" "http://br-linux.org/feed.xml" nil nil nil) ("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil) ("perl.cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil) ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil) ("emacswiki" "http://www.emacswiki.org/emacs/full.rss" nil nil nil) ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil) ("hackagenda" "http://www.hackagenda.com.br/feed/" nil nil nil) ("perl.ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil) ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil) ("mundoopensource" "http://www.mundoopensource.com.br/feed/" nil nil nil) ("perlhacks" "http://perlhacks.com/feed/" nil nil nil) ("perlmodules.net" "https://www.perlmodules.net/feed/personal/4aXAIS2XByrC7qaA9NV8nuWrHJgEoSeb0QO7TgdbNWjxxMlkB2" nil nil nil) ("perlnews" "http://perlnews.org/feed/" nil nil nil) ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil) ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil) ("perl.prepan" "http://prepan.org/feed" nil nil nil) ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil) ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil) ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil) ("softwarelivre" "http://softwarelivre.org/portal/feed" nil nil nil) ("fug-br" "http://www.fug.com.br/index2.php?option=com_rss&feed=RSS2.0&no_html=1" nil nil nil) ("mineracaodedados" "https://mineracaodedados.wordpress.com/feed/" nil nil nil) ("idgnow.news" "http://www.idgnow.com.br/RSS2" nil nil ("--quiet" "--timeout=60" "--tries=3" "--max-redirect=3" "--output-document=-")) ("canaltechbr" "http://feeds.feedburner.com/canaltechbr?format=xml" nil nil nil) ("bsdinfo.com.br" "http://www.bsdinfo.com.br/feed/" nil nil nil) ("openscience" "http://www.openscience.org/blog/?feed=rss2" nil nil nil) ("mongodb.blog" "http://blog.mongodb.org/rss" nil nil nil) ("free_software_foundation.news" "http://static.fsf.org/fsforg/rss/news.xml" nil nil nil) ("free_software_foundation.blogs" "http://static.fsf.org/fsforg/rss/blogs.xml" nil nil nil) ("nerdson" "http://hacktoon.com/feed/rss.xml" nil nil nil) ("postgresqlbr.blogspot" "http://postgresqlbr.blogspot.com/feeds/posts/default?alt=rss" nil nil nil) ("neilb.org" "http://neilb.org/atom.xml" nil nil nil) ("bsdnowmobile" "http://feeds.feedburner.com/BsdNowMobile" nil nil nil) ("planet.postgresql.org" "http://planet.postgresql.org/rss20.xml" nil nil nil) ("planet.mongodb.org" "http://planet.mongodb.org/recent.atom" nil nil nil) ("catonmat.net" "http://www.catonmat.net/feed/" nil nil nil) ("apache.org" "https://blogs.apache.org/foundation/feed/entries/rss" nil nil nil) ("social-engineer.org" "http://www.social-engineer.org/feed" nil nil nil) ("imasters" "http://imasters.com.br/feed" nil nil nil) ("sempreupdate.com.br" "http://www.sempreupdate.com.br/feeds/posts/default" nil nil nil) ("rodrigocalado.com.br" "http://www.rodrigocalado.com.br/feed/" nil nil nil) ("freebsdish.org" "http://blogs.freebsdish.org/feed/" nil nil nil) ("linuxjournal.com" "http://www.linuxjournal.com/node/feed" nil nil nil) ("planet.lisp.org" "http://planet.lisp.org/rss20.xml" nil nil nil) ("planet.emacsen.org" "http://planet.emacsen.org/atom.xml" nil nil nil) ("planet-commandline.org" "http://planet-commandline.org/rss20.xml" nil nil nil) ("dados.gov.br" "http://dados.gov.br/feed/" nil nil nil) ("ceptro.br" "http://www.ceptro.br/CEPTRO/RssCeptro" nil nil nil) ("serpro.gov.br" "https://www.serpro.gov.br/rss-serpro/RSS" nil nil ("--timeout=60" "--tries=3" "--max-redirect=1" "--no-check-certificate" "--output-document=-")) ("perlmaven-br" "http://br.perlmaven.com/atom" nil nil nil) ("nmap" "http://seclists.org/rss/nmap-announce.rss" nil nil nil) ("hack-tools.blackploit" "http://hack-tools.blackploit.com/feeds/posts/default?alt=rss" nil nil nil) ("programmingperl.org" "http://www.programmingperl.org/feed/" nil nil nil) ("opensource.com" "http://opensource.com/rss.xml" nil nil nil) ("okfn.org.br" "http://br.okfn.org/feed/" nil nil ("--config=/dev/null" "--quiet" "--max-redirect=1" "--timeout=60" "--tries=3" "--output-document=-")) ("latexcommunitynews" "http://feeds2.feedburner.com/LatexCommunityNews" nil nil nil) ("w3.org" "http://www.w3.org/blog/news/feed/atom" nil nil nil) ("cli-apps.org" "http://cli-apps.org/cli-apps-content.rdf" nil nil nil) ("dicas-l" "http://www.dicas-l.com.br/index.rdf" nil nil nil) ("texample.net" "http://www.texample.net/feeds/community/" nil nil nil) ("latexbr.blogspot.com" "http://latexbr.blogspot.com/feeds/posts/default" nil nil nil) ("vivendoentresimbolos.com" "http://www.vivendoentresimbolos.com/feeds/posts/default" nil nil nil) ("aprendendoestatisticacomor.blogspot.com" "http://aprendendoestatisticacomor.blogspot.com/feeds/posts/default" nil nil nil) ("cienciaaberta.net" "http://www.cienciaaberta.net/feed/" nil nil nil) ("slackbuilds.org" "http://slackbuilds.org/rss/ChangeLog.rss" nil nil nil) ("xmodulo.com" "http://xmodulo.com/feed" nil nil nil) ("obomprogramador.com" "http://www.obomprogramador.com/feeds/posts/default" nil nil nil) ("r4stats.com" "http://r4stats.com/feed/" nil nil nil) ("bash-hackers.org" "http://wiki.bash-hackers.org/feed.php" nil nil nil) ("vivaolinux.com.br" "http://vivaolinux.com.br/index.rdf" nil nil nil) ("emacsblog.org" "http://emacsblog.org/feed/" nil nil nil) ("quicklisp.org" "http://blog.quicklisp.org/feeds/posts/default" nil nil nil) ("linuxaria.com" "http://linuxaria.com/feed" nil nil nil) ("scraping.pro" "http://scraping.pro/feed/" nil nil nil) ("ietf.org" "http://tools.ietf.org/html/new-rfcs.rss" nil nil nil) ("cyberciti.biz" "http://feeds.cyberciti.biz/Nixcraft-LinuxFreebsdSolarisTipsTricks" nil nil nil) ("planet.kernel.org" "http://planet.kernel.org/rss20.xml" nil nil nil) ("linux.com" "http://www.linux.com/rss/feeds.php" nil nil nil) ("call-with-hopeless-continuation.blogspot.com" "http://call-with-hopeless-continuation.blogspot.com/feeds/posts/default" nil nil nil) ("revolutionanalytics.com" "http://blog.revolutionanalytics.com/rss.xml" nil nil nil) ("01.org" "https://01.org/blogs/rss.xml/all" nil nil nil) ("wikemacs.org" "http://wikemacs.org/index.php?title=Special:RecentChanges&feed=atom" nil nil nil) ("opensourcedelivers" "http://feeds.feedburner.com/opensourcedelivers" nil nil nil) ("toptal.com" "http://www.toptal.com/blog.rss" nil nil nil) ("linuxnewmedia.com.br" "http://www.linuxnewmedia.com.br/rss" nil nil nil) ("search.cpan.org" "http://search.cpan.org/uploads.rdf" nil nil nil) ("perlmonks.org" "http://perlmonks.org/?node_id=30175;xmlstyle=rss" nil nil nil) ("penselinux.com.br" "http://penselinux.com.br/feed/" nil nil nil) ("computerworld.com.br" "http://www.computerworld.com.br/RSS2" nil nil ("--quiet" "--max-redirect=3" "--timeout=30" "--tries=1" "--output-document=-")) ("nerdices.com.br" "http://nerdices.com.br/42/feed/" nil nil nil) ("fossforce.com" "http://fossforce.com/feed/" nil nil nil) ("onethingwell.org" "http://onethingwell.org/rss" nil nil nil) ("ergoemacs.org" "http://ergoemacs.org/emacs/blog.xml" nil nil nil) ("zdnet.com" "http://www.zdnet.com/blog/open-source/rss.xml" nil nil nil) ("sysadmin-br" "http://br-sysadmin.com/feed/" nil nil nil) ("mindbending-pt" "http://feeds.feedburner.com/mindbending-pt" nil nil nil) ("hc0der.blogspot.com" "http://hc0der.blogspot.com/feeds/posts/default" nil nil nil) ("linuxfoundation.org-news" "http://www.linuxfoundation.org/news-media/news/rss.xml" nil nil nil) ("linuxfoundation.org-blogs" "http://www.linuxfoundation.org/news-media/blogs/browse/rss.xml" nil nil nil) ("linuxfoundation.org-announcements" "http://www.linuxfoundation.org/news-media/announcements/rss.xml" nil nil nil) ("luizgustavo.pro.br" "http://luizgustavo.pro.br/atom.xml" nil nil nil) ("latex-project.org" "http://latex-project.org/atom.xml" nil nil nil) ("phoronix.com" "http://www.phoronix.com/rss.php" nil nil nil) ("vidadeprogramador" "http://feeds.feedburner.com/vidadeprogramador?format=xml" nil nil nil) ("butecopensource" "http://blog.butecopensource.com/feed/" nil nil nil) ("brasilanalytica.com" "http://brasilanalytica.com/feed/" nil nil nil) ("mariano.eng.br" "http://mariano.eng.br/feed/" nil nil nil) ("vivaolinux-forum" "http://feeds.feedburner.com/forum-vivaolinux?format=xml" nil nil nil))))
+ '(newsticker-url-list
+   (quote
+    (("aiyumi" "http://aiyumi.warpstar.net/pt/rss.xml" nil nil nil)
+     ("perl.blogs" "http://blogs.perl.org/atom.xml" nil nil nil)
+     ("br-linux" "http://br-linux.org/feed.xml" nil nil nil)
+     ("commandlinefu" "http://www.commandlinefu.com/feed/threeup" nil nil nil)
+     ("perl.cpanratings" "http://cpanratings.perl.org/index.rss" nil nil nil)
+     ("effectiveperlprogramming" "http://www.effectiveperlprogramming.com/feed/" nil nil nil)
+     ("emacswiki" "http://www.emacswiki.org/full.rss" nil nil nil)
+     ("fp2.com.br" "http://fp2.com.br/blog/index.php/feed/" nil nil nil)
+     ("hackagenda" "http://www.hackagenda.com.br/feed/" nil nil nil)
+     ("perl.ironman" "http://ironman.enlightenedperl.org/?feed=RSS" nil nil nil)
+     ("masteringemacs" "http://www.masteringemacs.org/feed/" nil nil nil)
+     ("mundoopensource" "http://www.mundoopensource.com.br/feed/" nil nil nil)
+     ("perlhacks" "http://perlhacks.com/feed/" nil nil nil)
+     ("perlmodules.net" "https://www.perlmodules.net/feed/personal/4aXAIS2XByrC7qaA9NV8nuWrHJgEoSeb0QO7TgdbNWjxxMlkB2" nil nil nil)
+     ("perlnews" "http://perlnews.org/feed/" nil nil nil)
+     ("perlsphere" "http://perlsphere.net/rss.xml" nil nil nil)
+     ("postgresql.org" "http://www.postgresql.org/news.rss" nil nil nil)
+     ("perl.prepan" "http://prepan.org/feed" nil nil nil)
+     ("r-bloggers" "http://www.r-bloggers.com/feed/" nil nil nil)
+     ("revista.espiritolivre" "http://www.revista.espiritolivre.org/feed" nil nil nil)
+     ("slashdot" "http://rss.slashdot.org/Slashdot/slashdot" nil nil nil)
+     ("softwarelivre" "http://softwarelivre.org/portal/feed" nil nil nil)
+     ("fug-br" "http://www.fug.com.br/index2.php?option=com_rss&feed=RSS2.0&no_html=1" nil nil nil)
+     ("mineracaodedados" "https://mineracaodedados.wordpress.com/feed/" nil nil nil)
+     ("idgnow.news" "http://www.idgnow.com.br/RSS2" nil nil
+      ("--quiet" "--timeout=60" "--tries=3" "--max-redirect=3" "--output-document=-"))
+     ("canaltechbr" "http://feeds.feedburner.com/canaltechbr?format=xml" nil nil nil)
+     ("bsdinfo.com.br" "http://www.bsdinfo.com.br/feed/" nil nil nil)
+     ("openscience" "http://www.openscience.org/blog/?feed=rss2" nil nil nil)
+     ("mongodb.blog" "http://blog.mongodb.org/rss" nil nil nil)
+     ("free_software_foundation.news" "http://static.fsf.org/fsforg/rss/news.xml" nil nil nil)
+     ("free_software_foundation.blogs" "http://static.fsf.org/fsforg/rss/blogs.xml" nil nil nil)
+     ("nerdson" "http://hacktoon.com/feed/rss.xml" nil nil nil)
+     ("postgresqlbr.blogspot" "http://postgresqlbr.blogspot.com/feeds/posts/default?alt=rss" nil nil nil)
+     ("neilb.org" "http://neilb.org/atom.xml" nil nil nil)
+     ("bsdnowmobile" "http://feeds.feedburner.com/BsdNowMobile" nil nil nil)
+     ("planet.postgresql.org" "http://planet.postgresql.org/rss20.xml" nil nil nil)
+     ("catonmat.net" "http://www.catonmat.net/feed/" nil nil nil)
+     ("apache.org" "https://blogs.apache.org/foundation/feed/entries/rss" nil nil nil)
+     ("social-engineer.org" "http://www.social-engineer.org/feed" nil nil nil)
+     ("imasters" "http://imasters.com.br/feed" nil nil nil)
+     ("sempreupdate.com.br" "http://www.sempreupdate.com.br/feeds/posts/default" nil nil nil)
+     ("rodrigocalado.com.br" "http://www.rodrigocalado.com.br/feed/" nil nil nil)
+     ("freebsdish.org" "http://blogs.freebsdish.org/feed/" nil nil nil)
+     ("linuxjournal.com" "http://www.linuxjournal.com/node/feed" nil nil nil)
+     ("planet.lisp.org" "http://planet.lisp.org/rss20.xml" nil nil nil)
+     ("planet.emacsen.org" "http://planet.emacsen.org/atom.xml" nil nil nil)
+     ("planet-commandline.org" "http://planet-commandline.org/rss20.xml" nil nil nil)
+     ("dados.gov.br" "http://dados.gov.br/feed/" nil nil nil)
+     ("ceptro.br" "http://www.ceptro.br/CEPTRO/RssCeptro" nil nil nil)
+     ("nmap" "http://seclists.org/rss/nmap-announce.rss" nil nil nil)
+     ("hack-tools.blackploit" "http://hack-tools.blackploit.com/feeds/posts/default?alt=rss" nil nil nil)
+     ("programmingperl.org" "http://www.programmingperl.org/feed/" nil nil nil)
+     ("opensource.com" "http://opensource.com/rss.xml" nil nil nil)
+     ("okfn.org.br" "http://br.okfn.org/feed/" nil nil
+      ("--config=/dev/null" "--quiet" "--max-redirect=1" "--timeout=60" "--tries=3" "--output-document=-"))
+     ("latexcommunitynews" "http://feeds2.feedburner.com/LatexCommunityNews" nil nil nil)
+     ("w3.org" "http://www.w3.org/blog/news/feed/atom" nil nil nil)
+     ("cli-apps.org" "http://cli-apps.org/cli-apps-content.rdf" nil nil nil)
+     ("dicas-l" "http://www.dicas-l.com.br/index.rdf" nil nil nil)
+     ("texample.net" "http://www.texample.net/feeds/community/" nil nil nil)
+     ("latexbr.blogspot.com" "http://latexbr.blogspot.com/feeds/posts/default" nil nil nil)
+     ("vivendoentresimbolos.com" "http://www.vivendoentresimbolos.com/feeds/posts/default" nil nil nil)
+     ("aprendendoestatisticacomor.blogspot.com" "http://aprendendoestatisticacomor.blogspot.com/feeds/posts/default" nil nil nil)
+     ("cienciaaberta.net" "http://www.cienciaaberta.net/feed/" nil nil nil)
+     ("slackbuilds.org" "http://slackbuilds.org/rss/ChangeLog.rss" nil nil nil)
+     ("xmodulo.com" "http://xmodulo.com/feed" nil nil nil)
+     ("obomprogramador.com" "http://www.obomprogramador.com/feeds/posts/default" nil nil nil)
+     ("r4stats.com" "http://r4stats.com/feed/" nil nil nil)
+     ("bash-hackers.org" "http://wiki.bash-hackers.org/feed.php" nil nil nil)
+     ("vivaolinux.com.br" "http://vivaolinux.com.br/index.rdf" nil nil nil)
+     ("emacsblog.org" "http://emacsblog.org/feed/" nil nil nil)
+     ("quicklisp.org" "http://blog.quicklisp.org/feeds/posts/default" nil nil nil)
+     ("linuxaria.com" "http://linuxaria.com/feed" nil nil nil)
+     ("scraping.pro" "http://scraping.pro/feed/" nil nil nil)
+     ("ietf.org" "http://tools.ietf.org/html/new-rfcs.rss" nil nil nil)
+     ("cyberciti.biz" "http://feeds.cyberciti.biz/Nixcraft-LinuxFreebsdSolarisTipsTricks" nil nil nil)
+     ("planet.kernel.org" "http://planet.kernel.org/rss20.xml" nil nil nil)
+     ("linux.com" "http://www.linux.com/rss/feeds.php" nil nil nil)
+     ("call-with-hopeless-continuation.blogspot.com" "http://call-with-hopeless-continuation.blogspot.com/feeds/posts/default" nil nil nil)
+     ("revolutionanalytics.com" "http://blog.revolutionanalytics.com/rss.xml" nil nil nil)
+     ("01.org" "https://01.org/blogs/rss.xml/all" nil nil nil)
+     ("wikemacs.org" "http://wikemacs.org/index.php?title=Special:RecentChanges&feed=atom" nil nil nil)
+     ("opensourcedelivers" "http://feeds.feedburner.com/opensourcedelivers" nil nil nil)
+     ("toptal.com" "http://www.toptal.com/blog.rss" nil nil nil)
+     ("linuxnewmedia.com.br" "http://www.linuxnewmedia.com.br/rss" nil nil nil)
+     ("search.cpan.org" "http://search.cpan.org/uploads.rdf" nil nil nil)
+     ("perlmonks.org" "http://perlmonks.org/?node_id=30175;xmlstyle=rss" nil nil nil)
+     ("penselinux.com.br" "http://penselinux.com.br/feed/" nil nil nil)
+     ("computerworld.com.br" "http://www.computerworld.com.br/RSS2" nil nil
+      ("--quiet" "--max-redirect=3" "--timeout=30" "--tries=1" "--output-document=-"))
+     ("nerdices.com.br" "http://nerdices.com.br/42/feed/" nil nil nil)
+     ("fossforce.com" "http://fossforce.com/feed/" nil nil nil)
+     ("onethingwell.org" "http://onethingwell.org/rss" nil nil nil)
+     ("ergoemacs.org" "http://ergoemacs.org/emacs/blog.xml" nil nil nil)
+     ("zdnet.com" "http://www.zdnet.com/blog/open-source/rss.xml" nil nil nil)
+     ("sysadmin-br" "http://br-sysadmin.com/feed/" nil nil nil)
+     ("mindbending-pt" "http://feeds.feedburner.com/mindbending-pt" nil nil nil)
+     ("hc0der.blogspot.com" "http://hc0der.blogspot.com/feeds/posts/default" nil nil nil)
+     ("linuxfoundation.org-news" "http://www.linuxfoundation.org/news-media/news/rss.xml" nil nil nil)
+     ("linuxfoundation.org-blogs" "http://www.linuxfoundation.org/news-media/blogs/browse/rss.xml" nil nil nil)
+     ("linuxfoundation.org-announcements" "http://www.linuxfoundation.org/news-media/announcements/rss.xml" nil nil nil)
+     ("luizgustavo.pro.br" "http://luizgustavo.pro.br/atom.xml" nil nil nil)
+     ("latex-project.org" "http://latex-project.org/atom.xml" nil nil nil)
+     ("phoronix.com" "http://www.phoronix.com/rss.php" nil nil nil)
+     ("butecopensource" "http://blog.butecopensource.com/feed/" nil nil
+      ("--quiet" "--timeout=60" "--tries=3" "--max-redirect=3" "--output-document=-"))
+     ("brasilanalytica.com" "http://brasilanalytica.com/feed/" nil nil nil)
+     ("mariano.eng.br" "http://mariano.eng.br/feed/" nil nil nil)
+     ("vivaolinux-forum" "http://feeds.feedburner.com/forum-vivaolinux?format=xml" nil nil nil)
+     ("inovacaotecnologica.com.br" "http://www.inovacaotecnologica.com.br/boletim/rss.xml" nil nil nil)
+     ("seginfo.com.br" "http://www.seginfo.com.br/feed/" nil nil nil)
+     ("savepoint.blog.br" "http://savepoint.blog.br/feed/" nil nil nil)
+     ("masteringperl.org" "http://www.masteringperl.org/feed/" nil nil nil)
+     ("texblog.org" "http://texblog.org/feed/" nil nil nil)
+     ("profissionaisti.com.br" "http://www.profissionaisti.com.br/feed/" nil nil nil)
+     ("ohwr.org" "http://www.ohwr.org/news.atom" nil nil nil)
+     ("slackblogs.blogspot.com" "http://slackblogs.blogspot.com/feeds/posts/default?alt=rss" nil nil nil)
+     ("perltv.org" "http://perltv.org/atom.xml" nil nil nil))))
  '(newsticker-url-list-defaults nil)
  '(newsticker-use-full-width nil)
- '(newsticker-wget-arguments (quote ("--quiet" "--max-redirect=1" "--timeout=60" "--tries=7" "--wait=30" "--random-wait" "--output-document=-")))
+ '(newsticker-wget-arguments
+   (quote
+    ("--quiet" "--max-redirect=1" "--timeout=60" "--tries=7" "--wait=30" "--random-wait" "--output-document=-")))
  '(newsticker-wget-name "wget")
  '(org-agenda-diary-file (quote diary-file))
- '(org-agenda-files (quote ("~/OFFICE/office.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/computer_science.org" "/home/jimmy/org-mode/database.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/misc.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/perl.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/r.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
+ '(org-agenda-dim-blocked-tasks t)
+ '(org-agenda-files
+   (quote
+    ("~/org-mode/games.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
+ '(org-agenda-insert-diary-extract-time nil)
  '(org-agenda-text-search-extra-files nil)
- '(org-alphabetical-lists t)
+ '(org-agenda-todo-list-sublevels t)
  '(org-attach-method (quote ln))
- '(org-babel-load-languages (quote ((awk . t) (C . t) (R . t) (calc . t) (css . t) (emacs-lisp . t) (fortran . t) (gnuplot . t) (haskell . t) (js . t) (latex . t) (ledger . t) (lisp . t) (maxima . t) (matlab . t) (ocaml . t) (octave . t) (org . t) (perl . t) (python . t) (scheme . t) (screen . t) (sh . t) (sql . t) (sqlite . t))))
+ '(org-babel-load-languages
+   (quote
+    ((awk . t)
+     (C . t)
+     (R . t)
+     (calc . t)
+     (css . t)
+     (emacs-lisp . t)
+     (fortran . t)
+     (gnuplot . t)
+     (haskell . t)
+     (js . t)
+     (latex . t)
+     (ledger . t)
+     (lisp . t)
+     (maxima . t)
+     (matlab . t)
+     (ocaml . t)
+     (octave . t)
+     (org . t)
+     (perl . t)
+     (python . t)
+     (scheme . t)
+     (screen . t)
+     (sh . t)
+     (sql . t)
+     (sqlite . t))))
  '(org-confirm-babel-evaluate nil)
  '(org-confirm-elisp-link-function nil)
  '(org-confirm-shell-link-function nil)
  '(org-emphasis-regexp-components (quote ("     ('\"{" "-   .,:!?;'\")}\\" "    
-" "." 1)))
+" "." 1)) t)
  '(org-enforce-todo-dependencies t)
  '(org-entities-ascii-explanatory t)
  '(org-export-author-info t)
@@ -679,25 +880,70 @@
  '(org-export-html-style-include-default nil)
  '(org-export-html-style-include-scripts nil)
  '(org-export-htmlize-output-type (quote inline-css))
- '(org-export-language-setup (quote (("en" "Author" "Date" "Table of Contents" "Footnotes") ("ca" "Autor" "Data" "&Iacute;ndex" "Peus de p&agrave;gina") ("cs" "Autor" "Datum" "Obsah" "Pozn\341mky pod carou") ("da" "Ophavsmand" "Dato" "Indhold" "Fodnoter") ("de" "Autor" "Datum" "Inhaltsverzeichnis" "Fu&szlig;noten") ("eo" "A&#365;toro" "Dato" "Enhavo" "Piednotoj") ("es" "Autor" "Fecha" "&Iacute;ndice" "Pies de p&aacute;gina") ("fi" "Tekij&auml;" "P&auml;iv&auml;m&auml;&auml;r&auml;" "Sis&auml;llysluettelo" "Alaviitteet") ("fr" "Auteur" "Date" "Table des mati&egrave;res" "Notes de bas de page") ("hu" "Szerz&otilde;" "D&aacute;tum" "Tartalomjegyz&eacute;k" "L&aacute;bjegyzet") ("is" "H&ouml;fundur" "Dagsetning" "Efnisyfirlit" "Aftanm&aacute;lsgreinar") ("it" "Autore" "Data" "Indice" "Note a pi&egrave; di pagina") ("nl" "Auteur" "Datum" "Inhoudsopgave" "Voetnoten") ("no" "Forfatter" "Dato" "Innhold" "Fotnoter") ("nb" "Forfatter" "Dato" "Innhold" "Fotnoter") ("nn" "Forfattar" "Dato" "Innhald" "Fotnotar") ("pl" "Autor" "Data" "Spis tre&sacute;ci" "Przypis") ("sv" "F&ouml;rfattare" "Datum" "Inneh&aring;ll" "Fotnoter") ("pt-BR" "Autor" "Data de criação" "Sumário" "Referências"))))
- '(org-export-latex-classes (quote (("article" "\\documentclass[11pt]{article}" ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}") ("\\subparagraph{%s}" . "\\subparagraph*{%s}")) ("report" "\\documentclass[11pt]{report}" ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")) ("book" "\\documentclass[11pt]{book}" ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}")) ("beamer" "\\documentclass{beamer}" org-beamer-sectioning) ("mycurriculum" "\\documentclass[11pt,a4paper]{article}
+ '(org-export-language-setup
+   (quote
+    (("en" "Author" "Date" "Table of Contents" "Footnotes")
+     ("ca" "Autor" "Data" "&Iacute;ndex" "Peus de p&agrave;gina")
+     ("cs" "Autor" "Datum" "Obsah" "Pozn\341mky pod carou")
+     ("da" "Ophavsmand" "Dato" "Indhold" "Fodnoter")
+     ("de" "Autor" "Datum" "Inhaltsverzeichnis" "Fu&szlig;noten")
+     ("eo" "A&#365;toro" "Dato" "Enhavo" "Piednotoj")
+     ("es" "Autor" "Fecha" "&Iacute;ndice" "Pies de p&aacute;gina")
+     ("fi" "Tekij&auml;" "P&auml;iv&auml;m&auml;&auml;r&auml;" "Sis&auml;llysluettelo" "Alaviitteet")
+     ("fr" "Auteur" "Date" "Table des mati&egrave;res" "Notes de bas de page")
+     ("hu" "Szerz&otilde;" "D&aacute;tum" "Tartalomjegyz&eacute;k" "L&aacute;bjegyzet")
+     ("is" "H&ouml;fundur" "Dagsetning" "Efnisyfirlit" "Aftanm&aacute;lsgreinar")
+     ("it" "Autore" "Data" "Indice" "Note a pi&egrave; di pagina")
+     ("nl" "Auteur" "Datum" "Inhoudsopgave" "Voetnoten")
+     ("no" "Forfatter" "Dato" "Innhold" "Fotnoter")
+     ("nb" "Forfatter" "Dato" "Innhold" "Fotnoter")
+     ("nn" "Forfattar" "Dato" "Innhald" "Fotnotar")
+     ("pl" "Autor" "Data" "Spis tre&sacute;ci" "Przypis")
+     ("sv" "F&ouml;rfattare" "Datum" "Inneh&aring;ll" "Fotnoter")
+     ("pt-BR" "Autor" "Data de criação" "Sumário" "Referências"))))
+ '(org-export-latex-classes
+   (quote
+    (("article" "\\documentclass[11pt]{article}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("report" "\\documentclass[11pt]{report}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("book" "\\documentclass[11pt]{book}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("beamer" "\\documentclass{beamer}" org-beamer-sectioning)
+     ("mycurriculum" "\\documentclass[11pt,a4paper]{article}
 \\usepackage[top=1cm,left=2cm,right=2cm,bottom=0.1cm]{geometry}
 \\usepackage{setspace}
 \\linespread{0.1}
 \\usepackage{amsfonts,graphicx}
 \\usepackage[pdftex,
-            pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
-            pdftitle={{{{TITLE}}}},
-            pdfsubject={{{{DESCRIPTION}}}},
-            pdfkeywords={{{{KEYWORDS}}}},
-            pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
-           ]{hyperref}
+	    pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
+	    pdftitle={{{{TITLE}}}},
+	    pdfsubject={{{{DESCRIPTION}}}},
+	    pdfkeywords={{{{KEYWORDS}}}},
+	    pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
+	   ]{hyperref}
 \\usepackage[latin1]{inputenc}  % char encoding
 \\pagestyle{empty}
 \\frenchspacing      % no aditional spaces after periods
 \\setlength{\\parskip}{8pt}\\parindent=0pt  % no paragraph indentation
 \\renewcommand\\familydefault{\\sfdefault}
-[NO-DEFAULT-PACKAGES]" ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}")))))
+[NO-DEFAULT-PACKAGES]"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")))))
  '(org-export-preserve-breaks t)
  '(org-export-run-in-background t)
  '(org-export-with-LaTeX-fragments (quote verbatim))
@@ -705,29 +951,51 @@
  '(org-export-with-section-numbers nil)
  '(org-fontify-emphasized-text t)
  '(org-fontify-quote-and-verse-blocks t)
- '(org-format-latex-options (quote (:foreground default :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$$" "\\(" "\\["))))
+ '(org-format-latex-options
+(quote
+ (:foreground default :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+              ("begin" "$1" "$$" "\\(" "\\["))))
  '(org-hide-emphasis-markers t)
  '(org-highlight-latex-fragments-and-specials t)
+ '(org-list-allow-alphabetical t)
  '(org-list-indent-offset 0)
  '(org-pretty-entities nil)
  '(org-pretty-entities-include-sub-superscripts nil)
- '(org-publish-project-alist (quote (("tecnoveneno" :auto-preamble t :base-directory "~/tecnoveneno/working/org/" :base-extension "org" :body-only t :headline-levels 999 :html-extension "html" :html-preamble t :htmlized-source t :publishing-directory "~/tecnoveneno/working/html/" :publishing-function org-publish-org-to-html :recursive t :section-numbers nil :sub-superscript t :table-of-contents nil))))
+'(org-publish-project-alist
+(quote
+ (("tecnoveneno" :auto-preamble t :base-directory "~/tecnoveneno/working/org/" :base-extension "org" :body-only t :headline-levels 999 :html-extension "html" :html-preamble t :htmlized-source t :publishing-directory "~/tecnoveneno/working/html/" :publishing-function org-publish-org-to-html :recursive t :section-numbers nil :sub-superscript t :table-of-contents nil))))
  '(org-replace-disputed-keys t)
  '(org-return-follows-link t)
  '(org-src-fontify-natively t)
  '(org-src-tab-acts-natively t)
  '(org-startup-folded (quote content))
  '(org-use-sub-superscripts (quote {}))
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/") ("melpa" . "http://melpa.milkbox.net/packages/") ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
+'(package-archives
+(quote
+ (("gnu" . "http://elpa.gnu.org/packages/")
+  ("marmalade" . "http://marmalade-repo.org/packages/")
+  ("melpa" . "http://melpa.milkbox.net/packages/")
+  ("user42" . "http://download.tuxfamily.org/user42/elpa/packages/"))))
  '(perl-tab-always-indent t)
  '(proced-after-send-signal-hook (quote (proced-revert)))
  '(save-interprogram-paste-before-kill nil)
+ '(scroll-preserve-screen-position 1)
  '(send-mail-function (quote sendmail-send-it))
  '(sendmail-program "/usr/bin/msmtp")
  '(sentence-end-without-period t)
  '(server-mode t)
  '(set-language-environment-hook (quote (url-set-mime-charset-string)))
- '(sh-other-keywords (quote ((bash sh-append bourne "bye" "logout" "select") (bourne sh-append sh "function") (csh sh-append shell "breaksw" "default" "end" "endif" "endsw" "foreach" "goto" "if" "logout" "onintr" "repeat" "switch" "then" "while") (es "break" "catch" "exec" "exit" "fn" "for" "forever" "fork" "if" "return" "throw" "while") (ksh88 sh-append bourne "select") (rc "break" "case" "exec" "exit" "fn" "for" "if" "in" "return" "switch" "while") (sh sh-append shell "./configure" "7z" "7za" "7zr" "a2p" "a2ping" "a2ps" "aafire" "aainfo" "aalib" "aasavefont" "aatest" "abook" "ac" "acct" "accton" "ack" "acl" "aconnect" "addpart" "adduser" "adjtimex" "adventure" "afm2tfm" "agetty" "agrep" "aleph" "align" "allcm" "allneeded" "alsa-utils" "alsaconf" "alsactl" "alsamixer" "amidi" "amixer" "ange-ftp" "animate" "antiword" "aplay" "aplaymidi" "apropos" "arc" "arch" "arecordmidi" "arithmetic" "arp" "arpd" "arping" "aseqdump" "aseqnet" "ash" "aspell" "at" "atc" "atd" "atq" "atrm" "atrun" "aumix" "autoexpect" "autoinsert" "autopasswd" "autorevert" "b2m" "backgammon" "badblocks" "banner" "base64" "basename" "bash" "batch" "battlestar" "bban" "bcd" "bibtex" "bin" "bind" "blkid" "blockdev" "bootlogd" "bpe" "browse-url" "bs" "bsd-finger" "bsd-games" "bsondump" "buildhash" "bunzip2" "bzcat" "bzdiff" "bzgrep" "bzip2" "bzip2recover" "bzless" "bzmore" "c2ph" "cacademo" "cacafire" "cacaplay" "cacaserver" "cacaview" "caesar" "cal" "calc" "calculator" "calendar" "canfield" "card" "cat" "catdoc" "catppt" "cdda2wav" "cdparanoia" "cdrecord" "cdrtools" "centerim" "cfdisk" "cfscores" "chacl" "chage" "chattr" "chcon" "chcpu" "chfn" "chgpasswd" "chgrp" "chkdupexe" "chmod" "chown" "chpasswd" "chroot" "chrt" "chsh" "chvt" "cksum" "clear" "clisp" "clockdiff" "cm2rem" "cmp" "col" "colcrt" "collateindex.pl" "colrm" "column" "comm" "compare" "compile_et" "composeglyphs" "composite" "config_data" "conjure" "consoletype" "contrab" "convert" "corelist" "coreutils" "countmail" "cp" "cpan" "cpan" "cpan2dist" "cpanm" "cpanp" "cpanp-run-perl" "cpio" "cribbage" "crond" "cryptdir" "csplit" "css" "csv2yaml" "ctags" "ctangle" "ctie" "ctrlaltdel" "cups" "curl" "cut" "cweave" "cytune" "date" "dc3dd" "dcron" "dd" "ddate" "deallocvt" "debugfs" "debugreiserfs" "decryptdir" "deformat-c" "deformat-sh" "delpart" "depmod" "devdump" "devtodo" "df" "dialog" "diff" "diff3" "diffpp" "diffstat" "diffutils" "dig" "dir" "dircolors" "dired" "dirname" "diskcopy" "dislocate" "dmesg" "dmidecode" "dmp" "dns" "doc-view" "docbook2dvi" "docbook2html" "docbook2man" "docbook2pdf" "docbook2ps" "docbook2rtf" "docbook2tex" "docbook2texi" "docbook2txt" "doctor" "done" "dprofpp" "du" "dump-acct" "dump-utmp" "dumpe2fs" "dumpkeys" "dvd+rw-tools" "dvi2fax" "dvicopy" "dvihp" "dvilj" "dvilj2p" "dvilj4" "dvilj4l" "dvipdfm" "dvipdft" "dvipng" "dvips" "dvired" "dvitomp" "dvitype" "dzil" "e2freefrag" "e2fsck" "e2fsprogs" "e2image" "e2pall" "e2undo" "ebb" "egrep" "eject" "elvfmt" "elvis" "elvtags" "emacs" "emacsclient" "enc2xs" "encapsulate" "encode_keychange" "enscript" "env" "epsffit" "epstopdf" "esac" "eshell" "espeak" "etags" "etex" "evim" "expand" "expect" "expectk" "expiry" "expr" "extractres" "factor" "faillog" "fallocate" "false" "faucet" "fbset" "fdformat" "fdisk" "fetchmail" "ffap" "fgconsole" "fgrep" "fi" "figlet" "file" "filefrag" "find" "find-file" "find2perl" "findaffix" "finder" "findfs" "findmnt" "findutils" "finger" "fish" "fixdlsrps" "fixfmps" "fixmacps" "fixnt" "fixproc" "fixps" "fixpsditps" "fixpspps" "fixscribeps" "fixtpps" "fixwfwps" "fixwpps" "fixwwps" "flock" "fmt" "fmtutil" "fmtutil-sys" "fold" "fontinst" "for" "formail" "fortune" "free" "fromdos" "fsck" "fsck.cramfs" "fsck.ext2" "fsck.ext3" "fsck.ext4" "fsck.ext4dev" "fsck.minix" "fsfreeze" "fstab-decode" "fstfind" "fstrim" "ftp-rfc" "funzip" "fuser" "gawk" "gcc" "genl" "getafm" "getfacl" "getkeycodes" "getmail" "getopt" "getpeername" "gftodvi" "gftopk" "gftype" "git" "gnuchess" "gomoku" "gpasswd" "grep" "grep-changelog" "groupadd" "groupdel" "groupmems" "groupmod" "groups" "grpck" "grpconv" "grpunconv" "gsftopk" "gunzip" "gzexe" "gzip" "h2ph" "h2xs" "halt" "hangman" "hdparm" "head" "hexdump" "hose" "host" "hostid" "hostname" "htop" "hunt" "huntd" "hwclock" "ibuffer" "icombine" "iconv" "id" "identify" "ido" "iecset" "ifcfg" "ifconfig" "ifstat" "ijoin" "imagemagick" "img2txt" "import" "in" "includeres" "info" "infocmp" "infokey" "infozip" "init" "initlog" "initscript" "insmod" "insmod.static" "install" "install-catalog" "install-info" "instmodsh" "ionice" "iostat" "ip" "ipcmk" "ipcrm" "ipcs" "ipf-mod.pl" "ipmaddr" "ipmask" "iproute2" "iptables" "iptraf" "iptunnel" "iputils" "isodebug" "isodump" "isoinfo" "isosize" "isovfy" "ispell" "join" "jw" "kbd" "kbd_mode" "kbdrate" "kibitz" "kill" "killall" "killall5" "kpseaccess" "kpsereadlink" "kpsestat" "kpsetool" "kpsewhere" "kpsewhich" "ksh" "last" "last-acct" "lastcomm" "lastlog" "lbdb" "ld" "ldap" "ldapcompare" "ldapdelete" "ldapexop" "ldapmodify" "ldapmodrdn" "ldappasswd" "ldapsearch" "ldapurl" "ldapwhoami" "ldattach" "ledger" "less" "lessecho" "lesskey" "lesspipe.sh" "libcaca" "libnetcfg" "libxml2" "lilo" "line" "link" "links" "linum" "linuxdoc" "linuxdoc-tools" "ln" "lnstat" "loadunimap" "locate" "lockfile" "logger" "login" "logname" "logoutd" "logsave" "longlines" "look" "losetup" "lp" "lpunlock" "ls" "lsattr" "lsblk" "lscpu" "lsdev" "lsmod" "lsof" "lspci" "lsusb" "lua" "lynx" "lzmadec" "lzmainfo" "mag" "mailstat" "mailx" "make" "makeindex" "makeinfo" "makempx" "makewhatis" "man" "man2dvi" "man2html" "mapscrn" "mc" "mcookie" "md5sum" "mech-dump" "mesg" "mf" "mf-nowin" "mft" "mib2c" "mib2c-update" "mii-tool" "mille" "mk_cmds" "mkafmmap" "mkdir" "mke2fs" "mkfifo" "mkfs" "mkfs.bfs" "mkfs.cramfs" "mkfs.minix" "mkindex" "mkisofs" "mklost+found" "mknod" "mkocp" "mkofm" "mkpasswd" "mkreiserfs" "mkswap" "mktemp" "mktemp-gnu" "mktexlsr" "mktexmf" "mktexpk" "mktextfm" "mkzftree" "modinfo" "modprobe" "module-init-tools" "mogrify" "mongo" "mongodump" "mongoexport" "mongoimport" "mongorestore" "mongostat" "mongotop" "monop" "montage" "more" "morse" "most" "mount" "mountpoint" "mpg123" "mplayer" "mpost" "mpstat" "mpto" "msmtp" "multitail" "multixterm" "munchlist" "mutt" "muttprint" "mv" "mysql" "mysqldump" "mysqlimport" "namei" "nameif" "nasm" "nc" "ncat" "ncftp" "ncurses" "ndiff" "net-snmp" "net-snmp-config" "net-snmp-create-v3-user" "net-tools" "net-utils" "netpipes" "netresolv" "netstat" "netwatch" "newer" "newsticker" "newusers" "nice" "nl" "nmap" "nohup" "nologin" "nproc" "nslookup" "nstat" "ntp" "number" "od" "odvicopy" "odvitype" "ogg123" "oggdec" "oggenc" "ogginfo" "ogonkify" "oleo" "omega" "omfonts" "onsgmls" "openjade" "openldap-client" "openssh" "openssl" "openvt" "osgml2xml" "osgmlnorm" "ospam" "ospcat" "ospent" "otangle" "otp2ocp" "outocp" "over" "p7zip" "pandoc" "par" "parallel" "partx" "passmass" "passwd" "paste" "patch" "patgen" "pathchk" "pciutils" "pcre" "pcregrep" "pcretest" "pdfetex" "pdffonts" "pdfimages" "pdfinfo" "pdflatex" "pdftexi2dvi" "pdftoabw" "pdftohtml" "pdftoppm" "pdftops" "pdftotext" "pdfxtex" "pdiff" "perl" "perlbug" "perlcritic" "perldb" "perldoc" "perlinfo" "perlivp" "perlthanks" "perltidy" "pfb2pfa" "pg" "phantasia" "piconv" "pidstat" "pig" "ping" "ping6" "pinky" "pivot_root" "pk2bm" "pkill" "pktogf" "pktype" "pl2pm" "play" "plipconfig" "pltotf" "pmap" "pod2cpanhtml" "pod2html" "pod2latex" "pod2man" "pod2text" "pod2usage" "podchecker" "podselect" "pom" "pooltype" "poppler" "postgresql" "ppt" "pr" "precat" "preunzip" "prezip" "prezip-bin" "primes" "printenv" "printf" "prlimit" "procinfo" "procmail" "procps" "prove" "ps" "ps2frag" "ps2pk" "ps4pdf" "psbook" "psfxtable" "pslatex" "psmandup" "psmerge" "psnup" "psresize" "psselect" "psset" "pstops" "pstree" "ptar" "ptardiff" "ptx" "pwck" "pwconv" "pwunconv" "quiz" "rain" "random" "rarp" "rarpd" "raw" "rawtime" "rcirc" "rcs-checkin" "rdev" "rdisc" "readcd" "readlink" "readprofile" "realpath" "rec" "recentf" "rect.el" "ref" "regex" "reiserfsck" "reiserfsprogs" "reiserfstune" "rem2html" "rem2ps" "remember" "remind" "rename" "renice" "reset" "resize2fs" "resize_reiserfs" "resizecons" "return" "rev" "rexima" "rftp" "rlogin-cwd" "rm" "rmdir" "rmmod" "robots" "rot13" "route" "routef" "routel" "rsync" "rtacct" "rtcwake" "rtf2rtf" "rtmon" "rtpr" "ruler" "rumakeindex" "run-parts" "runcon" "runlevel" "rvnamed" "s2p" "sa" "sadf" "sail" "sar" "savelog" "sc" "scgcheck" "scp" "screen" "script" "scriptreplay" "sdcv" "sdiff" "sed" "sedsed" "seejpeg" "sem" "sendmail" "seq" "setarch" "setconsolefont" "setfacl" "setfont" "setkeycodes" "setleds" "setmetamode" "setpci" "setserial" "setsid" "setterm" "sfdisk" "sftp" "sgml" "sgml2info" "sgml2latex" "sgml2txt" "sgmldiff" "sgmlpre" "sgmlsasp" "sgmlspl" "sgmlwhich" "sha1sum" "sha224sum" "sha256sum" "sha384sum" "sha512sum" "shadow" "shasum" "showchar" "showconsolefont" "showkey" "shred" "shuf" "shutdown" "sjeng" "skel" "skill" "slabtop" "slattach" "sleep" "sliceprint" "slocate" "snake" "snmp" "snmpbulkget" "snmpbulkwalk" "snmpcheck" "snmpconf" "snmpdelta" "snmpdf" "snmpget" "snmpgetnext" "snmpnetstat" "snmpset" "snmpstatus" "snmptable" "snmptest" "snmptranslate" "snmptrap" "snmpusm" "snmpvacm" "snmpwalk" "snscore" "sockdown" "socklist" "sort" "sox" "soxi" "speaker-test" "splain" "split" "sql" "squid" "ss" "ssh" "ssh-add" "ssh-agent" "ssh-copy-id" "ssh-keygen" "ssh-keyscan" "sshd" "stat" "states" "stdbuf" "strace" "strfile" "strings" "stty" "su" "sudo" "sulogin" "sum" "svn" "svnadmin" "svndumpfilter" "svnlook" "svnserve" "svnsync" "svnversion" "swaplabel" "swapon" "switch_root" "sync" "sysctl" "sysstat" "sysvbanner" "sysvinit" "table" "tac" "tail" "tailf" "tangle" "tar" "taskset" "tc" "tclsh" "tcpdump" "tcsh" "teachgammon" "tee" "telnet" "tempfile" "tesseract" "tetex" "tex" "texdoc" "texdoctk" "texexec" "texi2dvi" "texi2dvi4a2ps" "texi2html" "texi2pdf" "texindex" "texinfo" "texlinks" "tftopl" "tic" "tidy" "tie" "tig" "time" "timed-read" "timed-run" "timelimit" "timeout" "tknewsbiff" "tkpasswd" "tload" "tmm" "todos" "toe" "top" "touch" "tput" "tr" "tracepath" "tracepath6" "traceroute" "traceroute6" "tramp" "traptoemail" "tre" "tree" "trek" "true" "truncate" "tryaffix" "tset" "tsort" "ttf2afm" "tty" "tune2fs" "tunelp" "txt2regex" "txt2tags" "ul" "umount" "uname" "unbuffer" "unexpand" "uni2ascii" "unicode_start" "unicode_stop" "uniq" "unlink" "unshare" "unzip" "unzipsfx" "updmap" "updmap-sys" "uptime" "urifind" "urlview" "usb-devices" "usbutils" "useradd" "userdel" "usermod" "users" "usleep" "util-linux-ng" "uuidgen" "vcut" "vdir" "vftovp" "vi" "view" "vim" "vimdiff" "vimtutor" "vipw" "visudo" "vmstat" "volname" "vorbis-tools" "vorbiscomment" "vptovf" "w" "w3m" "wall" "wargames" "watch" "wc" "weather" "weave" "wget" "whatis" "whereis" "which" "whitespace" "who" "whoami" "whois" "windmove" "wipefs" "woman" "word-list-compress" "workbone" "worm" "worms" "write" "wtf" "wump" "wvdial" "xargs" "xkibitz" "xls2csv" "xml" "xml2po" "xmlcatalog" "xmlif" "xmllint" "xmlto" "xpath" "xpstat" "xsh" "xsubpp" "xx" "xxd" "xz" "xzdec" "xzdiff" "xzgrep" "xzless" "xzmore" "yes" "zcat" "zcmp" "zdiff" "zegrep" "zfgrep" "zforce" "zgrep" "zip" "zipcloak" "zipgrep" "zipnote" "zipsplit" "ziptool" "zless" "zmore" "znew" "zsh") (shell "break" "case" "continue" "exec" "exit") (zsh sh-append bash "select" "foreach"))))
+'(sh-other-keywords
+(quote
+ ((bash sh-append bourne "bye" "logout" "select")
+  (bourne sh-append sh "function")
+  (csh sh-append shell "breaksw" "default" "end" "endif" "endsw" "foreach" "goto" "if" "logout" "onintr" "repeat" "switch" "then" "while")
+  (es "break" "catch" "exec" "exit" "fn" "for" "forever" "fork" "if" "return" "throw" "while")
+  (ksh88 sh-append bourne "select")
+  (rc "break" "case" "exec" "exit" "fn" "for" "if" "in" "return" "switch" "while")
+  (sh sh-append shell "./configure" "7z" "7za" "7zr" "a2p" "a2ping" "a2ps" "aafire" "aainfo" "aalib" "aasavefont" "aatest" "abook" "ac" "acct" "accton" "ack" "acl" "aconnect" "addpart" "adduser" "adjtimex" "adventure" "afm2tfm" "agetty" "agrep" "aleph" "align" "allcm" "allneeded" "alsa-utils" "alsaconf" "alsactl" "alsamixer" "amidi" "amixer" "ange-ftp" "animate" "antiword" "aplay" "aplaymidi" "apropos" "arc" "arch" "arecordmidi" "arithmetic" "arp" "arpd" "arping" "aseqdump" "aseqnet" "ash" "aspell" "at" "atc" "atd" "atq" "atrm" "atrun" "aumix" "autoexpect" "autoinsert" "autopasswd" "autorevert" "b2m" "backgammon" "badblocks" "banner" "base64" "basename" "bash" "batch" "battlestar" "bban" "bcd" "bibtex" "bin" "bind" "blkid" "blockdev" "bootlogd" "bpe" "browse-url" "bs" "bsd-finger" "bsd-games" "bsondump" "buildhash" "bunzip2" "bzcat" "bzdiff" "bzgrep" "bzip2" "bzip2recover" "bzless" "bzmore" "c2ph" "cacademo" "cacafire" "cacaplay" "cacaserver" "cacaview" "caesar" "cal" "calc" "calculator" "calendar" "canfield" "card" "cat" "catdoc" "catppt" "cdda2wav" "cdparanoia" "cdrecord" "cdrtools" "centerim" "cfdisk" "cfscores" "chacl" "chage" "chattr" "chcon" "chcpu" "chfn" "chgpasswd" "chgrp" "chkdupexe" "chmod" "chown" "chpasswd" "chroot" "chrt" "chsh" "chvt" "cksum" "clear" "clisp" "clockdiff" "cm2rem" "cmp" "col" "colcrt" "collateindex.pl" "colrm" "column" "comm" "compare" "compile_et" "composeglyphs" "composite" "config_data" "conjure" "consoletype" "contrab" "convert" "corelist" "coreutils" "countmail" "cp" "cpan" "cpan" "cpan2dist" "cpanm" "cpanp" "cpanp-run-perl" "cpio" "cribbage" "crond" "cryptdir" "csplit" "css" "csv2yaml" "ctags" "ctangle" "ctie" "ctrlaltdel" "cups" "curl" "cut" "cweave" "cytune" "date" "dc3dd" "dcron" "dd" "ddate" "deallocvt" "debugfs" "debugreiserfs" "decryptdir" "deformat-c" "deformat-sh" "delpart" "depmod" "devdump" "devtodo" "df" "dialog" "diff" "diff3" "diffpp" "diffstat" "diffutils" "dig" "dir" "dircolors" "dired" "dirname" "diskcopy" "dislocate" "dmesg" "dmidecode" "dmp" "dns" "doc-view" "docbook2dvi" "docbook2html" "docbook2man" "docbook2pdf" "docbook2ps" "docbook2rtf" "docbook2tex" "docbook2texi" "docbook2txt" "doctor" "done" "dprofpp" "du" "dump-acct" "dump-utmp" "dumpe2fs" "dumpkeys" "dvd+rw-tools" "dvi2fax" "dvicopy" "dvihp" "dvilj" "dvilj2p" "dvilj4" "dvilj4l" "dvipdfm" "dvipdft" "dvipng" "dvips" "dvired" "dvitomp" "dvitype" "dzil" "e2freefrag" "e2fsck" "e2fsprogs" "e2image" "e2pall" "e2undo" "ebb" "egrep" "eject" "elvfmt" "elvis" "elvtags" "emacs" "emacsclient" "enc2xs" "encapsulate" "encode_keychange" "enscript" "env" "epsffit" "epstopdf" "esac" "eshell" "espeak" "etags" "etex" "evim" "expand" "expect" "expectk" "expiry" "expr" "extractres" "factor" "faillog" "fallocate" "false" "faucet" "fbset" "fdformat" "fdisk" "fetchmail" "ffap" "fgconsole" "fgrep" "fi" "figlet" "file" "filefrag" "find" "find-file" "find2perl" "findaffix" "finder" "findfs" "findmnt" "findutils" "finger" "fish" "fixdlsrps" "fixfmps" "fixmacps" "fixnt" "fixproc" "fixps" "fixpsditps" "fixpspps" "fixscribeps" "fixtpps" "fixwfwps" "fixwpps" "fixwwps" "flock" "fmt" "fmtutil" "fmtutil-sys" "fold" "fontinst" "for" "formail" "fortune" "free" "fromdos" "fsck" "fsck.cramfs" "fsck.ext2" "fsck.ext3" "fsck.ext4" "fsck.ext4dev" "fsck.minix" "fsfreeze" "fstab-decode" "fstfind" "fstrim" "ftp-rfc" "funzip" "fuser" "gawk" "gcc" "genl" "getafm" "getfacl" "getkeycodes" "getmail" "getopt" "getpeername" "gftodvi" "gftopk" "gftype" "git" "gnuchess" "gomoku" "gpasswd" "grep" "grep-changelog" "groupadd" "groupdel" "groupmems" "groupmod" "groups" "grpck" "grpconv" "grpunconv" "gsftopk" "gunzip" "gzexe" "gzip" "h2ph" "h2xs" "halt" "hangman" "hdparm" "head" "hexdump" "hose" "host" "hostid" "hostname" "htop" "hunt" "huntd" "hwclock" "ibuffer" "icombine" "iconv" "id" "identify" "ido" "iecset" "ifcfg" "ifconfig" "ifstat" "ijoin" "imagemagick" "img2txt" "import" "in" "includeres" "info" "infocmp" "infokey" "infozip" "init" "initlog" "initscript" "insmod" "insmod.static" "install" "install-catalog" "install-info" "instmodsh" "ionice" "iostat" "ip" "ipcmk" "ipcrm" "ipcs" "ipf-mod.pl" "ipmaddr" "ipmask" "iproute2" "iptables" "iptraf" "iptunnel" "iputils" "isodebug" "isodump" "isoinfo" "isosize" "isovfy" "ispell" "join" "jw" "kbd" "kbd_mode" "kbdrate" "kibitz" "kill" "killall" "killall5" "kpseaccess" "kpsereadlink" "kpsestat" "kpsetool" "kpsewhere" "kpsewhich" "ksh" "last" "last-acct" "lastcomm" "lastlog" "lbdb" "ld" "ldap" "ldapcompare" "ldapdelete" "ldapexop" "ldapmodify" "ldapmodrdn" "ldappasswd" "ldapsearch" "ldapurl" "ldapwhoami" "ldattach" "ledger" "less" "lessecho" "lesskey" "lesspipe.sh" "libcaca" "libnetcfg" "libxml2" "lilo" "line" "link" "links" "linum" "linuxdoc" "linuxdoc-tools" "ln" "lnstat" "loadunimap" "locate" "lockfile" "logger" "login" "logname" "logoutd" "logsave" "longlines" "look" "losetup" "lp" "lpunlock" "ls" "lsattr" "lsblk" "lscpu" "lsdev" "lsmod" "lsof" "lspci" "lsusb" "lua" "lynx" "lzmadec" "lzmainfo" "mag" "mailstat" "mailx" "make" "makeindex" "makeinfo" "makempx" "makewhatis" "man" "man2dvi" "man2html" "mapscrn" "mc" "mcookie" "md5sum" "mech-dump" "mesg" "mf" "mf-nowin" "mft" "mib2c" "mib2c-update" "mii-tool" "mille" "mk_cmds" "mkafmmap" "mkdir" "mke2fs" "mkfifo" "mkfs" "mkfs.bfs" "mkfs.cramfs" "mkfs.minix" "mkindex" "mkisofs" "mklost+found" "mknod" "mkocp" "mkofm" "mkpasswd" "mkreiserfs" "mkswap" "mktemp" "mktemp-gnu" "mktexlsr" "mktexmf" "mktexpk" "mktextfm" "mkzftree" "modinfo" "modprobe" "module-init-tools" "mogrify" "mongo" "mongodump" "mongoexport" "mongoimport" "mongorestore" "mongostat" "mongotop" "monop" "montage" "more" "morse" "most" "mount" "mountpoint" "mpg123" "mplayer" "mpost" "mpstat" "mpto" "msmtp" "multitail" "multixterm" "munchlist" "mutt" "muttprint" "mv" "mysql" "mysqldump" "mysqlimport" "namei" "nameif" "nasm" "nc" "ncat" "ncftp" "ncurses" "ndiff" "net-snmp" "net-snmp-config" "net-snmp-create-v3-user" "net-tools" "net-utils" "netpipes" "netresolv" "netstat" "netwatch" "newer" "newsticker" "newusers" "nice" "nl" "nmap" "nohup" "nologin" "nproc" "nslookup" "nstat" "ntp" "number" "od" "odvicopy" "odvitype" "ogg123" "oggdec" "oggenc" "ogginfo" "ogonkify" "oleo" "omega" "omfonts" "onsgmls" "openjade" "openldap-client" "openssh" "openssl" "openvt" "osgml2xml" "osgmlnorm" "ospam" "ospcat" "ospent" "otangle" "otp2ocp" "outocp" "over" "p7zip" "pandoc" "par" "parallel" "partx" "passmass" "passwd" "paste" "patch" "patgen" "pathchk" "pciutils" "pcre" "pcregrep" "pcretest" "pdfetex" "pdffonts" "pdfimages" "pdfinfo" "pdflatex" "pdftexi2dvi" "pdftoabw" "pdftohtml" "pdftoppm" "pdftops" "pdftotext" "pdfxtex" "pdiff" "perl" "perlbug" "perlcritic" "perldb" "perldoc" "perlinfo" "perlivp" "perlthanks" "perltidy" "pfb2pfa" "pg" "phantasia" "piconv" "pidstat" "pig" "ping" "ping6" "pinky" "pivot_root" "pk2bm" "pkill" "pktogf" "pktype" "pl2pm" "play" "plipconfig" "pltotf" "pmap" "pod2cpanhtml" "pod2html" "pod2latex" "pod2man" "pod2text" "pod2usage" "podchecker" "podselect" "pom" "pooltype" "poppler" "postgresql" "ppt" "pr" "precat" "preunzip" "prezip" "prezip-bin" "primes" "printenv" "printf" "prlimit" "procinfo" "procmail" "procps" "prove" "ps" "ps2frag" "ps2pk" "ps4pdf" "psbook" "psfxtable" "pslatex" "psmandup" "psmerge" "psnup" "psresize" "psselect" "psset" "pstops" "pstree" "ptar" "ptardiff" "ptx" "pwck" "pwconv" "pwunconv" "quiz" "rain" "random" "rarp" "rarpd" "raw" "rawtime" "rcirc" "rcs-checkin" "rdev" "rdisc" "readcd" "readlink" "readprofile" "realpath" "rec" "recentf" "rect.el" "ref" "regex" "reiserfsck" "reiserfsprogs" "reiserfstune" "rem2html" "rem2ps" "remember" "remind" "rename" "renice" "reset" "resize2fs" "resize_reiserfs" "resizecons" "return" "rev" "rexima" "rftp" "rlogin-cwd" "rm" "rmdir" "rmmod" "robots" "rot13" "route" "routef" "routel" "rsync" "rtacct" "rtcwake" "rtf2rtf" "rtmon" "rtpr" "ruler" "rumakeindex" "run-parts" "runcon" "runlevel" "rvnamed" "s2p" "sa" "sadf" "sail" "sar" "savelog" "sc" "scgcheck" "scp" "screen" "script" "scriptreplay" "sdcv" "sdiff" "sed" "sedsed" "seejpeg" "sem" "sendmail" "seq" "setarch" "setconsolefont" "setfacl" "setfont" "setkeycodes" "setleds" "setmetamode" "setpci" "setserial" "setsid" "setterm" "sfdisk" "sftp" "sgml" "sgml2info" "sgml2latex" "sgml2txt" "sgmldiff" "sgmlpre" "sgmlsasp" "sgmlspl" "sgmlwhich" "sha1sum" "sha224sum" "sha256sum" "sha384sum" "sha512sum" "shadow" "shasum" "showchar" "showconsolefont" "showkey" "shred" "shuf" "shutdown" "sjeng" "skel" "skill" "slabtop" "slattach" "sleep" "sliceprint" "slocate" "snake" "snmp" "snmpbulkget" "snmpbulkwalk" "snmpcheck" "snmpconf" "snmpdelta" "snmpdf" "snmpget" "snmpgetnext" "snmpnetstat" "snmpset" "snmpstatus" "snmptable" "snmptest" "snmptranslate" "snmptrap" "snmpusm" "snmpvacm" "snmpwalk" "snscore" "sockdown" "socklist" "sort" "sox" "soxi" "speaker-test" "splain" "split" "sql" "squid" "ss" "ssh" "ssh-add" "ssh-agent" "ssh-copy-id" "ssh-keygen" "ssh-keyscan" "sshd" "stat" "states" "stdbuf" "strace" "strfile" "strings" "stty" "su" "sudo" "sulogin" "sum" "svn" "svnadmin" "svndumpfilter" "svnlook" "svnserve" "svnsync" "svnversion" "swaplabel" "swapon" "switch_root" "sync" "sysctl" "sysstat" "sysvbanner" "sysvinit" "table" "tac" "tail" "tailf" "tangle" "tar" "taskset" "tc" "tclsh" "tcpdump" "tcsh" "teachgammon" "tee" "telnet" "tempfile" "tesseract" "tetex" "tex" "texdoc" "texdoctk" "texexec" "texi2dvi" "texi2dvi4a2ps" "texi2html" "texi2pdf" "texindex" "texinfo" "texlinks" "tftopl" "tic" "tidy" "tie" "tig" "time" "timed-read" "timed-run" "timelimit" "timeout" "tknewsbiff" "tkpasswd" "tload" "tmm" "todos" "toe" "top" "touch" "tput" "tr" "tracepath" "tracepath6" "traceroute" "traceroute6" "tramp" "traptoemail" "tre" "tree" "trek" "true" "truncate" "tryaffix" "tset" "tsort" "ttf2afm" "tty" "tune2fs" "tunelp" "txt2regex" "txt2tags" "ul" "umount" "uname" "unbuffer" "unexpand" "uni2ascii" "unicode_start" "unicode_stop" "uniq" "unlink" "unshare" "unzip" "unzipsfx" "updmap" "updmap-sys" "uptime" "urifind" "urlview" "usb-devices" "usbutils" "useradd" "userdel" "usermod" "users" "usleep" "util-linux-ng" "uuidgen" "vcut" "vdir" "vftovp" "vi" "view" "vim" "vimdiff" "vimtutor" "vipw" "visudo" "vmstat" "volname" "vorbis-tools" "vorbiscomment" "vptovf" "w" "w3m" "wall" "wargames" "watch" "wc" "weather" "weave" "wget" "whatis" "whereis" "which" "whitespace" "who" "whoami" "whois" "windmove" "wipefs" "woman" "word-list-compress" "workbone" "worm" "worms" "write" "wtf" "wump" "wvdial" "xargs" "xkibitz" "xls2csv" "xml" "xml2po" "xmlcatalog" "xmlif" "xmllint" "xmlto" "xpath" "xpstat" "xsh" "xsubpp" "xx" "xxd" "xz" "xzdec" "xzdiff" "xzgrep" "xzless" "xzmore" "yes" "zcat" "zcmp" "zdiff" "zegrep" "zfgrep" "zforce" "zgrep" "zip" "zipcloak" "zipgrep" "zipnote" "zipsplit" "ziptool" "zless" "zmore" "znew" "zsh" "ed")
+  (shell "break" "case" "continue" "exec" "exit")
+  (zsh sh-append bash "select" "foreach"))))
  '(show-paren-mode t)
  '(show-paren-style (quote parenthesis))
  '(show-trailing-whitespace t)
