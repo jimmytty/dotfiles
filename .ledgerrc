@@ -1,3 +1,4 @@
 --file ~/.ledger/ledger.dat
 --pager /usr/bin/less
 --date-format [%Y-%m-%d]
+--color
