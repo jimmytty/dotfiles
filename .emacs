@@ -1,10 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2015-10-11 11:12:16 jimmy>
+;;; Time-stamp: <2015-11-05 00:47:00 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(fset 'yes-or-no-p 'y-or-n-p)
 (package-initialize)
+(fset 'yes-or-no-p 'y-or-n-p)
 (ido-mode t)
 (appt-activate 1)
 
@@ -265,14 +265,8 @@
 ;;; ess-edit.el --- convenient editing of R code
 (add-to-list 'load-path "~/.emacs.d/el-get/ess-edit/")
 (require 'ess-edit)
-;;; ess-R-data-view.el --- Data viewer for GNU R
-(require 'ess-R-data-view)
-
-;;; essh.el --- a set of commands that emulate for bash what ESS is to R.
-(add-to-list 'load-path "~/.emacs.d/el-get/essh/")
-(require 'essh)
-(defun essh-sh-hook ())
-(add-hook 'sh-mode-hook 'essh-sh-hook)
+;; ;;; ess-R-data-view.el --- Data viewer for GNU R
+;; (require 'ess-R-data-view)
 
 ;;; fetchmail-mode.el --- Mode for editing .fetchmailrc files
 (add-to-list 'load-path "~/.emacs.d/el-get/fetchmail-mode/")
@@ -352,9 +346,12 @@
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
-;; ;;; magit.el --- control Git from Emacs
+;;; magit.el --- A Git porcelain inside Emacs
 (require 'magit)
-(load-file "~/.emacs.d/elpa/magit-20151011.49/magit-bisect.el") ; workaround
+(load-file
+ (car
+  (file-expand-wildcards
+   "~/.emacs.d/elpa/magit-*/magit-bisect.el"))) ; workaround
 
 ;;; mailcap-mode.el --- mailcap file editing mode
 (autoload 'mailcap-mode "mailcap-mode" nil t)
