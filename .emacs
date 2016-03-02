@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2015-11-05 00:47:00 jimmy>
+;;; Time-stamp: <2016-03-01 23:58:08 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (package-initialize)
@@ -15,7 +15,7 @@
 (add-to-list 'auto-mode-alist '("rc$" . conf-mode))
 
 (global-set-key (kbd "C-c C-k") 'kill-whole-line)
-(global-set-key (kbd "C-x L") 'count-lines-region)
+(global-set-key (kbd "C-x L") 'count-words-region)
 
 ;;; FUNCTIONS Section
 (fset 'par
@@ -33,17 +33,36 @@
   (region-beginning)
   (region-end)))))))
 
+(defun capitalize-region-ptbr (&optional b e)
+  (interactive "r")
+  (shell-command-on-region b e "perl -Mlib=$HOME/projects/CPAN/Lingua-PT-Capitalizer/lib/ -MLingua::PT::Capitalizer -wnE'print capitalize'" t t))
+
+(defun format-cnpj (&optional b e)
+  (interactive "r")
+  (shell-command-on-region b e "perl -MBusiness::BR::CNPJ=canon_cnpj,format_cnpj -wnE'chomp;say format_cnpj canon_cnpj$_'" t t))
+
+(defun format-cpf (&optional b e)
+  (interactive "r")
+  (shell-command-on-region b e "perl -MBusiness::BR::CPF=canon_cpf,format_cpf -wnE'chomp;say format_cpf canon_cpf$_'" t t))
+
+(defun format-rg (&optional b e)
+  (interactive "r")
+  (shell-command-on-region b e "perl -MBusiness::BR::RG=canon_rg,format_rg -wnE'chomp;say format_rg canon_rg$_'" t t))
+
 (defun espeak()
   (interactive)
   (shell-command-on-region
    (mark)
    (point)
-   "/usr/bin/espeak --stdin -s 160 -ven+f2"))
+   "/usr/bin/espeak --stdin -s 160 -ven+f2 &>/dev/null"))
 
 (defun podchecker ()
   (interactive)
-  (shell-command-on-region (mark)
-	       (point) "podchecker"))
+  (shell-command-on-region
+   (mark)
+   (point)
+   "podchecker"
+   ))
 (defun zsh-shell ()
   (interactive)
   (term "/bin/zsh")
@@ -62,6 +81,20 @@
   (interactive "r")
   (shell-command-on-region b e "piconv -f latin1 -t utf8 | uni2ascii -q -aU" t t))
 
+(defun js-beautify ()
+  (interactive)
+  (shell-command-on-region
+   (point-min) (point-max)
+   "js_beautify.pl --indent_size=4 --preserve_newlines -"
+   (current-buffer) t t
+  )
+  )
+
+(defun eww-open-file-current ()
+  (interactive)
+  (eww-open-file (buffer-file-name))
+)
+
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src"))
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_example". "#\\+end_example"))
 
@@ -70,6 +103,8 @@
 
 ;;; moz-controller.el --- Control Firefox from Emacs
 (require 'moz-controller)
+;;; firefox-controller.el --- An improved Firefox controller
+(require 'firefox-controller)
 
 ;;; org --- Outline-based notes management and organizer
 ;;; workaround:
@@ -199,7 +234,6 @@
 ;;; dired-subtree.el --- Insert subdirectories in a tree-like fashion
 (require 'dired-subtree)
 
-
 ;;; doc-mode.el --- a major-mode for highlighting a hierarchy structured text.
 (add-to-list 'load-path "~/.emacs.d/el-get/doc-mode/")
 (autoload 'doc-mode "doc-mode" nil t)
@@ -207,10 +241,11 @@
 ;;; asciidoc.el --- asciidoc text file development support
 (add-to-list 'load-path "~/.emacs.d/el-get/asciidoc/")
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
-(add-hook 'doc-mode-hook
-      '(lambda ()
-	 (turn-on-auto-fill)
-	 (require 'asciidoc)))
+(add-hook
+ 'doc-mode-hook
+ '(lambda ()
+    (turn-on-auto-fill)
+    (require 'asciidoc)))
 
 ;;; ecmascript-mode.el --- major mode for editing ECMAScript code
 (add-to-list 'load-path "~/.emacs.d/el-get/ecmascript-mode/")
@@ -600,11 +635,24 @@
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 
 ;;; yasnippet.el --- Yet another snippet extension for Emacs.
-(add-to-list 'load-path "~/.emacs.d/el-get/yasnippet/")
 (require 'yasnippet)
 
-;;;
+;;; editortools.el --- make use of App::EditorTools Perl module
+(load-file "~/.emacs.d/editortools.el")
+
+;;; itail.el --- An interactive tail mode
+(require 'itail)
+
+;;; scala-mode2.el --- Major mode for editing scala
+(require 'scala-mode2)
+
+;;; sed-mode.el --- Major mode to edit sed scripts
+(require 'sed-mode)
+(add-to-list 'auto-mode-alist '("\\.sed$" . sed-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (desktop-read)
+;;;
 
 ;;; CUSTOMIZE Section
 (custom-set-variables
@@ -670,7 +718,8 @@
  '(ledger-binary-path "~/usr/bin/ledger")
  '(ledger-reports
    (quote
-    (("misc" "hr;echo '# [CASH]';ledger --flat balance assets:cash;hr;echo '# [EXPENSES]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^expenses';hr;echo '# [INCOME]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^income';hr;echo '# [BUDGET]';ledger --prepend-format=\"[$(date +%Y-%m)]\" --budget --flat --effective --period=\"$(date +%Y-%m)\" balance '^expenses'")
+    (("summary" "~/bin/ledger/reports/summary.sh")
+     ("misc" "hr;echo '# [CASH]';ledger --flat balance assets:cash;hr;echo '# [EXPENSES]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^expenses';hr;echo '# [INCOME]';ledger --flat --period=$(date +%Y-%m) --subtotal --monthly --period-sort='(amount)' register '^income';echo '# [INCOME (yearly)]';ledger balance '^income' --empty --flat --period='this year' --balance-format='%-12((partial_account))%10(percent(market(display_total), market(parent.total)))%16(market(display_total))\\n%/%-18P--------------------\\nYearly%-21P%(T)\\nMontly%.23P%(display_total/12)\\n';hr;echo '# [BUDGET]';ledger --prepend-format=\"[$(date +%Y-%m)]\" --budget --flat --effective --period=\"$(date +%Y-%m)\" balance '^expenses'")
      ("balance_-_assets:cash" "ledger --flat --file=/home/jimmy/.ledger/ledger.dat balance assets:cash")
      ("cleared" "ledger --flat cleared")
      ("stats" "ledger stats")
@@ -830,7 +879,7 @@
  '(org-agenda-dim-blocked-tasks t)
  '(org-agenda-files
    (quote
-    ("~/org-mode/games.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
+    ("~/org-mode/perl.org" "~/org-mode/games.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
  '(org-agenda-insert-diary-extract-time nil)
  '(org-agenda-text-search-extra-files nil)
  '(org-agenda-todo-list-sublevels t)
@@ -990,7 +1039,7 @@
   (es "break" "catch" "exec" "exit" "fn" "for" "forever" "fork" "if" "return" "throw" "while")
   (ksh88 sh-append bourne "select")
   (rc "break" "case" "exec" "exit" "fn" "for" "if" "in" "return" "switch" "while")
-  (sh sh-append shell "./configure" "7z" "7za" "7zr" "a2p" "a2ping" "a2ps" "aafire" "aainfo" "aalib" "aasavefont" "aatest" "abook" "ac" "acct" "accton" "ack" "acl" "aconnect" "addpart" "adduser" "adjtimex" "adventure" "afm2tfm" "agetty" "agrep" "aleph" "align" "allcm" "allneeded" "alsa-utils" "alsaconf" "alsactl" "alsamixer" "amidi" "amixer" "ange-ftp" "animate" "antiword" "aplay" "aplaymidi" "apropos" "arc" "arch" "arecordmidi" "arithmetic" "arp" "arpd" "arping" "aseqdump" "aseqnet" "ash" "aspell" "at" "atc" "atd" "atq" "atrm" "atrun" "aumix" "autoexpect" "autoinsert" "autopasswd" "autorevert" "b2m" "backgammon" "badblocks" "banner" "base64" "basename" "bash" "batch" "battlestar" "bban" "bcd" "bibtex" "bin" "bind" "blkid" "blockdev" "bootlogd" "bpe" "browse-url" "bs" "bsd-finger" "bsd-games" "bsondump" "buildhash" "bunzip2" "bzcat" "bzdiff" "bzgrep" "bzip2" "bzip2recover" "bzless" "bzmore" "c2ph" "cacademo" "cacafire" "cacaplay" "cacaserver" "cacaview" "caesar" "cal" "calc" "calculator" "calendar" "canfield" "card" "cat" "catdoc" "catppt" "cdda2wav" "cdparanoia" "cdrecord" "cdrtools" "centerim" "cfdisk" "cfscores" "chacl" "chage" "chattr" "chcon" "chcpu" "chfn" "chgpasswd" "chgrp" "chkdupexe" "chmod" "chown" "chpasswd" "chroot" "chrt" "chsh" "chvt" "cksum" "clear" "clisp" "clockdiff" "cm2rem" "cmp" "col" "colcrt" "collateindex.pl" "colrm" "column" "comm" "compare" "compile_et" "composeglyphs" "composite" "config_data" "conjure" "consoletype" "contrab" "convert" "corelist" "coreutils" "countmail" "cp" "cpan" "cpan" "cpan2dist" "cpanm" "cpanp" "cpanp-run-perl" "cpio" "cribbage" "crond" "cryptdir" "csplit" "css" "csv2yaml" "ctags" "ctangle" "ctie" "ctrlaltdel" "cups" "curl" "cut" "cweave" "cytune" "date" "dc3dd" "dcron" "dd" "ddate" "deallocvt" "debugfs" "debugreiserfs" "decryptdir" "deformat-c" "deformat-sh" "delpart" "depmod" "devdump" "devtodo" "df" "dialog" "diff" "diff3" "diffpp" "diffstat" "diffutils" "dig" "dir" "dircolors" "dired" "dirname" "diskcopy" "dislocate" "dmesg" "dmidecode" "dmp" "dns" "doc-view" "docbook2dvi" "docbook2html" "docbook2man" "docbook2pdf" "docbook2ps" "docbook2rtf" "docbook2tex" "docbook2texi" "docbook2txt" "doctor" "done" "dprofpp" "du" "dump-acct" "dump-utmp" "dumpe2fs" "dumpkeys" "dvd+rw-tools" "dvi2fax" "dvicopy" "dvihp" "dvilj" "dvilj2p" "dvilj4" "dvilj4l" "dvipdfm" "dvipdft" "dvipng" "dvips" "dvired" "dvitomp" "dvitype" "dzil" "e2freefrag" "e2fsck" "e2fsprogs" "e2image" "e2pall" "e2undo" "ebb" "egrep" "eject" "elvfmt" "elvis" "elvtags" "emacs" "emacsclient" "enc2xs" "encapsulate" "encode_keychange" "enscript" "env" "epsffit" "epstopdf" "esac" "eshell" "espeak" "etags" "etex" "evim" "expand" "expect" "expectk" "expiry" "expr" "extractres" "factor" "faillog" "fallocate" "false" "faucet" "fbset" "fdformat" "fdisk" "fetchmail" "ffap" "fgconsole" "fgrep" "fi" "figlet" "file" "filefrag" "find" "find-file" "find2perl" "findaffix" "finder" "findfs" "findmnt" "findutils" "finger" "fish" "fixdlsrps" "fixfmps" "fixmacps" "fixnt" "fixproc" "fixps" "fixpsditps" "fixpspps" "fixscribeps" "fixtpps" "fixwfwps" "fixwpps" "fixwwps" "flock" "fmt" "fmtutil" "fmtutil-sys" "fold" "fontinst" "for" "formail" "fortune" "free" "fromdos" "fsck" "fsck.cramfs" "fsck.ext2" "fsck.ext3" "fsck.ext4" "fsck.ext4dev" "fsck.minix" "fsfreeze" "fstab-decode" "fstfind" "fstrim" "ftp-rfc" "funzip" "fuser" "gawk" "gcc" "genl" "getafm" "getfacl" "getkeycodes" "getmail" "getopt" "getpeername" "gftodvi" "gftopk" "gftype" "git" "gnuchess" "gomoku" "gpasswd" "grep" "grep-changelog" "groupadd" "groupdel" "groupmems" "groupmod" "groups" "grpck" "grpconv" "grpunconv" "gsftopk" "gunzip" "gzexe" "gzip" "h2ph" "h2xs" "halt" "hangman" "hdparm" "head" "hexdump" "hose" "host" "hostid" "hostname" "htop" "hunt" "huntd" "hwclock" "ibuffer" "icombine" "iconv" "id" "identify" "ido" "iecset" "ifcfg" "ifconfig" "ifstat" "ijoin" "imagemagick" "img2txt" "import" "in" "includeres" "info" "infocmp" "infokey" "infozip" "init" "initlog" "initscript" "insmod" "insmod.static" "install" "install-catalog" "install-info" "instmodsh" "ionice" "iostat" "ip" "ipcmk" "ipcrm" "ipcs" "ipf-mod.pl" "ipmaddr" "ipmask" "iproute2" "iptables" "iptraf" "iptunnel" "iputils" "isodebug" "isodump" "isoinfo" "isosize" "isovfy" "ispell" "join" "jw" "kbd" "kbd_mode" "kbdrate" "kibitz" "kill" "killall" "killall5" "kpseaccess" "kpsereadlink" "kpsestat" "kpsetool" "kpsewhere" "kpsewhich" "ksh" "last" "last-acct" "lastcomm" "lastlog" "lbdb" "ld" "ldap" "ldapcompare" "ldapdelete" "ldapexop" "ldapmodify" "ldapmodrdn" "ldappasswd" "ldapsearch" "ldapurl" "ldapwhoami" "ldattach" "ledger" "less" "lessecho" "lesskey" "lesspipe.sh" "libcaca" "libnetcfg" "libxml2" "lilo" "line" "link" "links" "linum" "linuxdoc" "linuxdoc-tools" "ln" "lnstat" "loadunimap" "locate" "lockfile" "logger" "login" "logname" "logoutd" "logsave" "longlines" "look" "losetup" "lp" "lpunlock" "ls" "lsattr" "lsblk" "lscpu" "lsdev" "lsmod" "lsof" "lspci" "lsusb" "lua" "lynx" "lzmadec" "lzmainfo" "mag" "mailstat" "mailx" "make" "makeindex" "makeinfo" "makempx" "makewhatis" "man" "man2dvi" "man2html" "mapscrn" "mc" "mcookie" "md5sum" "mech-dump" "mesg" "mf" "mf-nowin" "mft" "mib2c" "mib2c-update" "mii-tool" "mille" "mk_cmds" "mkafmmap" "mkdir" "mke2fs" "mkfifo" "mkfs" "mkfs.bfs" "mkfs.cramfs" "mkfs.minix" "mkindex" "mkisofs" "mklost+found" "mknod" "mkocp" "mkofm" "mkpasswd" "mkreiserfs" "mkswap" "mktemp" "mktemp-gnu" "mktexlsr" "mktexmf" "mktexpk" "mktextfm" "mkzftree" "modinfo" "modprobe" "module-init-tools" "mogrify" "mongo" "mongodump" "mongoexport" "mongoimport" "mongorestore" "mongostat" "mongotop" "monop" "montage" "more" "morse" "most" "mount" "mountpoint" "mpg123" "mplayer" "mpost" "mpstat" "mpto" "msmtp" "multitail" "multixterm" "munchlist" "mutt" "muttprint" "mv" "mysql" "mysqldump" "mysqlimport" "namei" "nameif" "nasm" "nc" "ncat" "ncftp" "ncurses" "ndiff" "net-snmp" "net-snmp-config" "net-snmp-create-v3-user" "net-tools" "net-utils" "netpipes" "netresolv" "netstat" "netwatch" "newer" "newsticker" "newusers" "nice" "nl" "nmap" "nohup" "nologin" "nproc" "nslookup" "nstat" "ntp" "number" "od" "odvicopy" "odvitype" "ogg123" "oggdec" "oggenc" "ogginfo" "ogonkify" "oleo" "omega" "omfonts" "onsgmls" "openjade" "openldap-client" "openssh" "openssl" "openvt" "osgml2xml" "osgmlnorm" "ospam" "ospcat" "ospent" "otangle" "otp2ocp" "outocp" "over" "p7zip" "pandoc" "par" "parallel" "partx" "passmass" "passwd" "paste" "patch" "patgen" "pathchk" "pciutils" "pcre" "pcregrep" "pcretest" "pdfetex" "pdffonts" "pdfimages" "pdfinfo" "pdflatex" "pdftexi2dvi" "pdftoabw" "pdftohtml" "pdftoppm" "pdftops" "pdftotext" "pdfxtex" "pdiff" "perl" "perlbug" "perlcritic" "perldb" "perldoc" "perlinfo" "perlivp" "perlthanks" "perltidy" "pfb2pfa" "pg" "phantasia" "piconv" "pidstat" "pig" "ping" "ping6" "pinky" "pivot_root" "pk2bm" "pkill" "pktogf" "pktype" "pl2pm" "play" "plipconfig" "pltotf" "pmap" "pod2cpanhtml" "pod2html" "pod2latex" "pod2man" "pod2text" "pod2usage" "podchecker" "podselect" "pom" "pooltype" "poppler" "postgresql" "ppt" "pr" "precat" "preunzip" "prezip" "prezip-bin" "primes" "printenv" "printf" "prlimit" "procinfo" "procmail" "procps" "prove" "ps" "ps2frag" "ps2pk" "ps4pdf" "psbook" "psfxtable" "pslatex" "psmandup" "psmerge" "psnup" "psresize" "psselect" "psset" "pstops" "pstree" "ptar" "ptardiff" "ptx" "pwck" "pwconv" "pwunconv" "quiz" "rain" "random" "rarp" "rarpd" "raw" "rawtime" "rcirc" "rcs-checkin" "rdev" "rdisc" "readcd" "readlink" "readprofile" "realpath" "rec" "recentf" "rect.el" "ref" "regex" "reiserfsck" "reiserfsprogs" "reiserfstune" "rem2html" "rem2ps" "remember" "remind" "rename" "renice" "reset" "resize2fs" "resize_reiserfs" "resizecons" "return" "rev" "rexima" "rftp" "rlogin-cwd" "rm" "rmdir" "rmmod" "robots" "rot13" "route" "routef" "routel" "rsync" "rtacct" "rtcwake" "rtf2rtf" "rtmon" "rtpr" "ruler" "rumakeindex" "run-parts" "runcon" "runlevel" "rvnamed" "s2p" "sa" "sadf" "sail" "sar" "savelog" "sc" "scgcheck" "scp" "screen" "script" "scriptreplay" "sdcv" "sdiff" "sed" "sedsed" "seejpeg" "sem" "sendmail" "seq" "setarch" "setconsolefont" "setfacl" "setfont" "setkeycodes" "setleds" "setmetamode" "setpci" "setserial" "setsid" "setterm" "sfdisk" "sftp" "sgml" "sgml2info" "sgml2latex" "sgml2txt" "sgmldiff" "sgmlpre" "sgmlsasp" "sgmlspl" "sgmlwhich" "sha1sum" "sha224sum" "sha256sum" "sha384sum" "sha512sum" "shadow" "shasum" "showchar" "showconsolefont" "showkey" "shred" "shuf" "shutdown" "sjeng" "skel" "skill" "slabtop" "slattach" "sleep" "sliceprint" "slocate" "snake" "snmp" "snmpbulkget" "snmpbulkwalk" "snmpcheck" "snmpconf" "snmpdelta" "snmpdf" "snmpget" "snmpgetnext" "snmpnetstat" "snmpset" "snmpstatus" "snmptable" "snmptest" "snmptranslate" "snmptrap" "snmpusm" "snmpvacm" "snmpwalk" "snscore" "sockdown" "socklist" "sort" "sox" "soxi" "speaker-test" "splain" "split" "sql" "squid" "ss" "ssh" "ssh-add" "ssh-agent" "ssh-copy-id" "ssh-keygen" "ssh-keyscan" "sshd" "stat" "states" "stdbuf" "strace" "strfile" "strings" "stty" "su" "sudo" "sulogin" "sum" "svn" "svnadmin" "svndumpfilter" "svnlook" "svnserve" "svnsync" "svnversion" "swaplabel" "swapon" "switch_root" "sync" "sysctl" "sysstat" "sysvbanner" "sysvinit" "table" "tac" "tail" "tailf" "tangle" "tar" "taskset" "tc" "tclsh" "tcpdump" "tcsh" "teachgammon" "tee" "telnet" "tempfile" "tesseract" "tetex" "tex" "texdoc" "texdoctk" "texexec" "texi2dvi" "texi2dvi4a2ps" "texi2html" "texi2pdf" "texindex" "texinfo" "texlinks" "tftopl" "tic" "tidy" "tie" "tig" "time" "timed-read" "timed-run" "timelimit" "timeout" "tknewsbiff" "tkpasswd" "tload" "tmm" "todos" "toe" "top" "touch" "tput" "tr" "tracepath" "tracepath6" "traceroute" "traceroute6" "tramp" "traptoemail" "tre" "tree" "trek" "true" "truncate" "tryaffix" "tset" "tsort" "ttf2afm" "tty" "tune2fs" "tunelp" "txt2regex" "txt2tags" "ul" "umount" "uname" "unbuffer" "unexpand" "uni2ascii" "unicode_start" "unicode_stop" "uniq" "unlink" "unshare" "unzip" "unzipsfx" "updmap" "updmap-sys" "uptime" "urifind" "urlview" "usb-devices" "usbutils" "useradd" "userdel" "usermod" "users" "usleep" "util-linux-ng" "uuidgen" "vcut" "vdir" "vftovp" "vi" "view" "vim" "vimdiff" "vimtutor" "vipw" "visudo" "vmstat" "volname" "vorbis-tools" "vorbiscomment" "vptovf" "w" "w3m" "wall" "wargames" "watch" "wc" "weather" "weave" "wget" "whatis" "whereis" "which" "whitespace" "who" "whoami" "whois" "windmove" "wipefs" "woman" "word-list-compress" "workbone" "worm" "worms" "write" "wtf" "wump" "wvdial" "xargs" "xkibitz" "xls2csv" "xml" "xml2po" "xmlcatalog" "xmlif" "xmllint" "xmlto" "xpath" "xpstat" "xsh" "xsubpp" "xx" "xxd" "xz" "xzdec" "xzdiff" "xzgrep" "xzless" "xzmore" "yes" "zcat" "zcmp" "zdiff" "zegrep" "zfgrep" "zforce" "zgrep" "zip" "zipcloak" "zipgrep" "zipnote" "zipsplit" "ziptool" "zless" "zmore" "znew" "zsh" "ed")
+  (sh sh-append shell "./configure" "7z" "7za" "7zr" "a2p" "a2ping" "a2ps" "aafire" "aainfo" "aalib" "aasavefont" "aatest" "abook" "ac" "acct" "accton" "ack" "acl" "aconnect" "addpart" "adduser" "adjtimex" "adventure" "afm2tfm" "agetty" "agrep" "aleph" "align" "allcm" "allneeded" "alsa-utils" "alsaconf" "alsactl" "alsamixer" "amidi" "amixer" "ange-ftp" "animate" "antiword" "aplay" "aplaymidi" "apropos" "arc" "arch" "arecordmidi" "arithmetic" "arp" "arpd" "arping" "aseqdump" "aseqnet" "ash" "aspell" "at" "atc" "atd" "atq" "atrm" "atrun" "aumix" "autoexpect" "autoinsert" "autopasswd" "autorevert" "b2m" "backgammon" "badblocks" "banner" "base64" "basename" "bash" "batch" "battlestar" "bban" "bcd" "bibtex" "bin" "bind" "blkid" "blockdev" "bootlogd" "bpe" "browse-url" "bs" "bsd-finger" "bsd-games" "bsondump" "buildhash" "bunzip2" "bzcat" "bzdiff" "bzgrep" "bzip2" "bzip2recover" "bzless" "bzmore" "c2ph" "cacademo" "cacafire" "cacaplay" "cacaserver" "cacaview" "caesar" "cal" "calc" "calculator" "calendar" "canfield" "card" "cat" "catdoc" "catppt" "cdda2wav" "cdparanoia" "cdrecord" "cdrtools" "centerim" "cfdisk" "cfscores" "chacl" "chage" "chattr" "chcon" "chcpu" "chfn" "chgpasswd" "chgrp" "chkdupexe" "chmod" "chown" "chpasswd" "chroot" "chrt" "chsh" "chvt" "cksum" "clear" "clisp" "clockdiff" "cm2rem" "cmp" "col" "colcrt" "collateindex.pl" "colrm" "column" "comm" "compare" "compile_et" "composeglyphs" "composite" "config_data" "conjure" "consoletype" "contrab" "convert" "corelist" "coreutils" "countmail" "cp" "cpan" "cpan" "cpan2dist" "cpanm" "cpanp" "cpanp-run-perl" "cpio" "cribbage" "crond" "cryptdir" "csplit" "css" "csv2yaml" "ctags" "ctangle" "ctie" "ctrlaltdel" "cups" "curl" "cut" "cweave" "cytune" "date" "dc3dd" "dcron" "dd" "ddate" "deallocvt" "debugfs" "debugreiserfs" "decryptdir" "deformat-c" "deformat-sh" "delpart" "depmod" "devdump" "devtodo" "df" "dialog" "diff" "diff3" "diffpp" "diffstat" "diffutils" "dig" "dir" "dircolors" "dired" "dirname" "diskcopy" "dislocate" "dmesg" "dmidecode" "dmp" "dns" "doc-view" "docbook2dvi" "docbook2html" "docbook2man" "docbook2pdf" "docbook2ps" "docbook2rtf" "docbook2tex" "docbook2texi" "docbook2txt" "doctor" "done" "dprofpp" "du" "dump-acct" "dump-utmp" "dumpe2fs" "dumpkeys" "dvd+rw-tools" "dvi2fax" "dvicopy" "dvihp" "dvilj" "dvilj2p" "dvilj4" "dvilj4l" "dvipdfm" "dvipdft" "dvipng" "dvips" "dvired" "dvitomp" "dvitype" "dzil" "e2freefrag" "e2fsck" "e2fsprogs" "e2image" "e2pall" "e2undo" "ebb" "egrep" "eject" "elvfmt" "elvis" "elvtags" "emacs" "emacsclient" "enc2xs" "encapsulate" "encode_keychange" "enscript" "env" "epsffit" "epstopdf" "esac" "eshell" "espeak" "etags" "etex" "evim" "expand" "expect" "expectk" "expiry" "expr" "extractres" "factor" "faillog" "fallocate" "false" "faucet" "fbset" "fdformat" "fdisk" "fetchmail" "ffap" "fgconsole" "fgrep" "fi" "figlet" "file" "filefrag" "find" "find-file" "find2perl" "findaffix" "finder" "findfs" "findmnt" "findutils" "finger" "fish" "fixdlsrps" "fixfmps" "fixmacps" "fixnt" "fixproc" "fixps" "fixpsditps" "fixpspps" "fixscribeps" "fixtpps" "fixwfwps" "fixwpps" "fixwwps" "flock" "fmt" "fmtutil" "fmtutil-sys" "fold" "fontinst" "for" "formail" "fortune" "free" "fromdos" "fsck" "fsck.cramfs" "fsck.ext2" "fsck.ext3" "fsck.ext4" "fsck.ext4dev" "fsck.minix" "fsfreeze" "fstab-decode" "fstfind" "fstrim" "ftp-rfc" "funzip" "fuser" "gawk" "gcc" "genl" "getafm" "getfacl" "getkeycodes" "getmail" "getopt" "getpeername" "gftodvi" "gftopk" "gftype" "git" "gnuchess" "gomoku" "gpasswd" "grep" "grep-changelog" "groupadd" "groupdel" "groupmems" "groupmod" "groups" "grpck" "grpconv" "grpunconv" "gsftopk" "gunzip" "gzexe" "gzip" "h2ph" "h2xs" "halt" "hangman" "hdparm" "head" "hexdump" "hose" "host" "hostid" "hostname" "htop" "hunt" "huntd" "hwclock" "ibuffer" "icombine" "iconv" "id" "identify" "ido" "iecset" "ifcfg" "ifconfig" "ifstat" "ijoin" "imagemagick" "img2txt" "import" "in" "includeres" "info" "infocmp" "infokey" "infozip" "init" "initlog" "initscript" "insmod" "insmod.static" "install" "install-catalog" "install-info" "instmodsh" "ionice" "iostat" "ip" "ipcmk" "ipcrm" "ipcs" "ipf-mod.pl" "ipmaddr" "ipmask" "iproute2" "iptables" "iptraf" "iptunnel" "iputils" "isodebug" "isodump" "isoinfo" "isosize" "isovfy" "ispell" "join" "jw" "kbd" "kbd_mode" "kbdrate" "kibitz" "kill" "killall" "killall5" "kpseaccess" "kpsereadlink" "kpsestat" "kpsetool" "kpsewhere" "kpsewhich" "ksh" "last" "last-acct" "lastcomm" "lastlog" "lbdb" "ld" "ldap" "ldapcompare" "ldapdelete" "ldapexop" "ldapmodify" "ldapmodrdn" "ldappasswd" "ldapsearch" "ldapurl" "ldapwhoami" "ldattach" "ledger" "less" "lessecho" "lesskey" "lesspipe.sh" "libcaca" "libnetcfg" "libxml2" "lilo" "line" "link" "links" "linum" "linuxdoc" "linuxdoc-tools" "ln" "lnstat" "loadunimap" "locate" "lockfile" "logger" "login" "logname" "logoutd" "logsave" "longlines" "look" "losetup" "lp" "lpunlock" "ls" "lsattr" "lsblk" "lscpu" "lsdev" "lsmod" "lsof" "lspci" "lsusb" "lua" "lynx" "lzmadec" "lzmainfo" "mag" "mailstat" "mailx" "make" "makeindex" "makeinfo" "makempx" "makewhatis" "man" "man2dvi" "man2html" "mapscrn" "mc" "mcookie" "md5sum" "mech-dump" "mesg" "mf" "mf-nowin" "mft" "mib2c" "mib2c-update" "mii-tool" "mille" "mk_cmds" "mkafmmap" "mkdir" "mke2fs" "mkfifo" "mkfs" "mkfs.bfs" "mkfs.cramfs" "mkfs.minix" "mkindex" "mkisofs" "mklost+found" "mknod" "mkocp" "mkofm" "mkpasswd" "mkreiserfs" "mkswap" "mktemp" "mktemp-gnu" "mktexlsr" "mktexmf" "mktexpk" "mktextfm" "mkzftree" "modinfo" "modprobe" "module-init-tools" "mogrify" "mongo" "mongodump" "mongoexport" "mongoimport" "mongorestore" "mongostat" "mongotop" "monop" "montage" "more" "morse" "most" "mount" "mountpoint" "mpg123" "mplayer" "mpost" "mpstat" "mpto" "msmtp" "multitail" "multixterm" "munchlist" "mutt" "muttprint" "mv" "mysql" "mysqldump" "mysqlimport" "namei" "nameif" "nasm" "nc" "ncat" "ncftp" "ncurses" "ndiff" "net-snmp" "net-snmp-config" "net-snmp-create-v3-user" "net-tools" "net-utils" "netpipes" "netresolv" "netstat" "netwatch" "newer" "newsticker" "newusers" "nice" "nl" "nmap" "nohup" "nologin" "nproc" "nslookup" "nstat" "ntp" "number" "od" "odvicopy" "odvitype" "ogg123" "oggdec" "oggenc" "ogginfo" "ogonkify" "oleo" "omega" "omfonts" "onsgmls" "openjade" "openldap-client" "openssh" "openssl" "openvt" "osgml2xml" "osgmlnorm" "ospam" "ospcat" "ospent" "otangle" "otp2ocp" "outocp" "over" "p7zip" "pandoc" "par" "parallel" "partx" "passmass" "passwd" "paste" "patch" "patgen" "pathchk" "pciutils" "pcre" "pcregrep" "pcretest" "pdfetex" "pdffonts" "pdfimages" "pdfinfo" "pdflatex" "pdftexi2dvi" "pdftoabw" "pdftohtml" "pdftoppm" "pdftops" "pdftotext" "pdfxtex" "pdiff" "perl" "perlbug" "perlcritic" "perldb" "perldoc" "perlinfo" "perlivp" "perlthanks" "perltidy" "pfb2pfa" "pg" "phantasia" "piconv" "pidstat" "pig" "ping" "ping6" "pinky" "pivot_root" "pk2bm" "pkill" "pktogf" "pktype" "pl2pm" "play" "plipconfig" "pltotf" "pmap" "pod2cpanhtml" "pod2html" "pod2latex" "pod2man" "pod2text" "pod2usage" "podchecker" "podselect" "pom" "pooltype" "poppler" "postgresql" "ppt" "pr" "precat" "preunzip" "prezip" "prezip-bin" "primes" "printenv" "printf" "prlimit" "procinfo" "procmail" "procps" "prove" "ps" "ps2frag" "ps2pk" "ps4pdf" "psbook" "psfxtable" "pslatex" "psmandup" "psmerge" "psnup" "psresize" "psselect" "psset" "pstops" "pstree" "ptar" "ptardiff" "ptx" "pwck" "pwconv" "pwunconv" "quiz" "rain" "random" "rarp" "rarpd" "raw" "rawtime" "rcirc" "rcs-checkin" "rdev" "rdisc" "readcd" "readlink" "readprofile" "realpath" "rec" "recentf" "rect.el" "ref" "regex" "reiserfsck" "reiserfsprogs" "reiserfstune" "rem2html" "rem2ps" "remember" "remind" "rename" "renice" "reset" "resize2fs" "resize_reiserfs" "resizecons" "return" "rev" "rexima" "rftp" "rlogin-cwd" "rm" "rmdir" "rmmod" "robots" "rot13" "route" "routef" "routel" "rsync" "rtacct" "rtcwake" "rtf2rtf" "rtmon" "rtpr" "ruler" "rumakeindex" "run-parts" "runcon" "runlevel" "rvnamed" "s2p" "sa" "sadf" "sail" "sar" "savelog" "sc" "scgcheck" "scp" "screen" "script" "scriptreplay" "sdcv" "sdiff" "sed" "sedsed" "seejpeg" "sem" "sendmail" "seq" "setarch" "setconsolefont" "setfacl" "setfont" "setkeycodes" "setleds" "setmetamode" "setpci" "setserial" "setsid" "setterm" "sfdisk" "sftp" "sgml" "sgml2info" "sgml2latex" "sgml2txt" "sgmldiff" "sgmlpre" "sgmlsasp" "sgmlspl" "sgmlwhich" "sha1sum" "sha224sum" "sha256sum" "sha384sum" "sha512sum" "shadow" "shasum" "showchar" "showconsolefont" "showkey" "shred" "shuf" "shutdown" "sjeng" "skel" "skill" "slabtop" "slattach" "sleep" "sliceprint" "slocate" "snake" "snmp" "snmpbulkget" "snmpbulkwalk" "snmpcheck" "snmpconf" "snmpdelta" "snmpdf" "snmpget" "snmpgetnext" "snmpnetstat" "snmpset" "snmpstatus" "snmptable" "snmptest" "snmptranslate" "snmptrap" "snmpusm" "snmpvacm" "snmpwalk" "snscore" "sockdown" "socklist" "sort" "sox" "soxi" "speaker-test" "splain" "split" "sql" "squid" "ss" "ssh" "ssh-add" "ssh-agent" "ssh-copy-id" "ssh-keygen" "ssh-keyscan" "sshd" "stat" "states" "stdbuf" "strace" "strfile" "strings" "stty" "su" "sudo" "sulogin" "sum" "svn" "svnadmin" "svndumpfilter" "svnlook" "svnserve" "svnsync" "svnversion" "swaplabel" "swapon" "switch_root" "sync" "sysctl" "sysstat" "sysvbanner" "sysvinit" "table" "tac" "tail" "tailf" "tangle" "tar" "taskset" "tc" "tclsh" "tcpdump" "tcsh" "teachgammon" "tee" "telnet" "tempfile" "tesseract" "tetex" "tex" "texdoc" "texdoctk" "texexec" "texi2dvi" "texi2dvi4a2ps" "texi2html" "texi2pdf" "texindex" "texinfo" "texlinks" "tftopl" "tic" "tidy" "tie" "tig" "time" "timed-read" "timed-run" "timelimit" "timeout" "tknewsbiff" "tkpasswd" "tload" "tmm" "todos" "toe" "top" "touch" "tput" "tr" "tracepath" "tracepath6" "traceroute" "traceroute6" "tramp" "traptoemail" "tre" "tree" "trek" "true" "truncate" "tryaffix" "tset" "tsort" "ttf2afm" "tty" "tune2fs" "tunelp" "txt2regex" "txt2tags" "ul" "umount" "uname" "unbuffer" "unexpand" "uni2ascii" "unicode_start" "unicode_stop" "uniq" "unlink" "unshare" "unzip" "unzipsfx" "updmap" "updmap-sys" "uptime" "urifind" "urlview" "usb-devices" "usbutils" "useradd" "userdel" "usermod" "users" "usleep" "util-linux-ng" "uuidgen" "vcut" "vdir" "vftovp" "vi" "view" "vim" "vimdiff" "vimtutor" "vipw" "visudo" "vmstat" "volname" "vorbis-tools" "vorbiscomment" "vptovf" "w" "w3m" "wall" "wargames" "watch" "wc" "weather" "weave" "wget" "whatis" "whereis" "which" "whitespace" "who" "whoami" "whois" "windmove" "wipefs" "woman" "word-list-compress" "workbone" "worm" "worms" "write" "wtf" "wump" "wvdial" "xargs" "xkibitz" "xls2csv" "xml" "xml2po" "xmlcatalog" "xmlif" "xmllint" "xmlto" "xpath" "xpstat" "xsh" "xsubpp" "xx" "xxd" "xz" "xzdec" "xzdiff" "xzgrep" "xzless" "xzmore" "yes" "zcat" "zcmp" "zdiff" "zegrep" "zfgrep" "zforce" "zgrep" "zip" "zipcloak" "zipgrep" "zipnote" "zipsplit" "ziptool" "zless" "zmore" "znew" "zsh" "ed" "nmcli")
   (shell "break" "case" "continue" "exec" "exit")
   (zsh sh-append bash "select" "foreach"))))
  '(show-paren-mode t)
