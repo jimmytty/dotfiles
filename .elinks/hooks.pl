@@ -20,6 +20,9 @@ use Text::Unidecode;
 use URI;
 use URI::Escape;
 use URI::QueryParam;
+use HTML::FromANSI;
+use Data::Printer;
+use XML::LibXML;
 
 use Log::Log4perl qw(:easy);
 my $logfile = dirname($0) . q(/hooks_log4perl.conf);
@@ -30,26 +33,26 @@ my $logger = Log::Log4perl->get_logger(q(hooks));
 # LOCAL FUNCTIONS
 #==============================================================================
 
-sub url2filename {    # kill me!
-    my $url = shift();
+sub url2filename {
+    my $url = shift;
 
     my $uri    = URI->new($url);
     my $scheme = $uri->scheme();
     my $path   = $uri->path();
 
-    return undef unless $scheme;
-    return $path if $scheme eq q(file);
+    return unless $scheme;
+    
+    return uri_unescape($path) if $scheme eq q(file);
 
-    my $opaque = $uri->opaque();
-    my @path   = File::Spec->splitdir(qq($opaque));
-    @path = grep( /./, @path );
-    my $filename = join( q(_), $scheme, @path );
-    $filename = substr( $filename, 0, 250 ) if ( length($filename) > 250 );
-    $filename .= q(.html);
-    my $cachefile = qq($ENV{ELINKS_CACHE}/$filename);
+    my $filename   = uri_escape($url);
+    my $suffix     = q(.html);
+    my $max_length = 250 - length $suffix;
+
+    $filename = ( substr $filename, 0, $max_length ) . $suffix;
+
+    my $cachefile = "$ENV{ELINKS_CACHE}/$filename";
 
     return $cachefile;
-
 } ## end sub url2filename
 
 sub cache_file {
@@ -59,17 +62,14 @@ sub cache_file {
     my $cachefile = &url2filename($url);
 
     if ($cachefile) {
-        if (substr( $cachefile, 0, length( $ENV{ELINKS_CACHE} ) ) eq
-            $ENV{ELINKS_CACHE} )
-        {
-            open( my $cachefh, q(>), $cachefile )
+        if ( index( $cachefile, $ENV{ELINKS_CACHE} ) == 0 ) {
+            open my $cachefh, q(>), $cachefile
                 or $logger->error(
-                qq(ERROR: cannot open file "$cachefile": $!\n));
+                qq(ERROR: cannot write file "$cachefile": $!\n));
             print( $cachefh $html );
             close($cachefh);
         }
     }
-
 } ## end sub cache_file
 
 #==============================================================================
@@ -79,7 +79,7 @@ sub cache_file {
 sub pre_format_html_hook {
     my ( $url, $html ) = splice @_;
 
-    &cache_file( $url, $html );
+    cache_file( $url, $html );
 
     foreach ($html) {
         s{\r\n}{\n}gmsx;
@@ -87,92 +87,22 @@ sub pre_format_html_hook {
 
     my $uri = URI->new($url);
 
-    if ( first { $uri->host() eq $_ } q(www.gnu.tux4.com.br) ) {
-        use HTML::Entities;
-        $html = encode_entities( decode_utf8($html), qq(\200-\377) );
-    }
-    elsif ( first { $uri->host() eq $_ }
-        ( q(getninjas.com.br), q(www.getninjas.com.br), ) )
+    if (   $uri->host() eq q(192.168.1.1)
+        && $uri->path() eq q(/api/monitoring/status) )
     {
-        my $tree = HTML::TreeBuilder::LibXML->new();
-        $tree->store_comments();
-        $tree->parse($html);
-
-        my @node = (
-            q{//div[@class='header-button']},           #
-            q{//div[@class='professionals-column']},    #
-            q{//div[@class='flash_messages']},          #
-            q{//nav[@id='sco-nav'][@class='area']},     #
-            q{//div[@id='sidebar']},                    #
-            q{//aside[@id='new-sidebar']},              #
-        );
-        my $xpath = q[(] . join( q(|), @node ) . q[)];
-        while ( my $node = $tree->findnodes($xpath)->[0] ) {
-            $node->delete();
-        }
-        $html = $tree->as_HTML();
-        $tree->eof();
-        $tree = $tree->delete();
-    } ## end elsif ( first { $uri->host...})
-    elsif ( $uri->host() eq q(metacpan.org)
-        && [ $uri->path_segments() ] ~~ [ q(), q(search) ] )
-    {
-        # EXPERIMENTAL
-        # my $tree = HTML::TreeBuilder::LibXML->new();
-        # $tree->store_comments();
-        # $tree->parse($html);
-
-      # my %result;
-      # my $node = $tree->findnodes(q{//div[@class="content search-results"]})
-      #     ->[0];
-      # my $xpath = q{div[@class="module-result"]};
-      # foreach my $result ( $node->findnodes($xpath) ) {
-      #     my $datetime = $result->findvalue(q{span[@class="relatize"]});
-      #     my $t = Time::Piece->strptime( $datetime, q(%d %b %Y %T %Z) );
-      #     push @{ $result{ $t->epoch() } }, $result;
-      #     $result->delete();
-      # }
-
-        # foreach my $timestamp ( sort { $a <=> $b } keys %result ) {
-        #     foreach my $result ( @{ $result{$timestamp} } ) {
-        #         $node->unshift_content($result);
-        #     }
-        # }
-        # $html = $tree->as_HTML();
-        # $tree->eof();
-        # $tree = $tree->delete();
-    } ## end elsif ( $uri->host() eq q(metacpan.org)...)
-    elsif ( $uri->host() eq q(www.vivaolinux.com.br) ) {
-
-        # ENCODING PROBLEMS
-        $html =~ tr{\r}{}d;
-        my $tree = HTML::TreeBuilder::LibXML->new();
-        $tree->store_comments();
-        $tree->parse($html);
-
-        my $xpath = q{//input[@type="button"]
-                            [starts-with(@onclick, 'window.location.href=')]
-        };
-
-        foreach my $node ( $tree->findnodes($xpath) ) {
-            my $text     = $node->findvalue(q{@value});
-            my $location = $node->findvalue(
-                q{substring-after(@onclick, 'window.location.href=')});
-            $location =~ tr{"'}{}d;
-            my $a = HTML::Element->new( q(a), href => $location );
-            $a->push_content($text);
-            $a = HTML::TreeBuilder::LibXML->new_from_content( $a->as_HTML() );
-            $node->preinsert( $a->findnodes(q{//a})->[0] );
-            $node->delete();
+        my $xml = XML::LibXML->new->parse_string($html);
+        my %xml;
+        foreach my $node ( $xml->findnodes(q{/response/node()}) ) {
+            my $key   = $node->findvalue(q{name(.)});
+            my $value = $node->findvalue(q{string(text())});
+            if ( grep { !(defined) || $_ eq q() } ( $key, $value ) ) {
+                next;
+            }
+            $xml{$key} = $value;
         }
 
-        $html = $tree->as_HTML();
-        $html =~ s{\N{NO-BREAK SPACE}}{&nbsp;}gmsx;
-        encode_entities( $html, qq(\200-\377) );
-        $html =~ s{\N{NO-BREAK SPACE}}{&nbsp;}gmsx;
-        $tree->eof();
-        $tree = $tree->delete();
-    } ## end elsif ( $uri->host() eq q(www.vivaolinux.com.br))
+        $html = ansi2html( p( %xml, colored => 1 ) );
+    } ## end if ( $uri->host() eq q(192.168.1.1)...)
 
     return $html;
 } ## end sub pre_format_html_hook
@@ -309,7 +239,8 @@ sub goto_url_hook {
     return $cur_url;
 } ## end sub goto_url_hook
 
-#sub follow_url_hook {}
+sub follow_url_hook { my $url = shift; return $url; }
+
 #sub proxy_for_hook {}
 #sub quit_hook {}
 
