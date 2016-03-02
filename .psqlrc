@@ -6,3 +6,4 @@
 \set HISTFILE ~/.psql_history-:DBNAME
 \set HISTSIZE 500
 \set COMP_KEYWORD_CASE lower
+SET BYTEA_OUTPUT TO 'ESCAPE'
