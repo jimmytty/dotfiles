@@ -2,31 +2,38 @@
 # Home Profile for GNU Screen
 #==============================================================================
 
-### screen
+### window 0
 chdir $HOME/tmp/
 screen -a -t mutt
 stuff "[ -x $HOME/usr/bin/muttng ] && { $HOME/usr/bin/muttng; } || /usr/bin/mutt\012"
 chdir $WDIR
 
-### screen
+### window 1
 screen -a -t elinks
 stuff "TERM=linux $HOME/usr/bin/elinks\012"
 
-### screen
+### window 2
 screen -a -t emacs
 # stuff "/usr/bin/emacs --debug-init\012"
 stuff "emacs\012"
 
-### screen
+### window 3
 screen -a
 
-### screen
+### window 4
 screen -a
 
-### screen
+### window 5
 screen -a # -t freebsd
 # stuff "/usr/bin/qemu-kvm -daemonize -display none -boot c -net nic -net user,hostfwd=tcp:127.0.0.1:2222-:22 -m 256 -localtime -no-reboot ~/srv/virtualmachines/disks/freebsd-9.3.qcow2\012"
 # stuff "(until ssh -p 2222 jimmy@127.0.0.1 ':' &>/dev/null;do sleep 1;done) && ssh -p 2222 jimmy@127.0.0.1\012"
+
+### window 6
+screen -a -t root
+stuff "su -\012"
+
+### window 7
+screen -a
 
 ### last
 register 0 ""
