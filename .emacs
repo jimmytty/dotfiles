@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2016-03-01 23:58:08 jimmy>
+;;; Time-stamp: <2016-04-01 22:44:59 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (package-initialize)
@@ -61,13 +61,12 @@
   (shell-command-on-region
    (mark)
    (point)
-   "podchecker"
-   ))
+   "podchecker"))
+
 (defun zsh-shell ()
   (interactive)
   (term "/bin/zsh")
   (rename-buffer "Zsh"))
-;(zsh-shell)
 
 (defun wtf (acronym)
   (interactive "swtf: ")
@@ -86,14 +85,11 @@
   (shell-command-on-region
    (point-min) (point-max)
    "js_beautify.pl --indent_size=4 --preserve_newlines -"
-   (current-buffer) t t
-  )
-  )
+   (current-buffer) t t))
 
 (defun eww-open-file-current ()
   (interactive)
-  (eww-open-file (buffer-file-name))
-)
+  (eww-open-file (buffer-file-name)))
 
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_src". "#\\+end_src"))
 (add-to-list 'ispell-skip-region-alist '("#\\+begin_example". "#\\+end_example"))
@@ -174,9 +170,6 @@
 
 ;;; moz.el --- Lets current buffer interact with inferior mozilla.
 (require 'moz)
-
-;;; sqlite.el --- use sqlite via elisp
-(require 'sqlite)
 
 ;;; ack.el --- Use ack where you might usually use grep.
 (require 'ack)
@@ -523,6 +516,8 @@
 (autoload 'sparql-mode "sparql-mode.el" "Major mode for editing SPARQL files" t)
 (add-to-list 'auto-mode-alist '("\\.sparql$" . sparql-mode))
 
+;;; sqlite.el --- use sqlite via elisp
+(require 'sqlite)
 ;;; sqlite-dump.el --- view dump of sqlite database file
 (autoload 'sqlite-dump "sqlite-dump" nil t)
 (modify-coding-system-alist 'file "\\.sqlite\\'" 'raw-text-unix)
@@ -649,6 +644,15 @@
 ;;; sed-mode.el --- Major mode to edit sed scripts
 (require 'sed-mode)
 (add-to-list 'auto-mode-alist '("\\.sed$" . sed-mode))
+
+;;; typing.el --- A game for fast typers, inspired by The Typing Of The Dead.
+(require 'typing)
+
+;;; vimish-fold.el --- Fold text like in Vim
+(require 'vimish-fold)
+
+;;; decide.el --- rolling dice and other random things
+(require 'decide)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (desktop-read)
@@ -1003,11 +1007,62 @@
               ("begin" "$1" "$$" "\\(" "\\["))))
  '(org-hide-emphasis-markers t)
  '(org-highlight-latex-fragments-and-specials t)
+'(org-latex-classes
+(quote
+ (("article" "\\documentclass[11pt]{article}"
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\subsection{%s}" . "\\subsection*{%s}")
+   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+  ("report" "\\documentclass[11pt]{report}"
+   ("\\part{%s}" . "\\part*{%s}")
+   ("\\chapter{%s}" . "\\chapter*{%s}")
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\subsection{%s}" . "\\subsection*{%s}")
+   ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+  ("book" "\\documentclass[11pt]{book}"
+   ("\\part{%s}" . "\\part*{%s}")
+   ("\\chapter{%s}" . "\\chapter*{%s}")
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\subsection{%s}" . "\\subsection*{%s}")
+   ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+  ("mycurriculum" "\\documentclass[11pt,a4paper]{article}
+\\usepackage[top=1cm,left=2cm,right=2cm,bottom=0.1cm]{geometry}
+\\usepackage{setspace}
+\\linespread{0.1}
+\\usepackage{amsfonts,graphicx}
+\\usepackage[pdftex,
+	    pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
+	    pdftitle={{{{TITLE}}}},
+	    pdfsubject={{{{DESCRIPTION}}}},
+	    pdfkeywords={{{{KEYWORDS}}}},
+	    pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
+	   ]{hyperref}
+\\usepackage[latin1]{inputenc}  % char encoding
+\\pagestyle{empty}
+\\frenchspacing      % no aditional spaces after periods
+\\setlength{\\parskip}{8pt}\\parindent=0pt  % no paragraph indentation
+\\renewcommand\\familydefault{\\sfdefault}
+[NO-DEFAULT-PACKAGES]"
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\subsection{%s}" . "\\subsection*{%s}")
+   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+   ("\\paragraph{%s}" . "\\paragraph*{%s}")))))
+ '(org-latex-hyperref-template
+"\\hypersetup{
+ pdfauthor={%a},
+ pdftitle={%t},
+ pdfkeywords={%k},
+ pdfsubject={%d},
+ pdfcreator={%c}
+}
+")
  '(org-list-allow-alphabetical t)
  '(org-list-indent-offset 0)
  '(org-pretty-entities nil)
  '(org-pretty-entities-include-sub-superscripts nil)
-'(org-publish-project-alist
+ '(org-publish-project-alist
 (quote
  (("tecnoveneno" :auto-preamble t :base-directory "~/tecnoveneno/working/org/" :base-extension "org" :body-only t :headline-levels 999 :html-extension "html" :html-preamble t :htmlized-source t :publishing-directory "~/tecnoveneno/working/html/" :publishing-function org-publish-org-to-html :recursive t :section-numbers nil :sub-superscript t :table-of-contents nil))))
  '(org-replace-disputed-keys t)
@@ -1046,6 +1101,15 @@
  '(show-paren-style (quote parenthesis))
  '(show-trailing-whitespace t)
  '(sort-fold-case t)
+'(sql-connection-alist
+(quote
+ (("tux4"
+   (sql-product
+    (quote postgres))
+   (sql-user "jimmy")
+   (sql-server "127.0.0.1")
+   (sql-database "tux4")
+   (sql-port 63333)))))
  '(sql-mode-hook (quote (sql-highlight-ansi-keywords)))
  '(tab-always-indent (quote complete))
  '(tab-stop-list (quote (4 8 16 24 32 40 48 56 64 72 80 88 96 104 112 120)))
