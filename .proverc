@@ -1,4 +1,5 @@
 # .proverc
+--lib
 --color
 --count
 --failures
