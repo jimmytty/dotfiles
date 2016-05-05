@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Time-stamp: <2016-04-01 22:44:59 jimmy>
+;;; Time-stamp: <2016-05-03 10:07:34 jimmy>
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (package-initialize)
@@ -26,8 +26,8 @@
   (interactive)
   (shell-command
    (format "%s %s" "brightmare"
-	   (shell-quote-argument
-	    (replace-regexp-in-string "[
+       (shell-quote-argument
+        (replace-regexp-in-string "[
 ]+" " "
  (buffer-substring
   (region-beginning)
@@ -37,24 +37,19 @@
   (interactive "r")
   (shell-command-on-region b e "perl -Mlib=$HOME/projects/CPAN/Lingua-PT-Capitalizer/lib/ -MLingua::PT::Capitalizer -wnE'print capitalize'" t t))
 
-(defun format-cnpj (&optional b e)
-  (interactive "r")
-  (shell-command-on-region b e "perl -MBusiness::BR::CNPJ=canon_cnpj,format_cnpj -wnE'chomp;say format_cnpj canon_cnpj$_'" t t))
-
-(defun format-cpf (&optional b e)
-  (interactive "r")
-  (shell-command-on-region b e "perl -MBusiness::BR::CPF=canon_cpf,format_cpf -wnE'chomp;say format_cpf canon_cpf$_'" t t))
-
-(defun format-rg (&optional b e)
-  (interactive "r")
-  (shell-command-on-region b e "perl -MBusiness::BR::RG=canon_rg,format_rg -wnE'chomp;say format_rg canon_rg$_'" t t))
-
-(defun espeak()
+(defun espeak-en()
   (interactive)
   (shell-command-on-region
    (mark)
    (point)
    "/usr/bin/espeak --stdin -s 160 -ven+f2 &>/dev/null"))
+
+(defun espeak-pt()
+  (interactive)
+  (shell-command-on-region
+   (mark)
+   (point)
+   "/usr/bin/espeak --stdin -s 160 -vpt+f2 &>/dev/null"))
 
 (defun podchecker ()
   (interactive)
@@ -117,13 +112,27 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 ;;; org2blog.el --- blog from Org mode to wordpress
-(setq org2blog/wp-blog-alist
-      '(("tux4you"
-	 :url "http://tux4.com.br/blogs/jimmy/xmlrpc.php"
-	 :username "jimmy"
-	 :default-title nil
-	 :default-categories nill
-	 :tags-as-categories t)))
+(require 'auth-source)
+(let (credentials)
+  (setq credentials
+        (auth-source-user-and-password
+         "perspicazsite.wordpress.com"))
+  (setq org2blog/wp-blog-alist
+        `(("perspicaz" :url
+           "https://perspicazsite.wordpress.com/xmlrpc.php"
+           :username ,(car credentials)
+           :password ,(cadr credentials)
+           :default-title nil
+           :default-categories nil
+           :tags-as-categories t))))
+(setq org2blog/wp-buffer-template
+"#+DATE: %s
+#+TITLE: %s
+#+DESCRIPTION:
+#+PERMALINK:
+#+PARENT:
+#+TAGS:\n")
+(setq org2blog/wp-show-post-in-browser nil)
 
 ;;; wcheck-mode.el --- General interface for text checkers
 ;; (autoload 'wcheck-mode "wcheck-mode" "Toggle wcheck-mode." t)
@@ -145,6 +154,7 @@
 
 ;;; symon.el --- tiny graphical system monitor
 (require 'symon)
+(setq symon-mode t)
 (setq symon-delay 60)
 
 ;;; bbcode-mode.el --- Major mode for writing BBCode markup
@@ -154,7 +164,10 @@
 (require 'elfeed)
 (require 'elfeed-org)
 (setq rmh-elfeed-org-files (list "~/.elfeed/elfeedrc.org"))
+(setq url-queue-parallel-processes 4)
 (elfeed-org)
+(elfeed-make-tagger :before "1 week ago"
+                    :remove 'unread)
 
 ;;; pretty-mode.el --- Redisplay parts of the buffer as pretty symbols.
 (require 'pretty-mode)
@@ -277,7 +290,7 @@
   (regexp-opt '("icyx://"))
   "/usr/bin/mplayer" "-slave" "-quiet" "-really-quiet" "-vo" "null")
 (add-to-list 'emms-player-list 'emms-player-icyx)
-
+(emms-history-load)
 ;;; emms-info-mediainfo.el --- Info-method for EMMS using medianfo
 (require 'emms-info-mediainfo)
 (add-to-list 'emms-info-functions 'emms-info-mediainfo)
@@ -301,7 +314,7 @@
 (autoload 'fetchmail-mode "fetchmail-mode.el"
   "Mode for editing .fetchmailrc files" t)
 (setq auto-mode-alist (append '(("\..fetchmailrc$" . fetchmail-mode))
-		  auto-mode-alist))
+          auto-mode-alist))
 
 ;;; figlet.el --- Annoy people with big, ascii art text
 (require 'figlet)
@@ -434,6 +447,17 @@
 ;;; pcre2el.el --- PCRE/Elisp/rx/SRE regexp syntax converter and utilities
 (require 'pcre2el)
 
+;;; perl-mode.el --- Perl code editing commands for GNU Emacs
+(add-hook
+ 'perl-mode-hook
+ (lambda ()
+   (font-lock-add-keywords nil
+  `((,(regexp-opt
+       '("__SUB__" "AUTOLOAD" "BEGIN" "DESTROY" "END" "INIT" "CHECK" "UNITCHECK" "abs" "accept" "alarm" "atan2" "bind" "binmode" "bless" "break" "caller" "chdir" "chmod" "chomp" "chop" "chown" "chr" "chroot" "close" "closedir" "connect" "cos" "crypt" "dbmclose" "dbmopen" "defined" "delete" "die" "dump" "each" "endgrent" "endhostent" "endnetent" "endprotoent" "endpwent" "endservent" "eof" "eval" "evalbytes" "exec" "exists" "exit" "exp" "fc" "fcntl" "fileno" "flock" "fork" "format" "formline" "getc" "getgrent" "getgrgid" "getgrnam" "gethostbyaddr" "gethostbyname" "gethostent" "getlogin" "getnetbyaddr" "getnetbyname" "getnetent" "getpeername" "getpgrp" "getppid" "getpriority" "getprotobyname" "getprotobynumber" "getprotoent" "getpwent" "getpwnam" "getpwuid" "getservbyname" "getservbyport" "getservent" "getsockname" "getsockopt" "glob" "gmtime" "goto" "grep" "hex" "index" "int" "import" "ioctl" "join" "keys" "kill" "last" "lc" "lcfirst" "length" "link" "listen" "localtime" "log" "lstat" "map" "mkdir" "msgctl" "msgget" "msgrcv" "msgsnd" "next" "not" "oct" "open" "opendir" "ord" "our" "pack" "pipe" "pop" "pos" "print" "printf" "prototype" "push" "quotemeta" "rand" "read" "readdir" "readline" "readlink" "readpipe" "recv" "redo" "ref" "rename" "require" "reset" "return" "reverse" "rewinddir" "rindex" "rmdir" "say" "scalar" "seek" "seekdir" "select" "semctl" "semget" "semop" "send" "setgrent" "sethostent" "setnetent" "setpgrp" "setpriority" "setprotoent" "setpwent" "setservent" "setsockopt" "shift" "shmctl" "shmget" "shmread" "shmwrite" "shutdown" "sin" "sleep" "socket" "socketpair" "sort" "splice" "split" "sprintf" "sqrt" "srand" "stat" "state" "study" "substr" "symlink" "syscall" "sysopen" "sysread" "sysseek" "system" "syswrite" "tell" "telldir" "tie" "tied" "time" "times" "truncate" "uc" "ucfirst" "umask" "undef" "unlink" "unimport" "unpack" "unshift" "untie" "use" "utime" "values" "vec" "wait" "waitpid" "wantarray" "warn" "write")
+       'symbols)
+     . font-lock-keyword-face)
+    ))))
+
 ;;; perl-pod-coding.el --- coding system from =encoding in perl files
 (require 'perl-pod-coding)
 
@@ -500,9 +524,9 @@
       (coding-system-for-write 'utf-8))
       (sgml-forward-element)
       (shell-command-on-region beg (point)
-		   (concat "xsh2 -qP- " (shell-quote-argument
-			     xsh-command) " | sed 1d")
-		   t ))))
+           (concat "xsh2 -qP- " (shell-quote-argument
+                 xsh-command) " | sed 1d")
+           t ))))
 
 ;;; showtip.el --- Show tip at cursor
 (add-to-list 'load-path "~/.emacs.d/el-get/showtip/")
@@ -883,7 +907,7 @@
  '(org-agenda-dim-blocked-tasks t)
  '(org-agenda-files
    (quote
-    ("~/org-mode/perl.org" "~/org-mode/games.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
+    ("~/org-mode/perl.org" "~/org-mode/todo.org" "/home/jimmy/org-mode/emacs.org" "/home/jimmy/org-mode/geo.org" "/home/jimmy/org-mode/home.org" "/home/jimmy/org-mode/javascript.org" "/home/jimmy/org-mode/json.org" "/home/jimmy/org-mode/latex.org" "/home/jimmy/org-mode/org-mode.org" "/home/jimmy/org-mode/pim.org" "/home/jimmy/org-mode/sysadmin.org" "/home/jimmy/org-mode/vim.org" "/home/jimmy/org-mode/web.org" "/home/jimmy/org-mode/xml.org" "/home/jimmy/org-mode/xpath.org" "/home/jimmy/org-mode/xsh.org" "/home/jimmy/org-mode/yaml.org")))
  '(org-agenda-insert-diary-extract-time nil)
  '(org-agenda-text-search-extra-files nil)
  '(org-agenda-todo-list-sublevels t)
@@ -978,12 +1002,12 @@
 \\linespread{0.1}
 \\usepackage{amsfonts,graphicx}
 \\usepackage[pdftex,
-	    pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
-	    pdftitle={{{{TITLE}}}},
-	    pdfsubject={{{{DESCRIPTION}}}},
-	    pdfkeywords={{{{KEYWORDS}}}},
-	    pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
-	   ]{hyperref}
+        pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
+        pdftitle={{{{TITLE}}}},
+        pdfsubject={{{{DESCRIPTION}}}},
+        pdfkeywords={{{{KEYWORDS}}}},
+        pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
+       ]{hyperref}
 \\usepackage[latin1]{inputenc}  % char encoding
 \\pagestyle{empty}
 \\frenchspacing      % no aditional spaces after periods
@@ -1033,12 +1057,12 @@
 \\linespread{0.1}
 \\usepackage{amsfonts,graphicx}
 \\usepackage[pdftex,
-	    pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
-	    pdftitle={{{{TITLE}}}},
-	    pdfsubject={{{{DESCRIPTION}}}},
-	    pdfkeywords={{{{KEYWORDS}}}},
-	    pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
-	   ]{hyperref}
+        pdfauthor={{{{AUTHOR}}}}~<{{{{EMAIL}}}}>,
+        pdftitle={{{{TITLE}}}},
+        pdfsubject={{{{DESCRIPTION}}}},
+        pdfkeywords={{{{KEYWORDS}}}},
+        pdfstartview=FitH,urlcolor=blue,colorlinks=true,bookmarks=true
+       ]{hyperref}
 \\usepackage[latin1]{inputenc}  % char encoding
 \\pagestyle{empty}
 \\frenchspacing      % no aditional spaces after periods
@@ -1121,6 +1145,7 @@
  '(uniquify-ask-about-buffer-names-p t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(uniquify-min-dir-content 1)
+ '(url-queue-timeout 60)
  '(user-mail-address "jimmy.tty@gmail.com")
  '(woman-cache-filename "~/.wmncach.el")
  '(woman-cache-level 3)
