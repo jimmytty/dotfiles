@@ -15,5 +15,11 @@
 #bindkey -t ^ourl stuff $URL
 #
 #bindkey -t ^oi stuff $ICQ
-#bindkey -t ^or  stuff $RG
+#bindkey -t ^or stuff $RG
 #bindkey -t ^oc stuff $CPF
+
+bindkey -k F1 exec pactl -- set-sink-volume 0 -2%
+bindkey -k F2 exec pactl -- set-sink-volume 0 +2%
+bindkey -k k8 exec emacsclient -e '(emms-previous)'
+bindkey -k k9 exec emacsclient -e '(emms-pause)'
+bindkey -k k; exec emacsclient -e '(emms-next)'
