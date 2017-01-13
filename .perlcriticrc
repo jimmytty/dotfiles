@@ -1,12 +1,9 @@
-include = Bangs BuiltinFunctions ClassHierarchies CodeLayout Compatibility ControlStructures Documentation Editor ErrorHandling InputOutput Lax logicLAB Miscellanea Modules NamingConventions Objects OTRS References RegularExpressions Storable Subroutines TestingAndDebugging Tics ValuesAndExpressions Variables Variables::ProhibitUnusedVariables CodeLayout::ProhibitTrailingWhitespace
-exclude = CodeLayout::ProhibitHashBarewords CodeLayout::ProhibitSpaceIndentation CodeLayout::RequireASCII CodeLayout::RequireUseUTF8 CodeLayout::TabIndentSpaceAlign Compatibility::PodMinimumVersion Documentation::PodSpelling Documentation::RequireEndBeforeLastPod Documentation::RequirePackageMatchesPodName Documentation::RequirePodAtEnd Documentation::RequirePodLinksIncludeText Documentation::RequirePodSections Editor::RequireEmacsFileVariables Miscellanea::RequireRcsKeywords Modules::RequireExplicitInclusion Modules::RequireVersionVar OTRS::RequireCamelCase OTRS::RequireParensWithMethods OTRS::RequireTrueReturnValueForModules Subroutines::ProhibitCallsToUndeclaredSubs Subroutines::ProhibitCallsToUnexportedSubs Subroutines::ProhibitExportingUndeclaredSubs ValuesAndExpressions::ProhibitImplicitNewlines ValuesAndExpressions::ProhibitLongChainsOfMethodCalls ValuesAndExpressions::RequireInterpolationOfMetachars ValuesAndExpressions::RestrictLongStrings logicLAB::RequireParamsValidate
-
 color     = 1
 force     = 0
-only      = 1
-pager     = less -R
-severity  = 1
-top       = 10000
+only      = 0
+pager     = less -IR
+severity  = 4
+top       = 50
 verbose   = 4
 
 [ControlStructures::ProhibitPostfixControls]
@@ -21,3 +18,5 @@ equivalent_modules = common::sense
 [Variables::ProhibitReusedNames]
 allow = $class $self
 
+[ValuesAndExpressions::RequireNumberSeparators]
+min_value = 1_000
