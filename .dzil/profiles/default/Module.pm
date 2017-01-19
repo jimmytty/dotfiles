@@ -5,6 +5,7 @@ use charnames q(:full);
 use Carp qw[carp croak confess cluck longmess shortmess];
 use English qw[-no_match_vars];
 no autovivification;
+use Try::Tiny;
 use Moo;
 
 no Moo;
@@ -56,4 +57,10 @@ Ronaldo Ferreira de Lima aka jimmy <jimmy at gmail>.
 
 =head1 SEE ALSO
 
+=cut
+
+=pod
+Local Variables:
+coding: utf-8-unix
+End:
 =cut
