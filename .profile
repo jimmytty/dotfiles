@@ -7,7 +7,7 @@ export EDITOR='/usr/bin/vim'
 export ELINKS_CACHE="$HOME/tmp/elinks_cache"
 export FETCHMAILHOME="$HOME"
 export FETCHMAILUSER="$USER"
-export GREP_OPTIONS='--color=auto'
+# export GREP_OPTIONS='--color=auto' # DEPRECATED
 export HOSTNAME="`cat /etc/HOSTNAME`"
 export HTML_TIDY="$HOME/.tidyrc"
 export LESS="-M -R"
@@ -30,6 +30,7 @@ export VISUAL='/usr/bin/vim'
 export ACRONYMDB="$HOME/usr/share/misc/acronyms"
 export TZ='America/Sao_Paulo'
 export SDCV_PAGER='piconv -f utf8 -t latin1 | fmt -w80 | less -R'
+export x11_display=:1
 
 # If the user doesn't have a .inputrc, use the one in /etc.
 if [ ! -r "$HOME/.inputrc" ]; then
@@ -80,7 +81,7 @@ else
     PS1='\u@\h:\w\$ '
 fi
 PS2='> '
-PATH="$HOME/bin/:$HOME/perl5/bin/:$HOME/usr/bin/:$HOME/.local/bin/:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/share/texmf/bin:/usr/X11R6/bin/:/sbin:/usr/sbin:/usr/local/sbin:"
+PATH="$HOME/bin/:$HOME/perl5/bin/:$HOME/usr/bin/:$HOME/.local/bin/:/bin:/usr/bin:/usr/local/bin:/usr/games:/usr/share/texmf/bin:/usr/X11R6/bin/:/sbin:/usr/sbin:/usr/local/sbin"
 export PATH DISPLAY LESS TERM PS1 PS2
 
 # Default umask.  A umask of 022 prevents new files from being created group
@@ -108,7 +109,7 @@ if [ ! "`id -u`" = "0" ]; then
 fi
 
 ### SETs
-/bin/setterm -bfreq 0
+# /bin/setterm -bfreq 0 # DEPRECATED
 if [[ $TERM == "linux" ]]; then
     /usr/bin/setleds +num
 fi
@@ -117,8 +118,8 @@ eval "$(dircolors $HOME/.dircolors)"
 
 ### PERL
 source ~/perl5/perlbrew/etc/bashrc
-perlbrew use perl-5.20.2
-export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/man/:$HOME/usr/share/man/:"
+perlbrew use perl-5.24.0
+export MANPATH="$(/usr/bin/man -C ~/.man.conf -w):$HOME/usr/man/:$HOME/usr/share/man/"
 
 ### ALIAS
 alias ack="$PERLBREW_ROOT/perls/$PERLBREW_PERL/bin/ack"
@@ -130,7 +131,7 @@ alias xsh="VISUAL='vim -c '\''set syntax=html | set encoding=utf8'\''' xsh"
 alias wicd='sudo /usr/bin/wicd-curses'
 
 ### ENVIRONMENT VARIABLES
-export INFOPATH="$HOME/usr/share/info/:$HOME/usr/local/share/info/:"
+export INFOPATH="$HOME/usr/share/info/:$HOME/usr/local/share/info/:/usr/share/info/:/usr/local/share/info/:$HOME/.emacs.d/pde/doc"
 export NETHACKDIR="$HOME/.nethack/"
 export PSQL_EDITOR='/usr/bin/vim -c '\''set nowrap syntax=sql'\'''
 export R_PROFILE="$HOME/R/rprofile.r"
