@@ -1,0 +1,6 @@
+# MPlayer configuration file
+
+osdlevel=3
+vo=gl
+ao=pulse
+mixer-channel=Master
