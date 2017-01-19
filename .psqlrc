@@ -7,3 +7,4 @@
 \set HISTSIZE 500
 \set COMP_KEYWORD_CASE lower
 SET BYTEA_OUTPUT TO 'ESCAPE'
+\set PROMPT1 '%M:%> [%n@%/]%R%#%x '
