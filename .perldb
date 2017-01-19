@@ -1,0 +1,43 @@
+#### perldb.el version 0.01
+{
+    package DB::emacs;
+    use constant PRE => "\032\032pre-prompt\n";
+    use constant POST => "\032\032post-prompt";
+    use subs qw(output);
+    our $o;
+    sub output {
+        my $val = shift;
+        $val = $o unless defined $val;
+        $val = '<undef>' unless defined $val;
+        print PRE;
+        print $val;
+        print POST;
+    }
+    sub status {
+        output (
+            sprintf "((current-sub . \"%s\")\n (functions . %d)\n (includes . %d))",
+            $DB::emacs::sub, scalar( keys %DB::sub ), scalar( keys %INC ));
+    }
+    # FIXME: How to inhibit this error
+    sub trace {
+        print PRE;
+        DB::print_trace($DB::OUT, 1);
+        print POST;
+    }
+    sub breakpoints {
+        print PRE;
+        DB->cmd_L('b');
+        print POST;
+    }
+    sub functions {
+        output "(" . join("\n", map { qq("$_") } sort keys %DB::sub) . ")";
+    }
+    sub includes {
+        output "(" . join("\n", map { s/\.pm$//; s/\//::/g; qq("$_") } sort keys %INC) . ")";
+    }
+}
+#### end perldb.el
+
+# Local Variables:
+# mode: perl
+# End:
