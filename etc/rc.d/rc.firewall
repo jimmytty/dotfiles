@@ -1,100 +1,83 @@
 #!/bin/bash
+#
+# usage: rc.firewall start|stop|status
+#
+# Simple firewall disallowing all incomming connections
+# but allowing all traffic on localhost (lo device)
+# and allowing all outgoing traffic for $ALLOWED_PORTS
+# (you can set the variable below)
+#
+# Author: Tomas M. <http://slax.linux-live.org/>
+#
+ALLOWED_PORTS="20 21 22 25 80 110 143 443 993"
+#-----------------------------------------------------------
 
-iptables='/usr/sbin/iptables'
+if [ "$1" = "start" ]; then
 
-stop () {
-    # Clear previous rules
-    $iptables --flush
-    $iptables --delete-chain
+   SYSCTLW="/sbin/sysctl -q -w"
+   IPTABLES="/usr/sbin/iptables"
 
-    for chain in INPUT FORWARD OUTPUT; do
-        $iptables --policy $chain ACCEPT
-    done
-}
+   # Disable routing triangulation. Respond to queries out
+   # the same interface, not another. Helps to maintain state
+   # Also protects against IP spoofing
 
-start () {
-    local interface='wlan0'
-    local ip
-    read ip < <(
-        ip -o -4 address show $interface |
-        sed '\%^[0-9]\+:\s\+'$interface'\s\+inet\s\([0-9]\+\(\.[0-9]\+\)\{3\}\)/[0-9][0-9]\sbrd\s.*$%!d;s//\1/'
-    )
+   $SYSCTLW net.ipv4.conf.all.rp_filter=1
 
-    if [[ -z "$ip" ]]; then
-        echo 'Could not find IP ADDRESS'
-        exit 1
-    fi
+   # Enable logging of packets with malformed IP addresses,
+   # Disable redirects,
+   # Disable source routed packets,
+   # Disable acceptance of ICMP redirects,
+   # Turn on protection from Denial of Service (DOS) attacks,
+   # Disable responding to ping broadcasts,
+   # Enable IP routing. Required if your firewall is protecting a network, NAT included
 
-    # Changing policies
-    $iptables --policy INPUT   DROP
-    $iptables --policy FORWARD DROP
+   $SYSCTLW net.ipv4.conf.all.log_martians=1
+   $SYSCTLW net.ipv4.conf.all.send_redirects=0
+   $SYSCTLW net.ipv4.conf.all.accept_source_route=0
+   $SYSCTLW net.ipv4.conf.all.accept_redirects=0
+   $SYSCTLW net.ipv4.tcp_syncookies=1
+   $SYSCTLW net.ipv4.icmp_echo_ignore_broadcasts=1
+   $SYSCTLW net.ipv4.ip_forward=1
 
-    # Allow all established traffic session
-    $iptables \
-        --append  INPUT \
-        --match   conntrack \
-        --ctstate ESTABLISHED,RELATED \
-        --jump    ACCEPT
+   # Firewall initialization, remove everything, start with clean tables
+   $IPTABLES -F      # remove all rules
+   $IPTABLES -X      # delete all user-defined chains
 
-    # Allow all to localhost
-    $iptables \
-        --append       INPUT \
-        --in-interface lo \
-        --jump         ACCEPT
+   # allow everything for loop device
+   $IPTABLES -A INPUT -i lo -j ACCEPT
+   $IPTABLES -A OUTPUT -j ACCEPT
 
-    # Allow ping
-    $iptables \
-        --append INPUT \
-        --proto  icmp \
-        --jump   ACCEPT
+   # allow DNS in all directions
+   $IPTABLES -A INPUT -p udp --dport 53 -j ACCEPT
+   $IPTABLES -A INPUT -p udp --sport 53 -j ACCEPT
+   $IPTABLES -A OUTPUT -p udp --dport 53 -j ACCEPT
+   $IPTABLES -A OUTPUT -p udp --sport 53 -j ACCEPT
 
-    # Log some port conections
-    declare -A ports
-    ports=( ['FTP']=21 ['SSH']=22 ['SMTP']=25 ['HTTP']=80 ['POP3']=110 )
-    for port_str in ${!ports[*]}; do
-        port_num=${ports[$port_str]}
-        $iptables \
-            --append       INPUT \
-            --protocol     tcp \
-            --dport        $port_num \
-            ! --source     $ip \
-            --in-interface $interface \
-            --jump         LOG \
-            --log-level    warning \
-            --log-prefix   "MSG:SERVICE=$port_str "
-    done
+   # Allow previously established connections
+   $IPTABLES -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-    # Syn-flood protection:
-    $iptables \
-        --append FORWARD \
-        --protocol tcp \
-        --syn \
-        --match limit \
-        --limit 1/s \
-        --jump ACCEPT
+   for PORT in $ALLOWED_PORTS; do
+      $IPTABLES -A INPUT -p tcp --dport $PORT -j ACCEPT
+   done
 
-    # Furtive port scanner:
-    $iptables \
-        --append FORWARD \
-        --protocol tcp \
-        --tcp-flags SYN,ACK,FIN,RST RST \
-        --match limit \
-        --limit 1/s \
-        --jump ACCEPT
+   # Create a chain for logging all dropped packets
+   $IPTABLES -N LOG_DROP
+#  $IPTABLES -A LOG_DROP -j LOG --log-prefix "Attack log: "
+   $IPTABLES -A LOG_DROP -j DROP
 
-    # Ping of death:
-    $iptables \
-        --append FORWARD \
-        --protocol icmp \
-        --icmp-type echo-request \
-        --match limit \
-        --limit 1/s \
-        --jump ACCEPT
-}
+   $IPTABLES -A INPUT -j LOG_DROP    # drop all incomming
+   $IPTABLES -A FORWARD -j LOG_DROP  # drop all forwarded
 
-case "$1" in
-    'start') start ;;
-    'stop') stop ;;
-    'restart') stop; start ;;
-    *) echo "usage $0 start|stop|restart"
-esac
+elif [ "$1" = "stop" ]; then
+   iptables -F
+   iptables -X
+   iptables -P OUTPUT ACCEPT
+   iptables -P FORWARD ACCEPT
+   iptables -P INPUT ACCEPT
+
+elif [ "$1" = "status" ]; then
+   iptables -L -v
+
+else
+   echo "usage: $0 start|stop|status"
+fi

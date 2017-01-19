@@ -8,9 +8,9 @@
 # commands in there.
 
 export ARCH=`/bin/arch`
-/usr/bin/loadkeys ~jimmy/etc/br-abnt.map.gz
 
-for service in firewall mongodb postgresql tor; do
-    test -x /etc/rc.d/rc.$service || continue
-    (/etc/rc.d/rc.$service start) >/dev/null 2>&1 &
-done
+sh /etc/rc.d/rc.consolekit stop
+
+( sh /etc/rc.d/rc.mongodb start ) &> /dev/null &
+( sh /etc/rc.d/rc.postgresql start) &> /dev/null &
+( sh /etc/rc.d/rc.tor start) &> /dev/null &
