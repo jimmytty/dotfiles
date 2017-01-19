@@ -7,7 +7,7 @@ add-xml-space: no         # default: no
 assume-xml-procins: no    # default: no
 break-before-br: no       # default: no
 char-encoding: ascii      # default: ascii (ascii, iso2022, latin1, utf8, raw)
-clean: yes                # default: no
+clean: no                 # default: no
 doctype: auto             # default: auto (<fpi>, auto, loose, omit, strict)
 drop-empty-paras: yes     # default: yes
 drop-font-tags: yes       # default: no
