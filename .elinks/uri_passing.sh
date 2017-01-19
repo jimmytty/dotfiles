@@ -1,7 +1,7 @@
 #!/bin/bash
 
 logfile="$HOME/var/log/elinks.log"
-#exec 1>> ${logfile} 2>&1
+exec 1>> ${logfile} 2>&1
 
 DISPLAY=:1.0
 read date time <<< $(date +%F\ %T)
@@ -10,6 +10,21 @@ outdir="$HOME/work"
 func_name=$1
 uri=$2
 filename=$($HOME/.elinks/uri2filename.pl $uri)
+uri_escaped=$(perl -MURI::Escape -wE'print uri_escape shift' "$uri")
+title="$(xsh \
+            --no-validation \
+            --html \
+            --input "$filename" \
+            --command 'print normalize-space(string(/html/head/title))' \
+            2>/dev/null)"
+title_escaped=$(perl -MURI::Escape -wE'print uri_escape shift' "$title")
+description="$(xsh \
+            --no-validation \
+            --html \
+            --input "$filename" \
+            --command 'print /html/head/meta[@content][@name="description" or @itemprop="description"]/@content' \
+            2>/dev/null)"
+description_escaped=$(perl -MURI::Escape -wE'print uri_escape shift' "$description")
 
 html2org () {
     xsh_src=$(cat <<'EOF'
@@ -57,6 +72,19 @@ emacs_w3m () {
     /usr/bin/emacsclient \
         --no-wait \
         --eval '(w3m "'"$uri"'")'
+}
+
+emacs_eww () {
+    /usr/bin/emacsclient \
+        --no-wait \
+        --eval '(eww "'"$uri"'")'
+}
+
+org_capture () {
+    emacsclient \
+        --no-wait \
+        'org-protocol://capture?'url=$uri_escaped'&'title=$title_escaped'&'body=$description_escaped &
+    screen -X select emacs
 }
 
 $func_name

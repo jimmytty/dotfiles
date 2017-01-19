@@ -41,7 +41,7 @@ sub url2filename {
     my $path   = $uri->path();
 
     return unless $scheme;
-    
+
     return uri_unescape($path) if $scheme eq q(file);
 
     my $filename   = uri_escape($url);
@@ -81,28 +81,33 @@ sub pre_format_html_hook {
 
     cache_file( $url, $html );
 
-    foreach ($html) {
-        s{\r\n}{\n}gmsx;
-    }
+    foreach ($html) { s{\r\n}{\n}gmsx; }
 
     my $uri = URI->new($url);
 
-    if (   $uri->host() eq q(192.168.1.1)
-        && $uri->path() eq q(/api/monitoring/status) )
-    {
-        my $xml = XML::LibXML->new->parse_string($html);
-        my %xml;
-        foreach my $node ( $xml->findnodes(q{/response/node()}) ) {
-            my $key   = $node->findvalue(q{name(.)});
-            my $value = $node->findvalue(q{string(text())});
-            if ( grep { !(defined) || $_ eq q() } ( $key, $value ) ) {
-                next;
-            }
-            $xml{$key} = $value;
-        }
+    # if (   $uri->host() eq q(192.168.1.1)
+    #     && $uri->path() eq q(/api/monitoring/status) )
+    # {
+    #     my $xml = XML::LibXML->new->parse_string($html);
+    #     my %xml;
+    #     foreach my $node ( $xml->findnodes(q{/response/node()}) ) {
+    #         my $key   = $node->findvalue(q{name(.)});
+    #         my $value = $node->findvalue(q{string(text())});
+    #         if ( grep { !(defined) || $_ eq q() } ( $key, $value ) ) {
+    #             next;
+    #         }
+    #         $xml{$key} = $value;
+    #     }
 
-        $html = ansi2html( p( %xml, colored => 1 ) );
-    } ## end if ( $uri->host() eq q(192.168.1.1)...)
+    #     $html = ansi2html( p( %xml, colored => 1 ) );
+    # } ## end if ( $uri->host() eq q(192.168.1.1)...)
+    # els
+        if ( $uri->host() eq q(br-linux.org) ) {
+        my $pattern = qr{<meta\scharset="utf-8">};
+        my $replace
+            = qq{<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />};
+        $html =~ s{$pattern}{$replace}imsx;
+    }
 
     return $html;
 } ## end sub pre_format_html_hook
