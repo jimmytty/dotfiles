@@ -1,0 +1,9 @@
+
+# Oleorc personal file configuration
+# Ronaldo Ferreira de Lima
+# Tue Aug 29 10:08:32 BRT 2006
+
+
+set-option a0
+set-option status -1
+set-option nobackup
