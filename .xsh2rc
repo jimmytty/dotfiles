@@ -1,3 +1,4 @@
+# -*- perl -*-
 quiet;
 nodebug;
 recovering 1;
@@ -6,13 +7,12 @@ query-encoding 'iso-8859-1';
 $PROMPT = '%L> ';
 
 def number2attributes $path {
-    my $nodes = xsh:split('/+',$path);
+    my $nodes = xsh:split('/+', $path);
     $nodes = xsh:grep($nodes, '.');
     my $fpath;
     my $cpath;
 
     foreach my $node in xsh:split('/', $path) {
-
         if ( $cpath) {
             $cpath = xsh:join('/', $cpath, $node);
         }
@@ -27,7 +27,7 @@ def number2attributes $path {
                 $attr = concat('[@'
                                , normalize-space(xsh:serialize($attr))
                                , ']'
-                              );
+                        );
                 $attrs = normalize-space(concat($attrs, $attr));
             }
             if ( string-length($attrs) != 0 and $node != 'html'){
